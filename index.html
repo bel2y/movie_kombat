@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MOVIE KOMBAT</title>
+  <link rel="stylesheet" href="src/styles.css">
+  <script defer src="src/battle.js"></script>
+  <script defer src="src/movies.js"></script>
+  <script defer src="src/main.js"></script>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <button class="brand" data-action="home" aria-label="На главную"><span class="mark" aria-hidden="true">◈</span> MOVIE <i>KOMBAT</i></button>
+      <nav aria-label="Меню">
+        <button data-action="home">Арена</button><button data-action="lists">Списки</button><button data-action="history">История</button>
+      </nav>
+      <button class="sound" data-action="sound" aria-pressed="false">Звук вкл.</button>
+    </header>
+    <main></main>
+    <footer><span><kbd>↑ ↓ ← →</kbd> Навигация</span><span><kbd>OK</kbd> Выбрать</span><span><kbd>Back</kbd> Назад</span></footer>
+  </div>
+</body>
+</html>

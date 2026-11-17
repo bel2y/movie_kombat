@@ -1,14 +1,13 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { battle, probability } from '../src/battle.ts';
-
+import engine from '../src/battle.js';
+const {battle, probability} = engine;
 const films = Array.from({ length: 16 }, (_, i) => ({ id: i, title: String(i), year: 2000, genre: 'Drama' }));
 const other = films.map(movie => ({ ...movie, id: movie.id + 16 }));
-const draws = (...values: number[]) => () => {
+const draws = (...values          ) => () => {
   assert.ok(values.length, 'extra random draw');
-  return values.shift()!;
+  return values.shift() ;
 };
-
 test('uses the specified rank weights', () => {
   assert.equal(probability(1, 16), 16 / 17);
   assert.equal(probability(3, 12), 14 / 19);
@@ -16,7 +15,7 @@ test('uses the specified rank weights', () => {
 });
 test('all sixteen participants have equal selection intervals', () => {
   for (let i = 0; i < 16; i++) {
-    const result = battle(films, other, draws((i + .5) / 16, 0, .99))!;
+    const result = battle(films, other, draws((i + .5) / 16, 0, .99)) ;
     assert.equal(result.left.movie.id, i);
     assert.equal(result.right.movie.id, 16);
     assert.equal(result.winner, 'right');

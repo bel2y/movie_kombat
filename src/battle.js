@@ -1,25 +1,11 @@
-export interface Movie { id: number; title: string; year: number; genre: string; poster?: string }
-interface Entry { movie: Movie; rank: number }
-export type Side = 'left' | 'right';
-export interface BattleResult {
-  left: Entry;
-  right: Entry;
-  winner: Side;
-  chance: number;
-  banner: string;
-  date: string;
-}
-
-export function probability(left: number, right: number): number {
+function probability(left        , right        )         {
   return (17 - left) / (34 - left - right);
 }
-
-function random(): number {
-  if (!globalThis.crypto?.getRandomValues) return Math.random();
+function random()         {
+  if (!(typeof crypto !== "undefined" && crypto.getRandomValues)) return Math.random();
   return crypto.getRandomValues(new Uint32Array(1))[0] / 2 ** 32;
 }
-
-export function battle(a: readonly Movie[], b: readonly Movie[], draw = random): BattleResult | null {
+function battle(a                  , b                  , draw = random)                      {
   if (!a.length || !b.length) return null;
   const i = Math.floor(draw() * a.length);
   const j = Math.floor(draw() * b.length);
@@ -36,3 +22,4 @@ export function battle(a: readonly Movie[], b: readonly Movie[], draw = random):
   else if (winningRank > Math.min(left.rank, right.rank)) banner = 'UPSET!';
   return { left, right, winner, chance, banner, date: new Date().toISOString() };
 }
+if (typeof module !== "undefined") module.exports = {battle, probability};

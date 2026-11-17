@@ -1,6 +1,4 @@
-import type { Movie } from './battle';
-
-const data: [number, string, number, string, string?][] = [
+const data                                              = [
   [157336,'Интерстеллар',2014,'Фантастика','gEU2QniE6E77NI6lCU6MxlNBvIx.jpg'],
   [27205,'Начало',2010,'Фантастика','edv5CZvWj09upOsy2Y6IwDhK8bt.jpg'],
   [603,'Матрица',1999,'Фантастика','f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg'],
@@ -34,8 +32,7 @@ const data: [number, string, number, string, string?][] = [
   [1422,'Отступники',2006,'Криминал'],
   [115,'Большой Лебовски',1998,'Комедия'],
 ];
-
-const movies: Movie[] = data.map(([id,title,year,genre,path]) => ({
+const movies          = data.map(([id,title,year,genre,path]) => ({
   id, title, year, genre, poster: path && 'https://image.tmdb.org/t/p/w342/' + path,
 }));
-export const demoLists = [movies.slice(0, 16), movies.slice(16)] as const;
+const demoLists = [movies.slice(0, 16), movies.slice(16)]         ;
