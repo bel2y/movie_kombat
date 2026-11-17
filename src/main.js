@@ -3,7 +3,7 @@
   const nav = document.querySelector('nav');
   const soundButton = document.querySelector('.sound');
   const key = 'movie-kombat.history.v1';
-  const names = ['Игрок 1', 'Игрок 2'];
+  const names = ['Илья', 'Наташа'];
   let history = [];
   try {
     const saved = JSON.parse(localStorage.getItem(key) || '[]');
