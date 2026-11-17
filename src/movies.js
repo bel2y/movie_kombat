@@ -1,38 +1,229 @@
-const data                                              = [
-  [157336,'Интерстеллар',2014,'Фантастика','gEU2QniE6E77NI6lCU6MxlNBvIx.jpg'],
-  [27205,'Начало',2010,'Фантастика','edv5CZvWj09upOsy2Y6IwDhK8bt.jpg'],
-  [603,'Матрица',1999,'Фантастика','f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg'],
-  [438631,'Дюна',2021,'Фантастика','d5NXSklXo0qyIYkgV94XAgMIckC.jpg'],
-  [155,'Тёмный рыцарь',2008,'Триллер','qJ2tW6WMUDux911r6m7haRef0WH.jpg'],
-  [76341,'Безумный Макс',2015,'Боевик'],
-  [98,'Гладиатор',2000,'История'],
-  [550,'Бойцовский клуб',1999,'Драма'],
-  [13,'Форрест Гамп',1994,'Драма'],
-  [680,'Криминальное чтиво',1994,'Криминал'],
-  [807,'Семь',1995,'Триллер'],
-  [77,'Помни',2000,'Триллер'],
-  [329,'Парк юрского периода',1993,'Приключения'],
-  [105,'Назад в будущее',1985,'Приключения'],
-  [346698,'Барби',2023,'Комедия'],
-  [872585,'Оппенгеймер',2023,'История'],
-  [120467,'Отель «Гранд Будапешт»',2014,'Комедия','eWdyYQreja6JGCzqHWXpWHDrrPo.jpg'],
-  [313369,'Ла-Ла Ленд',2016,'Мюзикл','uDO8zWDhfWwoFdKS4fzkUJt0Rf0.jpg'],
-  [194,'Амели',2001,'Мелодрама','nS758OZBrrl6s2iw3ekGdBwCZAC.jpg'],
-  [496243,'Паразиты',2019,'Триллер','7IiTTgloJzvGI1TAYymCfbfl3vT.jpg'],
-  [129,'Унесённые призраками',2001,'Анимация','39wmItIWsg5sZMyRUHLkWBcuVCM.jpg'],
-  [10681,'ВАЛЛ·И',2008,'Анимация'],
-  [354912,'Тайна Коко',2017,'Анимация'],
-  [152601,'Она',2013,'Мелодрама'],
-  [244786,'Одержимость',2014,'Драма'],
-  [763,'Зловещие мертвецы',1981,'Ужасы'],
-  [101,'Леон',1994,'Криминал'],
-  [637,'Жизнь прекрасна',1997,'Драма'],
-  [37165,'Шоу Трумана',1998,'Драма'],
-  [4935,'Ходячий замок',2004,'Анимация'],
-  [1422,'Отступники',2006,'Криминал'],
-  [115,'Большой Лебовски',1998,'Комедия'],
+// Порядок в каждом списке задаёт рейтинг желания от 1 до 16.
+const movieLists = [
+  [
+    {
+      "id": 652,
+      "title": "Троя",
+      "year": 2004,
+      "genre": "Приключения",
+      "poster": "https://image.tmdb.org/t/p/w342/a07wLy4ONfpsjnBqMwhlWTJTcm.jpg"
+    },
+    {
+      "id": 77338,
+      "title": "1+1",
+      "year": 2011,
+      "genre": "Комедия",
+      "poster": "https://image.tmdb.org/t/p/w342/1QU7HKgsQbGpzsJbJK4pAVQV9F5.jpg"
+    },
+    {
+      "id": 278,
+      "title": "Побег из Шоушенка",
+      "year": 1994,
+      "genre": "Драма",
+      "poster": "https://image.tmdb.org/t/p/w342/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg"
+    },
+    {
+      "id": 77,
+      "title": "Мементо",
+      "year": 2000,
+      "genre": "Триллер",
+      "poster": "https://image.tmdb.org/t/p/w342/nzlv62aC0octS5AklAiWpXLX9Z0.jpg"
+    },
+    {
+      "id": 79443,
+      "title": "Ронал-варвар",
+      "year": 2011,
+      "genre": "Анимация",
+      "poster": "https://image.tmdb.org/t/p/w342/k32V790RUZksAMm6SbvBm3QicIp.jpg"
+    },
+    {
+      "id": 1242898,
+      "title": "Хищник: Планета смерти",
+      "year": 2025,
+      "genre": "Фантастика",
+      "poster": "https://image.tmdb.org/t/p/w342/pHpq9yNUIo6aDoCXEBzjSolywgz.jpg"
+    },
+    {
+      "id": 602147,
+      "title": "Тёмное наследие",
+      "year": 2020,
+      "genre": "Триллер",
+      "poster": "https://image.tmdb.org/t/p/w342/rEpfvgTQsc768zNND0SjMelbnLH.jpg"
+    },
+    {
+      "id": 497,
+      "title": "Зелёная миля",
+      "year": 1999,
+      "genre": "Драма",
+      "poster": "https://image.tmdb.org/t/p/w342/8VG8fDNiy50H4FedGwdSVUPoaJe.jpg"
+    },
+    {
+      "id": 4922,
+      "title": "Загадочная история Бенджамина Баттона",
+      "year": 2008,
+      "genre": "Драма",
+      "poster": "https://image.tmdb.org/t/p/w342/26wEWZYt6yJkwRVkjcbwJEFh9IS.jpg"
+    },
+    {
+      "id": 12193,
+      "title": "Четыре Рождества",
+      "year": 2008,
+      "genre": "Комедия",
+      "poster": "https://image.tmdb.org/t/p/w342/zixj44TC7rwzpxtJAG5OzFJnEqe.jpg"
+    },
+    {
+      "id": 384682,
+      "title": "Новогодний корпоратив",
+      "year": 2016,
+      "genre": "Комедия",
+      "poster": "https://image.tmdb.org/t/p/w342/7r3w3cPTbNEIr1imb8zXyeIJCJe.jpg"
+    },
+    {
+      "id": 10147,
+      "title": "Плохой Санта",
+      "year": 2003,
+      "genre": "Комедия",
+      "poster": "https://image.tmdb.org/t/p/w342/rfClLIyeHqpMofmrPY8DaLe4z9x.jpg"
+    },
+    {
+      "id": 11674,
+      "title": "101 далматинец",
+      "year": 1996,
+      "genre": "Семейный",
+      "poster": "https://image.tmdb.org/t/p/w342/8o2ADoAyG796UwTjwBFjPyBz0yG.jpg"
+    },
+    {
+      "id": 11823,
+      "title": "Пережить Рождество",
+      "year": 2004,
+      "genre": "Комедия",
+      "poster": "https://image.tmdb.org/t/p/w342/agiItFfsvNsjpinLGwjfpYOhLaX.jpg"
+    },
+    {
+      "id": 335797,
+      "title": "Зверопой",
+      "year": 2016,
+      "genre": "Анимация",
+      "poster": "https://image.tmdb.org/t/p/w342/rwopfpHqPCYBSgBuZwkaXXqHp14.jpg"
+    },
+    {
+      "id": 1005331,
+      "title": "Ручная кладь",
+      "year": 2024,
+      "genre": "Триллер",
+      "poster": "https://image.tmdb.org/t/p/w342/sjMN7DRi4sGiledsmllEw5HJjPy.jpg"
+    }
+  ],
+  [
+    {
+      "id": 17979,
+      "title": "Рождественская история",
+      "year": 2009,
+      "genre": "Анимация",
+      "poster": "https://image.tmdb.org/t/p/w342/xNwlAIdx1Ln28GRiQttUP9Gojy2.jpg"
+    },
+    {
+      "id": 10184,
+      "title": "Обещать — не значит жениться",
+      "year": 2009,
+      "genre": "Мелодрама",
+      "poster": "https://image.tmdb.org/t/p/w342/jip2ap24Y6JxEgzVRyNqyYssnyR.jpg"
+    },
+    {
+      "id": 137,
+      "title": "День сурка",
+      "year": 1993,
+      "genre": "Комедия",
+      "poster": "https://image.tmdb.org/t/p/w342/gCgt1WARPZaXnq523ySQEUKinCs.jpg"
+    },
+    {
+      "id": 1921,
+      "title": "Сладкий ноябрь",
+      "year": 2001,
+      "genre": "Мелодрама",
+      "poster": "https://image.tmdb.org/t/p/w342/3biEHZSBSYqSkawU2sQyNbLcjgE.jpg"
+    },
+    {
+      "id": "local:you-are-my-only-one-1993",
+      "title": "Ты у меня одна",
+      "year": 1993,
+      "genre": "Драма"
+    },
+    {
+      "id": 562,
+      "title": "Крепкий орешек",
+      "year": 1988,
+      "genre": "Боевик",
+      "poster": "https://image.tmdb.org/t/p/w342/7Bjd8kfmDSOzpmhySpEhkUyK2oH.jpg"
+    },
+    {
+      "id": 8844,
+      "title": "Джуманджи",
+      "year": 1995,
+      "genre": "Приключения",
+      "poster": "https://image.tmdb.org/t/p/w342/bdHG5Mo83VPobeZZdlSz0Y7HQHB.jpg"
+    },
+    {
+      "id": 1573,
+      "title": "Крепкий орешек 2",
+      "year": 1990,
+      "genre": "Боевик",
+      "poster": "https://image.tmdb.org/t/p/w342/ybki0UWO3OPhaM6MSniuKC7sy1R.jpg"
+    },
+    {
+      "id": "local:feedback-2020",
+      "title": "Обратная связь",
+      "year": 2020,
+      "genre": "Комедия"
+    },
+    {
+      "id": 510,
+      "title": "Пролетая над гнездом кукушки",
+      "year": 1975,
+      "genre": "Драма",
+      "poster": "https://image.tmdb.org/t/p/w342/kjWsMh72V6d8KRLV4EOoSJLT1H7.jpg"
+    },
+    {
+      "id": 51828,
+      "title": "Один день",
+      "year": 2011,
+      "genre": "Мелодрама",
+      "poster": "https://image.tmdb.org/t/p/w342/n9jMwSg4IavdD8wqdYnyW5w3Mvp.jpg"
+    },
+    {
+      "id": 3981,
+      "title": "Чего хотят женщины",
+      "year": 2000,
+      "genre": "Комедия",
+      "poster": "https://image.tmdb.org/t/p/w342/eqkBEMDk1316Yx5wVoabWY07JAi.jpg"
+    },
+    {
+      "id": 9535,
+      "title": "Анализируй это",
+      "year": 1999,
+      "genre": "Комедия",
+      "poster": "https://image.tmdb.org/t/p/w342/gN8o7Ke1lUF2K8tzcLRb5bfEKbD.jpg"
+    },
+    {
+      "id": 11036,
+      "title": "Дневник памяти",
+      "year": 2004,
+      "genre": "Мелодрама",
+      "poster": "https://image.tmdb.org/t/p/w342/rNzQyW4f8B8cQeg7Dgj3n6eT5k9.jpg"
+    },
+    {
+      "id": 5255,
+      "title": "Полярный экспресс",
+      "year": 2004,
+      "genre": "Анимация",
+      "poster": "https://image.tmdb.org/t/p/w342/eOoCzH0MqeGr2taUZO4SwG416PF.jpg"
+    },
+    {
+      "id": 508,
+      "title": "Реальная любовь",
+      "year": 2003,
+      "genre": "Мелодрама",
+      "poster": "https://image.tmdb.org/t/p/w342/7QPeVsr9rcFU9Gl90yg0gTOTpVv.jpg"
+    }
+  ]
 ];
-const movies          = data.map(([id,title,year,genre,path]) => ({
-  id, title, year, genre, poster: path && 'https://image.tmdb.org/t/p/w342/' + path,
-}));
-const demoLists = [movies.slice(0, 16), movies.slice(16)]         ;

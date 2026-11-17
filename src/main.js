@@ -26,7 +26,7 @@
     `<button class="${className}" data-action="${action}" ${initial ? 'data-initial' : ''}>${title}</button>`;
 
   function poster(movie) {
-    return `<div class="movie-poster"><div class="poster-art" style="--hue:${movie.id % 360}">
+    return `<div class="movie-poster"><div class="poster-art" style="--hue:${String(movie.id).split('').reduce((sum, char) => sum + char.charCodeAt(0), 0) % 360}">
       <span>${escape(movie.title)}</span>${movie.poster ? `<img src="${escape(movie.poster)}" alt="">` : ''}
       </div></div>`;
   }
@@ -47,7 +47,7 @@
       <p class="subtitle">Два списка. Один фильм на вечер.</p></div>
       <div class="matchup">${names.map((name, i) => `
         <section class="player ${i ? 'red' : ''}"><div class="avatar" aria-hidden="true">${i ? '✦' : '◈'}</div>
-          <h2>${name}</h2><p>${demoLists[i].length} фильмов</p></section>
+          <h2>${name}</h2><p>${movieLists[i].length} фильмов</p></section>
         ${i ? '' : '<div class="home-vs" aria-hidden="true">VS</div>'}`).join('')}</div>
       ${button('start', 'FIGHT! <span aria-hidden="true">↗</span>', 'fight', true)}`,
     intro: () => '<h1 class="intro-title">MOVIE <em>KOMBAT</em></h1>',
@@ -64,7 +64,7 @@
     },
     lists: () => `<h1>Списки фильмов</h1><div class="actions">${names.map((name, i) =>
       `<button data-action="list-${i}" ${i === selectedList ? 'data-initial' : ''} aria-pressed="${i === selectedList}">${name}</button>`).join('')}
-      </div><ol class="collection">${demoLists[selectedList].map(movie =>
+      </div><ol class="collection">${movieLists[selectedList].map(movie =>
         `<li>${poster(movie)}<strong>${escape(movie.title)}</strong><small>${movie.year} · ${escape(movie.genre)}</small></li>`).join('')}</ol>`,
     history: () => `<h1>История битв</h1>${button('home', 'На арену', '', true)}<ul class="log">${history.map(item =>
       `<li><strong>${escape(item[item.winner].movie.title)}</strong><span>${escape(item.banner)}</span>
@@ -107,9 +107,9 @@
 
   function start() {
     if (playing()) return;
-    result = battle(demoLists[0], demoLists[1]);
+    result = battle(movieLists[0], movieLists[1]);
     if (!result) return;
-    reels = demoLists.map((movies, i) => {
+    reels = movieLists.map((movies, i) => {
       const finish = i ? result.right.movie : result.left.movie;
       const startIndex = movies.indexOf(finish) + 1;
       return Array.from({ length: 21 }, (_, j) => j === 20 ? finish : movies[(startIndex + j) % movies.length]);
