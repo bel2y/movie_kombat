@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;
 :root {
   color-scheme: dark;
   --ink:#0b0b11;
@@ -103,4 +104,71 @@ kbd { background:#ffffff10; border:1px solid var(--line); border-radius:4px; pad
 }
 @media (prefers-reduced-motion:reduce) {
   *, *::before, *::after { animation-duration:.001s !important; transition-duration:.001s !important; }
+}
+/* Cinema arena */
+0,800;0,900;1,800;1,900&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root { --ink:#080a10; --paper:#f4f3ec; --muted:#818b9f; --blue:#6cafff; --red:#ff725e; --gold:#dbff73; font-family:Manrope,system-ui,sans-serif; }
+body { background:#080a10; }
+header { position:relative; z-index:2; background:#080a10; padding:22px 5vw; border-color:#ffffff0d; }
+.brand { font-family:'Barlow Condensed',Impact,sans-serif; font-size:25px; letter-spacing:1px; }
+.brand i { color:inherit; font-style:normal; }
+.mark { display:inline-block; color:var(--gold); font-size:30px; vertical-align:middle; }
+nav { background:#ffffff05; border:1px solid #ffffff09; border-radius:40px; padding:5px; }
+nav button { border-radius:30px; padding:10px 25px; font-size:13px; color:#8e96a5; }
+nav button.active { background:#242a34; }
+.sound { font-size:12px; border-radius:30px; padding:12px 20px; color:#a7aebb; }
+footer { background:#080a10; border-color:#ffffff0b; justify-content:flex-start; padding:20px 5vw; gap:28px; font-size:11px; letter-spacing:.03em; }
+kbd { background:transparent; border-color:#ffffff20; padding:3px 6px; margin-right:7px; color:#b6becb; }
+.home,.intro,.versus,.winner,.roulette,.result {
+ background:radial-gradient(ellipse at 6% 75%,#1645a349,transparent 43%),radial-gradient(ellipse at 94% 75%,#9d302d40,transparent 43%),linear-gradient(180deg,#080a10,#0e1420 85%,#080a10);
+ overflow:hidden;
+}
+.home { padding:45px 5vw 52px; gap:30px; isolation:isolate; }
+.home::before { content:''; position:absolute; z-index:-1; width:100%; height:100%; left:0; top:0; opacity:.22; background:repeating-linear-gradient(115deg,transparent 0 119px,#7e9bc314 120px 121px); pointer-events:none; }
+.hero { position:relative; }
+.hero .eyebrow { color:#9ca6b9; letter-spacing:.38em; font-size:10px; margin-bottom:18px; }
+.hero h1 { font-family:'Barlow Condensed',Impact,sans-serif; font-size:clamp(65px,10vw,155px); font-weight:900; line-height:.85; letter-spacing:-.025em; font-style:italic; }
+.hero h1 em { color:var(--gold); text-shadow:0 0 70px #d5ff7320; }
+.hero .subtitle { margin-top:25px; font-size:14px; letter-spacing:.05em; }
+.matchup { width:min(1040px,100%); gap:45px; margin:10px 0; }
+.player { position:relative; padding:30px 25px 25px; border:1px solid #6686bc35; border-radius:4px; background:linear-gradient(135deg,#2c51812b,#0c1320aa); overflow:hidden; min-height:200px; }
+.player::before { content:''; position:absolute; width:210px; height:210px; border:1px solid #87baff17; border-radius:50%; left:50%; top:-80px; transform:translateX(-50%); box-shadow:0 0 0 30px #87baff05,0 0 0 60px #87baff04; }
+.player::after { content:''; position:absolute; bottom:0; left:20%; right:20%; height:2px; background:var(--team); box-shadow:0 0 25px var(--team); }
+.player.red { background:linear-gradient(225deg,#80382c30,#1b1113aa); border-color:#b16c5835; }
+.avatar { position:relative; width:72px; height:72px; margin:0 auto 18px; display:grid; place-items:center; border-radius:18px; border:1px solid #91bcff50; background:linear-gradient(145deg,#4264965c,#192c496b); font-size:40px; transform:rotate(-6deg); box-shadow:0 12px 30px #0005; }
+.red .avatar { background:linear-gradient(145deg,#9854455c,#4922196b); border-color:#ffac9150; transform:rotate(6deg); }
+.player h2 { font-size:22px; letter-spacing:-.04em; }
+.player p { font-size:12px; margin-top:8px; }
+.home-vs { font-family:'Barlow Condensed',Impact,sans-serif; font-size:46px; color:#6d7688; position:relative; }
+.fight { font-family:'Barlow Condensed',Impact,sans-serif; font-size:36px; letter-spacing:2px; border-radius:3px; padding:15px 45px; min-width:300px; box-shadow:0 5px 0 #849d39,0 15px 45px #b5ff7315; transition:transform .18s,box-shadow .18s; }
+.fight:hover { transform:translateY(-3px); box-shadow:0 8px 0 #849d39,0 20px 60px #b5ff7325; }
+.fight:focus-visible { outline-color:#eaffb6; outline-offset:8px; }
+.fight span { font-family:Manrope,sans-serif; font-style:normal; font-size:25px; margin-left:35px; }
+.scene-title,.roulette>h1,.lists>h1,.history>h1 { font-family:'Barlow Condensed',Impact,sans-serif; text-transform:uppercase; letter-spacing:.02em; }
+.duel-vs { font-family:'Barlow Condensed',Impact,sans-serif; font-size:clamp(55px,8vw,120px); }
+.poster-art { border-radius:4px; box-shadow:0 12px 30px #0005; }
+.duel h2 { font-size:clamp(16px,2vw,27px); }
+.final-card { border-radius:5px; background:linear-gradient(135deg,#182230f0,#10141df0); border-color:#9cb1ce25; box-shadow:0 30px 90px #0008; padding:40px; }
+.final-card h1 { font-family:'Barlow Condensed',Impact,sans-serif; font-size:clamp(40px,5vw,72px); }
+.final-card .primary { border-radius:4px; }
+.skip { border-radius:30px; color:#b3bdce; background:#080a10a0; font-size:12px; }
+.collection { gap:22px; }
+.collection strong { font-size:13px; margin-top:12px; }
+.collection small { font-size:11px; }
+.log li { padding:22px 12px; font-size:14px; }
+.log span { color:var(--gold); font-size:11px; letter-spacing:.1em; }
+@media(min-width:1600px) { .home { gap:45px; } .player { padding:40px; } .matchup { width:1200px; } }
+@media(max-width:650px) {
+ header { padding:12px 18px; } .brand { font-size:22px; } nav { width:100%; } nav button { flex:1; padding:8px 18px; }
+ .home { padding:35px 18px 42px; gap:30px; }
+ .hero h1 { font-size:clamp(48px,13vw,80px); }
+ .hero .subtitle { font-size:12px; }
+ .matchup { gap:12px; }
+ .player { padding:25px 12px; min-height:190px; }
+ .player h2 { font-size:19px; }
+ .avatar { width:58px; height:58px; font-size:32px; }
+ .home-vs { font-size:30px; }
+ .fight { min-width:250px; font-size:30px; }
+ footer { justify-content:center; padding:16px 10px; gap:12px; font-size:9px; }
+ .final-card { padding:25px; }
 }
