@@ -29,3 +29,12 @@ test('empty lists do not draw and short lists preserve absolute ranks', () => {
   assert.equal(battle(films, [], draws()), null);
   assert.equal(battle(films.slice(0, 2), other.slice(0, 1), draws(.8, 0, 0))?.banner, 'UPSET!');
 });
+
+test('filtered lists preserve original desire ranks and matching-rank banner', () => {
+  const a = [{ ...films[0], rank: 16 }];
+  const b = [{ ...other[0], rank: 1 }];
+  const result = battle(a, b, draws(0, 0, 0));
+  assert.equal(result.chance, 1 / 17);
+  assert.equal(result.banner, 'UPSET!');
+  assert.equal(result.left.rank, 16);
+});

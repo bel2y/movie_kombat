@@ -9,15 +9,15 @@ function battle(a                  , b                  , draw = random)        
   if (!a.length || !b.length) return null;
   const i = Math.floor(draw() * a.length);
   const j = Math.floor(draw() * b.length);
-  const left = { movie: a[i], rank: i + 1 };
-  const right = { movie: b[j], rank: j + 1 };
+  const left = { movie: a[i], rank: a[i].rank ?? i + 1 };
+  const right = { movie: b[j], rank: b[j].rank ?? j + 1 };
   const same = left.movie.id === right.movie.id;
   const chance = probability(left.rank, right.rank);
   const winner = same || draw() < chance ? 'left' : 'right';
   const winningRank = winner === 'left' ? left.rank : right.rank;
   let banner = 'WINNER';
   if (same) banner = 'PERFECT MATCH';
-  else if (i === j) banner = '50/50';
+  else if (left.rank === right.rank) banner = '50/50';
   else if (winningRank === 1) banner = 'FLAWLESS VICTORY';
   else if (winningRank > Math.min(left.rank, right.rank)) banner = 'UPSET!';
   return { left, right, winner, chance, banner, date: new Date().toISOString() };
