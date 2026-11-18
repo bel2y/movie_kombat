@@ -23,3 +23,12 @@ test('failed files retry once and are not reported as saved',async()=>{
  assert.equal(requests,2);assert.equal(assets.status().failed,1);assert.equal(assets.status().saved,0);assert.equal(assets.status().busy,false);
  await assert.rejects(assets.ensure('https://other.test/image.webp'));assert.equal(requests,2);
 });
+test('download completion is visible even when every file was already loaded',async()=>{
+ const assets=boot(async()=>image());await assets.ready;await assets.ensure(file);await assets.downloadAll();
+ assert.equal(assets.status().completed,true);
+});
+test('motion pauses queued downloads until the scene is stable',async()=>{
+ let requests=0;const assets=boot(async()=>{requests++;return image();});await assets.ready;
+ assets.setMotion(true);const pending=assets.ensure(file);await Promise.resolve();assert.equal(requests,0);
+ assets.setMotion(false);await pending;assert.equal(requests,1);
+});

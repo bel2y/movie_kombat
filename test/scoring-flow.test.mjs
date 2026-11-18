@@ -14,7 +14,7 @@ function boot(storage,lists){
   crypto:{getRandomValues:a=>{a[0]=0;return a;}},window:{innerWidth:1920},setTimeout:(fn,delay)=>{pending.push({fn,delay});return pending.length;},clearTimeout(id){if(pending[id-1])pending[id-1].done=true;},
   document:{querySelector:s=>s==='main'?main:s==='nav'?nav:s==='.shell'?shell:{},addEventListener:(type,fn)=>events[type]=fn}};
  vm.runInNewContext(engine+'\n'+app,context);
- return {shell,main,click:action=>events.click({target:{closest:()=>({dataset:{action}})}}),runTimers:()=>pending.slice().sort((a,b)=>a.delay-b.delay).forEach(t=>{if(!t.done){t.done=true;t.fn();}}),start:()=>events.click({target:{closest:()=>({dataset:{action:'start'}})}}),watch:()=>events.click({target:{closest:()=>({dataset:{action:'watch'}})}}),destination:()=>destination};
+ return {shell,main,enter(action){context.document.activeElement={matches:()=>true,click:()=>events.click({target:{closest:()=>({dataset:{action}})}})};events.keydown({key:'Enter',repeat:false,preventDefault(){}});},click:action=>events.click({target:{closest:()=>({dataset:{action}})}}),runTimers:()=>pending.slice().sort((a,b)=>a.delay-b.delay).forEach(t=>{if(!t.done){t.done=true;t.fn();}}),start:()=>events.click({target:{closest:()=>({dataset:{action:'start'}})}}),watch:()=>events.click({target:{closest:()=>({dataset:{action:'watch'}})}}),destination:()=>destination};
 }
 const film=id=>({id,title:'Film '+id,year:2000,genre:'Drama'});
 test('confirmed reset clears only game progress and restores both lists',()=>{
@@ -56,4 +56,10 @@ test('watch opens the winning film in Lampa using TMDB identity',()=>{
  session.start();const saved=JSON.stringify(storage);session.watch();
  assert.equal(session.destination(),'http://lampa.mx/?card=79433&media=movie&source=tmdb');
  assert.equal(JSON.stringify(storage),saved);
+});
+
+test('remote Enter activates once without skipping the screen it opens',()=>{
+ const session=boot({},[[film(1)],[film(2)]]);session.enter('start');
+ assert.equal(session.shell.dataset.scene,'intro');
+ session.runTimers();assert.equal(session.shell.dataset.scene,'versus');
 });

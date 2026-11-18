@@ -6,11 +6,16 @@
   const blobs=new Map(),saved=new Set(),jobs=new Map();
   let db=null,busy=false,done=0,failed=0,storage='checking',active=0;
   const queue=[];
+  let motion=false,completed=false;const pendingArtwork=new Map();
   const canonical=value=>new URL(value,base).href;
   const notify=()=>window.dispatchEvent(new Event('mk-assets'));
   function apply(url,blob){
     if(blobs.has(url))return blobs.get(url);
     const local=URL.createObjectURL(blob);blobs.set(url,local);
+    if(motion){pendingArtwork.set(url,local);return local;}
+    updateArtwork(url,local);return local;
+  }
+  function updateArtwork(url,local){
     const name=new URL(url).pathname.split('/').pop().split('.')[0];
     document.documentElement.style.setProperty('--mk-art-'+name,'url("'+local+'")');
     document.querySelectorAll('img').forEach(img=>{if(img.src===url){img.src=local;img.hidden=false;}});
@@ -41,15 +46,18 @@
   function persist(url,blob){
     if(!db)return Promise.resolve(false);
     return new Promise(resolve=>{
+      let settled=false;
+      const finish=value=>{if(!settled){settled=true;clearTimeout(timer);resolve(value);}};
+      const timer=setTimeout(()=>{storage='blocked';finish(false);},5000);
       try {
         const tx=db.transaction('images','readwrite');tx.objectStore('images').put({url,blob});
-        tx.oncomplete=()=>{saved.add(url);resolve(true);};
-        tx.onerror=tx.onabort=()=>{storage='full';resolve(false);};
-      }catch(_){storage='blocked';resolve(false);}
+        tx.oncomplete=()=>{saved.add(url);finish(true);notify();};
+        tx.onerror=tx.onabort=()=>{storage='full';finish(false);};
+      }catch(_){storage='blocked';finish(false);}
     });
   }
   function pump(){
-    while(active<3&&queue.length){
+    while(!motion&&active<2&&queue.length){
       const job=queue.shift();active++;
       job().finally(()=>{active--;pump();});
     }
@@ -79,13 +87,13 @@
     jobs.set(url,promise);promise.then(()=>jobs.delete(url),()=>jobs.delete(url));return promise;
   }
   const ready=open().then(()=>{notify();});
-  const api={ready,url:value=>blobs.get(canonical(value)) || value,ensure,
-    status:()=>({total:files.length,saved:saved.size,busy,done,failed,storage}),
+  const api={ready,setMotion(value){motion=value;if(!motion){pendingArtwork.forEach((local,url)=>updateArtwork(url,local));pendingArtwork.clear();pump();}},url:value=>blobs.get(canonical(value)) || value,ensure,
+    status:()=>({total:files.length,saved:saved.size,busy,done,failed,storage,completed}),
     async downloadAll(){
       if(busy)return;
-      busy=true;done=0;failed=0;notify();await ready;
+      busy=true;completed=false;done=0;failed=0;notify();await ready;
       await Promise.all(files.map(async file=>{try{await ensure(file);}catch(_){failed++;}done++;notify();}));
-      busy=false;notify();
+      busy=false;completed=true;notify();
     }
   };
   window.MovieKombatAssets=api;

@@ -47,6 +47,7 @@
   let scene = 'home';
   let result;
   let reels;
+  let stopReels = () => {};
   let previousWinners = new Set();
   let timers = [];
   let selectedList = 0;
@@ -130,7 +131,7 @@
     home: () => (previewPlayer ?? remainingPlayer()) !== null && (previewPlayer ?? remainingPlayer()) >= 0 ? singleHome(previewPlayer ?? remainingPlayer()) : `${showcase()}<div class="home-fighters">${names.map((name, i) => `<div class="home-player team-${i}">${fighter(i)}<p class="film-count">${availableLists()[i].length} фильмов</p></div>`).join('')}</div><div class="home-versus">${vsMark}</div>${battleButton('В БОЙ!', 'fight')}`,
     intro: () => `${participants()}<h1 class="scene-title">Битва начинается</h1><div class="intro-emblem"><img src="src/optimized/intro-emblem.d5ee62f67913.webp" alt="Movie Kombat — противостояние"></div><div class="intro-flare" aria-hidden="true"></div>`,
     roulette: () => `${participants()}<h1 class="scene-title">${result.solo ? "Выбираем фильм" : "Выбираем соперников"}</h1><div class="reels">${reels.map((strip, i) => strip ?
-      `<section class="team-${i}"><div class="window"><div class="strip" style="--reel-from:${-strip.from};--reel-to:${-strip.to}">${strip.movies.map(poster).join('')}</div></div><div class="selection-frame" aria-hidden="true"><div class="focus-window"><div class="strip" style="--reel-from:${-strip.from};--reel-to:${-strip.to}">${strip.movies.map(poster).join('')}</div></div>${metalCorners}</div><div class="metal-poster reel-lock">${poster(result[i ? 'right' : 'left'].movie)}${metalCorners}</div></section>` : '').join('')}</div><div class="reel-versus"><img class="vs-mark" src="src/optimized/home-vs.2b654653a8c6.webp" alt="Против"></div>`,
+      `<section class="team-${i}"><div class="window"><div class="strip" style="--reel-from:${-strip.from};--reel-to:${-strip.to}"></div></div><div class="selection-frame" aria-hidden="true"><div class="focus-window"><div class="strip" style="--reel-from:${-strip.from};--reel-to:${-strip.to}"></div></div>${metalCorners}</div><div class="metal-poster reel-lock">${poster(result[i ? 'right' : 'left'].movie)}${metalCorners}</div></section>` : '').join('')}</div><div class="reel-versus"><img class="vs-mark" src="src/optimized/home-vs.2b654653a8c6.webp" alt="Против"></div>`,
     versus: duel,
     winner: () => {
       const win = result[result.winner].movie;
@@ -155,6 +156,8 @@
   };
 
   function show(next) {
+    stopReels();
+    window.MovieKombatAssets?.setMotion?.(["intro","roulette","versus","winner"].includes(next));
     if (next === 'home' && scene !== 'home') playerFighters = pickFighters();
     scene = next;
     document.querySelector('.shell').dataset.scene = next;
@@ -166,6 +169,7 @@
     main.innerHTML = views[next]() + (next==='versus' ? button('continue','Продолжить <kbd>OK</kbd>','skip continue',true) : playing() ? button('skip', 'Пропустить <kbd>OK</kbd>', 'skip', true) : '');
     main.querySelectorAll('.hero-logo').forEach(element => { element.append(document.querySelector('.brand-logo').cloneNode(true)); });
     if(window.MovieKombatAssets)document.querySelectorAll('img').forEach(img=>{const url=artUrl(img.getAttribute('src'));if(url!==img.getAttribute('src'))img.src=url;});
+    if(next==='roulette' && typeof animateReels==='function') stopReels=animateReels(main,reels,poster);
     updateAssetStatus();
     const initial = main.querySelector('[data-initial]');
     if (initial) initial.focus();
@@ -177,7 +181,8 @@
     if(!state){label.textContent='Хранилище изображений недоступно.';return;}
     label.textContent=(state.busy ? `Загрузка: ${state.done} из ${state.total}. ` : '')+`Сохранено: ${state.saved} из ${state.total}.`+(state.failed ? ` Не загрузилось: ${state.failed}. Нажми «Скачать графику», чтобы повторить.` : '')+(['blocked','full'].includes(state.storage) ? '\nУстройство не разрешило сохранить все файлы. Загруженные изображения доступны только до закрытия игры.' : '');
     const progress=main.querySelector('.asset-progress');if(progress){progress.max=state.total;progress.value=state.busy?state.done:state.saved;}
-    const download=main.querySelector('[data-action="download-art"]');if(download)download.disabled=state.busy;
+    const download=main.querySelector('[data-action="download-art"]');if(download){download.setAttribute('aria-busy',String(state.busy));download.textContent=state.busy?'Загружаем…':state.completed?'Проверить загрузку':'Скачать графику';}
+    if(state.completed&&!state.busy)label.textContent=(state.saved===state.total?'Готово! Вся графика сохранена на устройстве. ':'Загрузка завершена. ')+label.textContent;
   }
   if(window.addEventListener)window.addEventListener('mk-assets',updateAssetStatus);
 
@@ -312,6 +317,7 @@
     }
     if (event.key === 'Enter' || event.keyCode === 13) {
       if (playing() || event.repeat) event.preventDefault();
+      if(!playing() && !event.repeat && document.activeElement?.matches?.('button[data-action]')) { event.preventDefault(); document.activeElement.click(); return; }
       if (playing() && !event.repeat) { if(scene==='versus') continueBattle(); else skip(); }
       return;
     }

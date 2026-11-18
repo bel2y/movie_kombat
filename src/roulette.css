@@ -60,3 +60,8 @@
 .roulette .reels .window:after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(100deg,transparent 12%,#fff 18%,transparent 24%,transparent 58%,#fff 65%,transparent 71%) top/100% 2px no-repeat,linear-gradient(100deg,transparent 24%,#fff 31%,transparent 38%,transparent 78%,#fff 85%,transparent 92%) bottom/100% 2px no-repeat}
 .roulette .selection-frame{filter:drop-shadow(0 0 4px var(--rail-core)) drop-shadow(0 0 12px var(--rail-color))}
 .roulette .reel-lock{filter:drop-shadow(0 0 4px var(--rail-core)) drop-shadow(0 0 12px var(--rail-color))}
+/* Keep glow on the fixed frame, not on the moving descendants. */
+.roulette .selection-frame{filter:none}
+.roulette .selection-frame:before{filter:drop-shadow(0 0 4px var(--rail-core)) drop-shadow(0 0 12px var(--rail-color))}
+.roulette .strip{backface-visibility:hidden}
+.roulette:after{animation:none}
