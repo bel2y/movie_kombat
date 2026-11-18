@@ -42,7 +42,7 @@
   let previewPlayer = null;
   function battleButton(label, style) {
     return canBattle() ? button('start', remainingPlayer() !== null ? 'Выбрать фильм' : label, style, true)
-      : '<p role="status">Все фильмы уже выбраны. Добавьте новые фильмы в списки.</p>';
+      : '<div class="empty-arena"><p role="status">Все фильмы выбраны</p>'+button('reset','Сбросить битвы','',true)+'</div>';
   }
   let scene = 'home';
   let result;
@@ -131,7 +131,7 @@
     home: () => (previewPlayer ?? remainingPlayer()) !== null && (previewPlayer ?? remainingPlayer()) >= 0 ? singleHome(previewPlayer ?? remainingPlayer()) : `${showcase()}<div class="home-fighters">${names.map((name, i) => `<div class="home-player team-${i}">${fighter(i)}<p class="film-count">${availableLists()[i].length} фильмов</p></div>`).join('')}</div><div class="home-versus">${vsMark}</div>${battleButton('В БОЙ!', 'fight')}`,
     intro: () => `${participants()}<h1 class="scene-title">Битва начинается</h1><div class="intro-emblem"><img src="src/optimized/intro-emblem.d5ee62f67913.webp" alt="Movie Kombat — противостояние"></div><div class="intro-flare" aria-hidden="true"></div>`,
     roulette: () => `${participants()}<h1 class="scene-title">${result.solo ? "Выбираем фильм" : "Выбираем соперников"}</h1><div class="reels">${reels.map((strip, i) => strip ?
-      `<section class="team-${i}"><div class="window"><div class="strip" style="--reel-from:${-strip.from};--reel-to:${-strip.to}"></div></div><div class="selection-frame" aria-hidden="true"><div class="focus-window"><div class="strip" style="--reel-from:${-strip.from};--reel-to:${-strip.to}"></div></div>${metalCorners}</div><div class="metal-poster reel-lock">${poster(result[i ? 'right' : 'left'].movie)}${metalCorners}</div></section>` : '').join('')}</div><div class="reel-versus"><img class="vs-mark" src="src/optimized/home-vs.2b654653a8c6.webp" alt="Против"></div>`,
+      `<section class="team-${i}${strip.static ? ' fixed-reel' : ''}"><div class="window"><div class="strip" style="--reel-from:${-strip.from};--reel-to:${-strip.to}"></div></div><div class="selection-frame" aria-hidden="true"><div class="focus-window"><div class="strip" style="--reel-from:${-strip.from};--reel-to:${-strip.to}"></div></div>${metalCorners}</div><div class="metal-poster reel-lock">${poster(result[i ? 'right' : 'left'].movie)}${metalCorners}</div></section>` : '').join('')}</div><div class="reel-versus"><img class="vs-mark" src="src/optimized/home-vs.2b654653a8c6.webp" alt="Против"></div>`,
     versus: duel,
     winner: () => {
       const win = result[result.winner].movie;
@@ -225,7 +225,7 @@
     result = nextResult;
     if (!result) return;
     previousWinners = new Set(excluded);
-    reels = movieLists.map((movies, i) => {
+    reels = available.map((movies, i) => {
       const entry=result[i ? 'right' : 'left']; if (!entry) return null; const finish=entry.movie;
       return buildReel(movies, finish.id, i === 1, window.innerWidth);
     });
@@ -250,6 +250,7 @@
     }
     show('intro');
     play([130, 196]);
+    if(reels.every(reel=>!reel||reel.static)){timers=[setTimeout(()=>show('versus'),2000)];return;}
     timers = [
       setTimeout(() => show('roulette'), 2000),
       setTimeout(() => { show('versus'); play([196, 233, 294]); }, 12000),
@@ -341,12 +342,14 @@
   // Read-only scene preview for visual review; never records a battle.
   const previewScene = new URLSearchParams(location.search).get('preview');
   if (previewScene && Object.prototype.hasOwnProperty.call(views, previewScene)) {
-    const previewLists = canBattle() ? availableLists() : movieLists;
+    let previewLists = canBattle() ? availableLists() : movieLists;
+    const counts=(new URLSearchParams(location.search).get('remaining')||'').split(',').map(Number);
+    if(counts.length===2 && counts.every(n=>Number.isInteger(n)&&n>=0&&n<=16) && counts.some(n=>n>0))previewLists=previewLists.map((list,i)=>list.slice(0,counts[i]));
     const singleParam=new URLSearchParams(location.search).get('player');
     previewPlayer=singleParam==='0'||singleParam==='1' ? Number(singleParam) : null;
-    result=previewPlayer===null ? chooseRound(previewLists[0],previewLists[1],()=>.12) : chooseRound(previewPlayer===0?movieLists[0]:[],previewPlayer===1?movieLists[1]:[],()=>.12);
+    result=previewPlayer===null ? chooseRound(previewLists[0],previewLists[1],()=>.12) : chooseRound(previewPlayer===0?previewLists[0]:[],previewPlayer===1?previewLists[1]:[],()=>.12);
     previousWinners = new Set(excluded);
-    reels = movieLists.map((movies, i) => result[i ? 'right' : 'left'] ? buildReel(movies, result[i ? 'right' : 'left'].movie.id, i === 1, window.innerWidth) : null);
+    reels = previewLists.map((movies, i) => result[i ? 'right' : 'left'] ? buildReel(movies, result[i ? 'right' : 'left'].movie.id, i === 1, window.innerWidth) : null);
     show(previewScene);
   } else show('home');
 })();

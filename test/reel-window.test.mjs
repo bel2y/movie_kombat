@@ -17,3 +17,23 @@ test('virtual reel keeps a bounded visible window and lands on the same winner',
  }
 });
 
+
+test('one remaining film is a fixed card, never a repeated spinning strip',()=>{
+ for(const reverse of [false,true]){
+  const result=reel.buildReel([{id:4}],4,reverse,1920);
+  assert.equal(result.static,true);assert.equal(result.from,result.to);assert.equal(result.movies.length,1);
+ }
+});
+test('two to four films repeat without empty edges and land on each selected film',()=>{
+ for(const count of [2,3,4])for(const reverse of [false,true]){
+  const movies=Array.from({length:count},(_,id)=>({id}));
+  for(const selected of movies){
+   const result=reel.buildReel(movies,selected.id,reverse,1920);
+   for(let t=0;t<=1;t+=.02){
+    const window=reel.reelWindow(result,result.from+(result.to-result.from)*t,1920,240);
+    assert.ok(window.movies.every(m=>movies.includes(m)));
+   }
+   assert.equal(result.movies[result.to].id,selected.id);
+  }
+ }
+});

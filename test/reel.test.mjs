@@ -11,6 +11,7 @@ test('repeated reels cover both viewport edges throughout travel and stop on the
         for (const reverse of [false, true]) {
           const reel = buildReel(movies, selected.id, reverse, width);
           assert.equal(reel.movies[reel.to].id, selected.id);
+          if(count===1){assert.equal(reel.static,true);continue;}
           assert.equal(reel.to - reel.from, reverse ? -44 : 44);
           const halfVisible = Math.ceil(width / 105 / 2);
           assert.ok(Math.min(reel.from, reel.to) >= halfVisible);

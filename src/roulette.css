@@ -65,3 +65,7 @@
 .roulette .selection-frame:before{filter:drop-shadow(0 0 4px var(--rail-core)) drop-shadow(0 0 12px var(--rail-color))}
 .roulette .strip{backface-visibility:hidden}
 .roulette:after{animation:none}
+.roulette .fixed-reel .selection-frame,.roulette .fixed-reel .strip{display:none}
+.roulette .fixed-reel .reel-lock{animation:none;opacity:1}
+.empty-arena{position:absolute;bottom:4%;left:25%;width:50%;display:grid;gap:.7em;justify-items:center;z-index:20}
+.empty-arena p{font-size:1.5em;color:#ffe4a3}

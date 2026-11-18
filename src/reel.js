@@ -6,6 +6,7 @@ function buildReel(movies, selectedId, reverse, viewportWidth) {
   const stop = padding + travel;
   const selected = movies.findIndex(movie => movie.id === selectedId);
   if (!movies.length || selected < 0) throw new Error('Selected movie is missing');
+  if(movies.length===1)return {movies:[movies[0]],from:0,to:0,static:true};
   const strip = Array.from({ length: padding * 2 + travel + 1 }, (_, index) =>
     movies[((selected + index - stop) % movies.length + movies.length) % movies.length]);
   return {
@@ -27,6 +28,7 @@ const reelCardPool = new Map();
 function animateReels(root, reels, renderPoster) {
   const tracks = [...root.querySelectorAll('.reels section')].flatMap(section=>{
     const side=section.classList.contains('team-1')?1:0;
+    if(reels[side].static)return [];
     return [...section.querySelectorAll('.strip')].map((element,index)=>({element,side,index,last:null,
       width:element.parentElement.clientWidth, card:0}));
   });
