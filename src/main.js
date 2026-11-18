@@ -79,7 +79,7 @@
     intro: () => '<h1 class="intro-title hero-logo"></h1>',
     roulette: () => `<p class="eyebrow">MOVIE KOMBAT</p><h1>Выбираем соперников</h1><div class="reels">${reels.map((strip, i) =>
       `<section class="${i ? 'red' : ''}"><h2>${names[i]}</h2><div class="window">
-      <div class="strip">${strip.map(poster).join('')}</div><div class="selection-frame" aria-hidden="true"></div></div></section>`).join('')}</div>`,
+      <div class="strip" style="--reel-from:${-strip.from};--reel-to:${-strip.to}">${strip.movies.map(poster).join('')}</div><div class="selection-frame" aria-hidden="true"></div></div></section>`).join('')}</div>`,
     versus: duel,
     winner: duel,
     result: () => {
@@ -142,9 +142,7 @@
     previousWinners = new Set(excluded);
     reels = movieLists.map((movies, i) => {
       const finish = i ? result.right.movie : result.left.movie;
-      const startIndex = movies.findIndex(movie => movie.id === finish.id) + 1;
-      const strip = Array.from({ length: 47 }, (_, j) => j === 44 ? finish : movies[(startIndex + j) % movies.length]);
-      return i === 1 ? strip.reverse() : strip;
+      return buildReel(movies, finish.id, i === 1, window.innerWidth);
     });
     excluded.add(result[result.winner].movie.id);
     try { localStorage.setItem(excludedKey, JSON.stringify([...excluded])); } catch (error) { /* Storage is optional. */ }

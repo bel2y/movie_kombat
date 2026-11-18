@@ -597,8 +597,12 @@ kbd { background:transparent; border-color:#ffffff20; padding:3px 6px; margin-ri
 .collection .movie-poster.already-won::after { content:'Уже побеждал';position:absolute;left:0;right:0;bottom:12px;text-align:center;padding:7px 4px;background:#080b12d9;color:#d4d6db;font-size:11px;letter-spacing:.03em;z-index:2; }
 
 /* Ten-second selection with more revolutions. */
-.reels .strip { animation-duration:9.4s; }
-.reels .red .strip { animation-duration:9.95s; }
+.reels .strip { animation-name:continuous-film-travel;animation-duration:9.4s; }
+.reels .red .strip { animation-name:continuous-film-travel;animation-duration:9.95s; }
+@keyframes continuous-film-travel {
+ from { transform:translateX(calc(var(--reel-card) * var(--reel-from))); }
+ to { transform:translateX(calc(var(--reel-card) * var(--reel-to))); }
+}
 .selection-frame { animation-delay:9.4s; }
 .red .selection-frame { animation-delay:9.95s; }
 @keyframes film-travel {
