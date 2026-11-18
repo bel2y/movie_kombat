@@ -618,3 +618,9 @@ kbd { background:transparent; border-color:#ffffff20; padding:3px 6px; margin-ri
  .reels .strip,.reels .red .strip { animation-duration:.001s; }
  .selection-frame { animation:none; }
 }
+
+/* Natasha's own portrait; preserve the original image proportions. */
+.home .player.red .portrait-frame .portrait-placeholder { background-image:url('natasha.png');background-size:cover;background-position:54% center; }
+
+/* Ilya's own portrait, cropped without stretching. */
+.home .player:not(.red) .portrait-frame .portrait-placeholder { background-image:url('ilya.png');background-size:cover;background-position:50% center; }
