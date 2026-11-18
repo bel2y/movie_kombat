@@ -1,6 +1,6 @@
 .versus .duel{top:15%;height:56%;width:calc(var(--unit)*64);left:calc(50% - var(--unit)*32)}
 .versus .duel .metal-poster{height:87%}
-.versus .duel:before{content:'Исход ещё не решён';top:72%;font-size:.8em;line-height:1.5;padding:.4em 0;text-transform:uppercase}
+.versus .duel:before{content:'Сравниваем силу';top:72%;font-size:.8em;line-height:1.5;padding:.4em 0;text-transform:uppercase}
 .versus .contender-caption h2{font-size:1.2em}
 .versus .contender-caption p{display:none}
 .combat-panels{position:absolute;left:6%;right:6%;top:75%;height:18%;display:grid;grid-template-columns:1fr 1fr;gap:3%;z-index:12}
@@ -19,6 +19,8 @@
 .power-total>span{font-size:.8em}.power-step{position:absolute;right:0;opacity:0;font-size:1.45em;font-weight:500;font-variant-numeric:tabular-nums;animation:power-number 1.1s var(--delay) forwards}
 .power-step.initial{animation:power-number .6s forwards}.power-step.stage-2{animation:stat-arrive .4s var(--delay) both}
 .versus .skip{bottom:.8%;right:3%;min-width:0;font-size:.85em;padding:.1em .7em;z-index:15}
+.combat-rule{position:absolute;left:6%;bottom:1.1%;max-width:65%;font-size:.8em;color:#e5d8bb;text-align:left;z-index:12}
+.versus .continue{font-size:1em;padding:.15em .9em;color:#ffe4a3;border-color:#e5be71}
 @keyframes stat-arrive{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes power-fill{from{width:0}to{width:var(--points)}}
 @keyframes power-number{0%,99.9%{opacity:1}100%{opacity:0}}
@@ -31,6 +33,7 @@
  .stat-parts{gap:.1em}.stat-value{font-size:1.4em}.stat-value i{display:none}.stat-label{font-size:.65em;letter-spacing:0}
  .power-summary{flex-direction:column;gap:.6em;margin-top:.9em}.power-bar{width:92%;height:1em}.power-total{width:90%;font-size:1.1em}
  .versus .skip{bottom:2%;font-size:1em;min-height:36px}
+ .combat-rule{bottom:1.6%;left:4%;max-width:48%;font-size:.6em;line-height:1.3}
 }
 @media(prefers-reduced-motion:reduce){.stat-part,.power-bar span{animation:none;opacity:1}.power-step{animation:none;opacity:0}.power-step.stage-2{animation:none;opacity:1}}
 

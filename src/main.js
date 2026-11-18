@@ -96,7 +96,7 @@
   function scorePanel(side) {
     const entry=result[side];
     const score=entry.score || strength(entry.movie,entry.rank);
-    const points=[score.desire*60,score.rating*25,score.losses*15].map(n=>Math.round(n*10)/10);
+    const points=score.points || [score.desire*60,score.rating*25,score.losses*15].map(n=>Math.round(n*10)/10);
     const format=n=>Number(n.toFixed(1)).toLocaleString('ru-RU');
     let total=0;
     const labels=['Желание','Рейтинг','Надежда'];
@@ -110,7 +110,7 @@
         <div class="contender-caption"><h2>${escape(entry.movie.title)}</h2><p>${entry.movie.year} · ${escape(entry.movie.genre)}</p></div></article>`;
     };
     return `${participants()}<h1 class="scene-title">Схватка</h1>
-      <div class="duel">${card('left')}${vsMark}${card('right')}</div><div class="combat-panels">${scorePanel('left')}${scorePanel('right')}</div>`;
+      <div class="duel">${card('left')}${vsMark}${card('right')}</div><div class="combat-panels">${scorePanel('left')}${scorePanel('right')}</div><p class="combat-rule">${result.left.movie.id===result.right.movie.id ? 'Один фильм в обоих списках — полное совпадение.' : result.tied ? 'Сила равна — победителя определяет жребий.' : 'Желание + рейтинг + надежда. Побеждает большая сумма.'}</p>`;
   }
 
   function singleHome(i) {
@@ -158,7 +158,7 @@
     document.querySelector('.shell').dataset.single = single !== null && single >= 0 ? String(single) : '';
     nav.hidden = playing() || next === 'result';
     nav.querySelectorAll('button').forEach(item => item.classList.toggle('active', item.dataset.action === next));
-    main.innerHTML = views[next]() + (playing() ? button('skip', 'Пропустить <kbd>OK</kbd>', 'skip', true) : '');
+    main.innerHTML = views[next]() + (next==='versus' ? button('continue','Продолжить <kbd>OK</kbd>','skip continue',true) : playing() ? button('skip', 'Пропустить <kbd>OK</kbd>', 'skip', true) : '');
     main.querySelectorAll('.hero-logo').forEach(element => { element.append(document.querySelector('.brand-logo').cloneNode(true)); });
     const initial = main.querySelector('[data-initial]');
     if (initial) initial.focus();
@@ -223,9 +223,15 @@
     timers = [
       setTimeout(() => show('roulette'), 2000),
       setTimeout(() => { show('versus'); play([196, 233, 294]); }, 12000),
-      setTimeout(() => { show('winner'); play([262, 330, 392, 523]); }, 18500),
-      setTimeout(() => show('result'), 21500),
     ];
+  }
+
+  function continueBattle() {
+    if (scene!=='versus') return;
+    timers.forEach(clearTimeout);
+    show('winner');
+    play([262,330,392,523]);
+    timers=[setTimeout(()=>show('result'),3000)];
   }
 
   function skip() {
@@ -243,6 +249,7 @@
     if (!target) return;
     const action = target.dataset.action;
     if (action === 'start') start();
+    else if (action === 'continue') continueBattle();
     else if (action === 'watch') watchWinner();
     else if (action === 'skip' || (playing() && action === 'home')) skip();
     else if (action === 'sound') {
@@ -275,7 +282,7 @@
     }
     if (event.key === 'Enter' || event.keyCode === 13) {
       if (playing() || event.repeat) event.preventDefault();
-      if (playing() && !event.repeat) skip();
+      if (playing() && !event.repeat) { if(scene==='versus') continueBattle(); else skip(); }
       return;
     }
     const direction = arrows[event.key];
