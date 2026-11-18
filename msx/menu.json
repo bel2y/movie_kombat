@@ -5,6 +5,6 @@
   "template": { "type": "separate", "layout": "0,0,6,4" },
   "items": [
     { "title": "Lampa", "icon": "movie", "action": "link:http://lampa.mx" },
-    { "title": "Movie Kombat", "image": "https://bel2y.github.io/movie_kombat/src/logo-concept.png", "action": "link:https://bel2y.github.io/movie_kombat/" }
+    { "title": "Movie Kombat", "image": "https://bel2y.github.io/movie_kombat/src/logo-concept.png", "action": "link:window:https://bel2y.github.io/movie_kombat/" }
   ]
 }
