@@ -1,0 +1,51 @@
+.shell[data-single="0"],.shell[data-single="1"]{background-image:linear-gradient(100deg,#00162c55,#00142699),url('ui/home-atmosphere.png');--accent:#36bdff}
+.shell[data-single="1"]{background-image:linear-gradient(100deg,#27070c88,#21060944),url('ui/home-atmosphere.png');--accent:#ff5747}
+.single .reel-versus{display:none}
+.single-heading{position:absolute;top:20%;left:39%;right:4%;text-align:center}
+.single-heading h1{font-size:3.5em;color:#ffe0a0;font-weight:400;text-transform:uppercase;font-style:italic}
+.single-heading p{font-size:1.35em;color:#d9d7d0}
+.single-heading{z-index:10;top:18%}
+.single-heading p{margin-top:.3em}
+.home.single .showcase.single-static{top:43%;height:30%;gap:1em;max-width:68%}
+.home.single .single-static[data-count="3"]{height:34%;top:41%}
+.home.single .single-static[data-count="2"]{height:36%;top:40%}
+.home.single .single-static[data-count="1"]{height:31%;top:44%;background:none;border:0;box-shadow:none}
+.home.single .single-static[data-count="1"] .showcase-card{width:calc(var(--unit)*18)}
+.home.single .single-static[data-count="2"] .showcase-card{width:calc(var(--unit)*15)}
+.home.single .single-static[data-count="3"] .showcase-card{width:calc(var(--unit)*14)}
+.single-shelf{position:absolute;left:32%;right:-3%;top:43%;height:31%;transform:rotate(-3deg);overflow:hidden;background:#061420c9;border-block:2px solid #c2efff;box-shadow:0 0 5px #fff,0 0 16px var(--accent);z-index:5}
+.single-track{display:flex;width:max-content;height:100%;animation:single-shelf-scroll var(--duration) linear infinite}
+.single-group{display:flex;flex-shrink:0;height:100%;align-items:center}
+.home.single .single-shelf .showcase-card{flex:none;width:calc(var(--unit)*14);height:94%;margin-right:calc(var(--unit)*.8)}
+.single-shelf:hover .single-track{animation-play-state:paused}
+@keyframes single-shelf-scroll{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.single-track{animation:none}.single-shelf{overflow-x:auto}.single-group[aria-hidden]{display:none}}
+.single-player{position:absolute;left:0;top:13%;width:36%;height:80%;z-index:8}
+.single-player .fighter{inset:0;width:100%;height:100%}
+.single-player .fighter-art img{object-fit:cover;object-position:top;transform:scale(1.1);transform-origin:top}
+.single-player .nameplate{left:12%;width:80%;bottom:17%;font-size:3em}
+.single-count{position:absolute;bottom:12%;left:25%;font-size:1.3em;color:#ffe2a0}
+.home.single .showcase{top:40%;left:67%;height:33%;width:max-content;max-width:75%;transform:translateX(-50%) rotate(-3deg)}
+.home.single .fight{left:42%;width:50%;bottom:5%;height:14%;font-size:3em}
+.roulette.single{--reel-card:max(120px,calc(var(--unit)*17))}
+.roulette.single .reels{inset:31% -5% 23%;transform:rotate(-4deg);gap:0}
+.roulette.single .reels section{height:100%;--selection-x:60%}
+.roulette.single .participants .fighter,.roulette.single .participants .fighter.team-1{left:0;right:auto;top:19%;width:30%;height:70%}
+.roulette.single .participants .nameplate{bottom:9%;font-size:2.6em}
+.roulette.single .fighter-art img{transform:scale(1.15)}
+.result.single .winner-kicker{border-color:var(--accent);box-shadow:0 0 12px var(--accent)}
+.result.single .participants .fighter,.result.single .participants .fighter.team-1{left:0;right:auto}
+.result.single .participants .team-1 .nameplate{left:62%}
+.single .actions p{max-width:100%}
+@media(max-aspect-ratio:1/1){
+ .single-heading{top:16%;left:5%;right:5%}.single-heading h1{font-size:2.5em}.single-heading p{font-size:1.2em}
+ .home.single .showcase.single-static{top:35%;height:20%;left:55%;max-width:110%;gap:.5em}
+ .home.single .single-static[data-count="1"] .showcase-card{width:31vw}.home.single .single-static[data-count="2"] .showcase-card,.home.single .single-static[data-count="3"] .showcase-card{width:24vw}
+ .single-shelf{top:34%;height:23%;left:0;right:-5%}.home.single .single-shelf .showcase-card{width:31vw;margin-right:2vw}
+ .single-player{top:49%;left:-5%;width:65%;height:45%}.single-player .nameplate{font-size:2em;bottom:13%}.single-count{bottom:6%;font-size:1em}
+ .home.single .showcase{top:32%;height:24%;left:55%;max-width:120%}.home.single .fight{left:52%;width:44%;height:10%;bottom:10%;font-size:1.5em}
+ .roulette.single{--reel-card:42vw}.roulette.single .reels{inset:34% -10% 31%}.roulette.single .reels section{--selection-x:57%}
+ .roulette.single .participants .fighter,.roulette.single .participants .fighter.team-1{top:63%;width:45%;height:35%;left:0}
+ .roulette.single .participants .nameplate{font-size:1.5em}.roulette.single .scene-title{top:19%;font-size:1.8em}
+ .result.single .participants .team-1 .nameplate{left:15%}
+}

@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import engine from '../src/battle.js';
-const {battle, probability} = engine;
+const {battle, probability, strength, recordLoss} = engine;
 const films = Array.from({ length: 16 }, (_, i) => ({ id: i, title: String(i), year: 2000, genre: 'Drama' }));
 const other = films.map(movie => ({ ...movie, id: movie.id + 16 }));
 const draws = (...values          ) => () => {
@@ -9,9 +9,9 @@ const draws = (...values          ) => () => {
   return values.shift() ;
 };
 test('uses the specified rank weights', () => {
-  assert.equal(probability(1, 16), 16 / 17);
-  assert.equal(probability(3, 12), 14 / 19);
-  assert.equal(probability(5, 5), 0.5);
+  assert.equal(probability(0, 0), .5);
+  assert.ok(probability(1, 0) > .84 && probability(1, 0) < .85);
+  assert.ok(Math.abs(probability(.7,.2) + probability(.2,.7) - 1) < 1e-12);
 });
 test('all sixteen participants have equal selection intervals', () => {
   for (let i = 0; i < 16; i++) {
@@ -31,10 +31,10 @@ test('empty lists do not draw and short lists preserve absolute ranks', () => {
 });
 
 test('filtered lists preserve original desire ranks and matching-rank banner', () => {
-  const a = [{ ...films[0], rank: 16 }];
-  const b = [{ ...other[0], rank: 1 }];
+  const a = [{ ...films[0], rank: 16, listSize:16 }];
+  const b = [{ ...other[0], rank: 1, listSize:16 }];
   const result = battle(a, b, draws(0, 0, 0));
-  assert.equal(result.chance, 1 / 17);
+  assert.equal(result.chance, probability(.25*.65, .6+.25*.65));
   assert.equal(result.banner, 'UPSET!');
   assert.equal(result.left.rank, 16);
 });

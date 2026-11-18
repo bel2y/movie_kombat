@@ -1,0 +1,49 @@
+/* Face-off composition, with poster and player positions tied to the centre. */
+.shell[data-scene=versus]{background-image:url('ui/intro-atmosphere.png')}
+.shell[data-scene=versus]:before,.shell[data-scene=versus]:after,.versus:before{display:none}
+.shell[data-scene=versus] .brand-logo{display:none}
+.shell[data-scene=versus] .home-brand-logo{display:block;width:100%}
+.shell[data-scene=versus] header{padding:.1% 2.5%}
+.shell[data-scene=versus] .brand{width:25%;max-width:48vh}
+.shell[data-scene=versus] .brand:after{content:'К И Н О Р У Л Е Т К А';display:block;font-size:.6em;line-height:1.4;letter-spacing:.2em;margin-top:-.4em}
+.versus .scene-title{top:2.5%;right:3%;max-width:60%;font-size:1.85em;font-weight:300;letter-spacing:.12em;z-index:12}
+.versus .scene-title:after{display:none}
+.versus .duel{top:14%;left:calc(50% - var(--unit)*33);width:calc(var(--unit)*66);height:65%;grid-template-columns:1fr .52fr 1fr;gap:2%;z-index:6}
+.versus .duel article,.versus .duel article.right{transform:rotate(3deg) skewY(-6deg)}
+.versus .duel .metal-poster{height:88%;filter:drop-shadow(0 0 4px #7ee8ff) drop-shadow(0 0 10px #008cff)}
+.versus .duel .right .metal-poster{filter:drop-shadow(0 0 4px #ffb59c) drop-shadow(0 0 10px #ff3020)}
+.versus .metal-poster:before{background-image:url('ui/home-frame.png');clip-path:none}
+.versus .metal-poster>.movie-poster{inset:4% 4%;clip-path:polygon(7% 0,93% 0,100% 6%,100% 94%,93% 100%,7% 100%,0 94%,0 6%)}
+.versus .duel>.vs-mark{width:210%;height:50%;margin-left:-55%;object-fit:contain;align-self:center;filter:drop-shadow(0 2px 6px #000a)}
+.versus .duel:before{content:'ПРОТИВОСТОЯНИЕ';position:absolute;left:38%;top:10%;width:24%;font-size:1em;font-weight:300;font-style:italic;letter-spacing:.08em;line-height:2.3;border-top:1px solid #b6975b;border-bottom:1px solid #b6975b;color:#f0dcc0;transform:rotate(-4deg);text-shadow:0 2px 4px #000}
+.versus .contender-caption{padding-top:.3em}
+.versus .contender-caption h2{font-size:1.7em;font-weight:300;line-height:1.05;text-wrap:balance}
+.versus .contender-caption p{font-size:.72em;letter-spacing:.15em;margin-top:.25em}
+.versus .participants .fighter{top:17%;height:47%;width:calc(var(--unit)*23);left:calc(50% - var(--unit)*53);z-index:5}
+.versus .participants .fighter.team-1{left:auto;right:calc(50% - var(--unit)*53)}
+.versus .fighter-art{mask-image:linear-gradient(#000 50%,#000b 70%,transparent 97%);-webkit-mask-image:linear-gradient(#000 50%,#000b 70%,transparent 97%)}
+.versus .fighter-art img{transform:scale(1.55);transform-origin:50% 0}
+.versus .participants .nameplate{bottom:13%;left:0;width:91%;font-size:2.35em;transform:skew(-22deg) rotate(-7deg);border-color:#9de5ff;box-shadow:inset 0 3px 2px #b3edff,0 0 12px #009dff;background:linear-gradient(120deg,#073d60a0,#07101ded)}
+.versus .participants .team-1 .nameplate{left:9%;border-color:#ffb5a0;box-shadow:inset 0 3px 2px #ffc0ad,0 0 12px #ff3328;background:linear-gradient(120deg,#611a23a0,#190c12ed)}
+.versus .bottom-films{left:calc(50% - var(--unit)*39);width:calc(var(--unit)*61);height:16%;bottom:2%;border-top:2px solid #92e7ff;border-bottom:2px solid #ff9e86;box-shadow:0 -2px 9px #009dff,0 2px 9px #ff3026;z-index:4}
+.versus .bottom-films .showcase-card{flex:1;padding:2px;background:#050e15}
+.versus .bottom-films .showcase-card:nth-child(n+4){display:none}
+.versus .bottom-films .showcase-card:before{display:none}
+.versus .bottom-films .poster-art img{object-position:center 30%}
+.versus .skip{right:3%;bottom:7%;min-width:20%;font-size:1.6em;font-weight:300;padding:.2em .9em}
+@media(max-aspect-ratio:1/1){
+ .shell[data-scene=versus] .brand{width:49%}
+ .versus .scene-title{top:12%;left:4%;right:auto;width:92%;max-width:none;font-size:1.5em}
+ .versus .participants .fighter{top:18%;height:25%;width:32%;left:-5%}
+ .versus .participants .fighter.team-1{right:-5%}
+ .versus .participants .nameplate{font-size:1.4em;bottom:10%;left:12%}
+ .versus .participants .team-1 .nameplate{left:-3%}
+ .versus .duel{top:40%;left:4%;width:92%;height:38%;grid-template-columns:1fr .3fr 1fr;gap:1%}
+ .versus .duel .metal-poster{height:85%}
+ .versus .duel:before{top:-15%;left:20%;width:60%;font-size:1em;line-height:1.8}
+ .versus .duel>.vs-mark{width:290%;margin-left:-95%;height:40%}
+ .versus .contender-caption h2{font-size:max(14px,1.15em)}.versus .contender-caption p{font-size:max(10px,.65em);letter-spacing:.02em}
+ .versus .bottom-films{left:8%;width:60%;height:8%;bottom:4%}
+ .versus .skip{right:4%;bottom:5%;min-width:23%;font-size:1em;min-height:40px;padding:.2em .5em}
+ .shell[data-scene=versus] .sound{top:1%;right:2%}
+}

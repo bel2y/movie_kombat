@@ -1,0 +1,50 @@
+/* The viewport is the arena; 16:9 is a composition, not a page-size constraint. */
+html,body{width:100%;min-height:100%;margin:0}
+body{display:block;overflow-x:hidden}
+.shell{width:100%;height:100vh;height:100dvh;min-height:0;border:0;--unit:min(1vw,1.77778vh)}
+button{touch-action:manipulation}
+.sound{z-index:40}
+.home .fight{bottom:0}
+.home .film-count{white-space:nowrap}
+.home .showcase{--poster-width:calc(var(--unit)*10.5);left:50%;width:max-content;gap:calc(var(--unit)*.65);transform:translateX(-50%) rotate(-4.8deg)}
+.home .showcase-card{flex:0 0 var(--poster-width);width:var(--poster-width)}
+.home .showcase-card.featured{flex:0 0 calc(var(--poster-width)*1.5);width:calc(var(--poster-width)*1.5)}
+.home-player{width:calc(var(--unit)*45);left:calc(50% - var(--unit)*59)}
+.home-player.team-1{left:auto;right:calc(50% - var(--unit)*59)}
+@media(min-aspect-ratio:2/1){
+ .shell[data-scene=home] .brand{width:23%;max-width:49vh}
+ .home .showcase{top:15%;height:33%}
+ .home-player .nameplate{left:18%;width:72%}.home-player.team-1 .nameplate{left:10%}
+ .home-player .film-count{left:30%;width:47%}.home-player.team-1 .film-count{left:23%}
+ .home-versus{left:32%;width:36%}
+ .home .fight{width:72vh;left:calc(50% - 36vh)}
+}
+/* Portrait: separate header, poster shelf, players and action areas. */
+@media(max-aspect-ratio:1/1){
+ .shell{--unit:1vw;font-size:clamp(11px,2.6vw,24px);min-height:560px}
+ .shell[data-scene=home] header{height:16%;padding:1% 4%;display:block}
+ .shell[data-scene=home] .brand{display:block;width:54%;max-width:340px;margin:0 auto}
+ .shell[data-scene=home] nav{position:absolute;top:66%;left:5%;width:90%;margin:0;padding:0;gap:3%;justify-content:center;font-size:1em}
+ .shell[data-scene=home] nav button{font-size:1.1em;min-height:36px;flex:1;max-width:220px;padding:.12em .4em}
+ .shell[data-scene=home] .sound{top:3%;right:2%;font-size:10px;max-width:19%;padding:6px}
+ .home .showcase{--poster-width:20vw;top:19%;height:22%;left:50%;width:max-content;gap:1.5vw}
+ .home-player{top:36%;height:52%;width:63%;left:-16%}.home-player.team-1{right:-16%}
+ .home-player .fighter-art img{transform:scale(1.08)}
+ .home-player .nameplate{bottom:12%;font-size:2.2em;line-height:1.3}
+ .home-player .film-count{bottom:3%;font-size:1.15em;line-height:1.5}
+ .home-versus{top:54%;left:33%;width:34%;height:14%}
+ .home .fight{bottom:0;width:64%;left:18%;height:13%;font-size:3.1em}
+}
+/* Short landscape phones: keep controls readable without enlarging the artwork. */
+@media(min-aspect-ratio:1/1) and (max-height:500px){
+ .shell{font-size:clamp(10px,2.4vh,14px)}
+ .shell[data-scene=home] nav{gap:1em;margin-top:0;padding-right:4%}
+ .shell[data-scene=home] nav button{min-width:6em;min-height:30px}
+ .shell[data-scene=home] .sound{font-size:9px;padding:2px}
+ .home-player .nameplate{font-size:2.7em}.home-player .film-count{font-size:1.1em}
+ .home .fight{font-size:3.2em;min-height:44px}
+}
+@supports(padding:env(safe-area-inset-top)){
+ .shell{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+}
+@media(max-width:360px){.home-player .film-count{font-size:.9em;padding:0 .2em}}

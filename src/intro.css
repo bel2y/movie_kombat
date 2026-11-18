@@ -1,0 +1,32 @@
+/* Battle introduction: layered artwork, live fighters and accessible controls. */
+.shell[data-scene=intro]{background-image:url('ui/intro-atmosphere.png')}
+.shell[data-scene=intro]:before,.shell[data-scene=intro]:after,.intro:before{display:none}
+.intro .scene-title{top:4.5%;left:25%;right:auto;width:54%;max-width:none;font-size:1.9em;letter-spacing:.23em;white-space:nowrap;font-weight:300;z-index:10}
+.intro .scene-title:before,.intro .scene-title:after{width:2.5em;margin:0 .65em}
+.intro .intro-emblem{left:19%;top:22%;width:65%;height:58%;transform:none;z-index:8;animation:intro-impact .7s cubic-bezier(.16,.8,.2,1) both}
+.intro .intro-emblem>img:first-child{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 4px 6px #0009)}
+.intro .participants .fighter{left:-3%;top:0;width:29%;height:54%;z-index:7;animation:intro-left .6s ease-out both}
+.intro .participants .fighter.team-1{left:auto;right:-3%;top:40%;width:29%;height:49%;animation-name:intro-right}
+.intro .fighter-art{mask-image:linear-gradient(#000 45%,#000d 65%,transparent 96%);-webkit-mask-image:linear-gradient(#000 45%,#000d 65%,transparent 96%)}
+.intro .fighter-art img{object-fit:cover;object-position:center top;transform:scale(1.12);transform-origin:50% 0}
+.intro .participants .nameplate{bottom:16%;left:18%;width:74%;font-size:2.45em;line-height:1.25;font-weight:400;transform:skew(-24deg) rotate(-5deg);background:linear-gradient(120deg,#07456dbd,#05121de8 70%);border-color:#8cddff;box-shadow:inset 0 0 0 2px #075479,inset 0 3px 3px #b5edff,0 0 8px #08aaff}
+.intro .participants .team-1 .nameplate{left:-7%;bottom:10%;width:82%;border-color:#ff9f87;background:linear-gradient(120deg,#661823b8,#1b0b11e8 70%);box-shadow:inset 0 0 0 2px #6e1b20,inset 0 3px 3px #ffb7a4,0 0 8px #ff3328}
+.intro .skip{right:6%;bottom:3.5%;min-width:23%;font-size:1.7em;font-weight:300;letter-spacing:.16em;padding:.12em 1em;background:linear-gradient(135deg,#363530,#101316 35%,#101216 75%,#39322a);border-color:#ddba7c;box-shadow:inset 0 0 0 2px #191818,inset 0 -2px #81392a}
+.intro-flare{position:absolute;pointer-events:none;z-index:9;inset:0;background:radial-gradient(ellipse at 58% 38%,#fff7dcbb,transparent 35%);animation:intro-flash .85s ease-out both}
+@keyframes intro-impact{from{opacity:0;transform:scale(1.3);filter:blur(6px)}to{opacity:1;transform:scale(1);filter:blur(0)}}
+@keyframes intro-left{from{opacity:0;transform:translateX(-15%)}to{opacity:1;transform:translateX(0)}}
+@keyframes intro-right{from{opacity:0;transform:translateX(15%)}to{opacity:1;transform:translateX(0)}}
+@keyframes intro-flash{0%{opacity:0}22%{opacity:.65}100%{opacity:0}}
+@media(min-aspect-ratio:2/1){.intro .intro-emblem{left:23%;width:54%;top:19%;height:65%}.intro .participants .fighter{width:52vh}.intro .participants .fighter.team-1{width:52vh}.intro .scene-title{left:25%;width:50%}}
+@media(max-aspect-ratio:1/1){
+ .intro .scene-title{top:5%;left:5%;width:90%;font-size:1.65em;letter-spacing:.14em}
+ .intro .scene-title:before,.intro .scene-title:after{display:none}
+ .intro .participants .fighter{top:12%;left:-7%;width:58%;height:36%}
+ .intro .participants .fighter.team-1{top:57%;right:-7%;width:58%;height:35%}
+ .intro .participants .nameplate{font-size:2em;bottom:15%;width:78%;left:18%}
+ .intro .participants .team-1 .nameplate{left:-4%;bottom:12%;width:85%}
+ .intro .intro-emblem{left:3%;width:94%;top:34%;height:32%}
+ .intro .skip{right:7%;bottom:2%;min-width:55%;min-height:42px;font-size:1.55em}
+ .shell[data-scene=intro] .sound{top:1%;right:2%}
+}
+@media(prefers-reduced-motion:reduce){.intro .intro-emblem,.intro .participants .fighter{animation:none}.intro-flare{display:none}}

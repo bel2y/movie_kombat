@@ -1,0 +1,40 @@
+/* Start screen only: composition matched to the approved 16:9 arena. */
+.home-brand-logo{display:none}
+.shell[data-scene=home]{background-image:url('ui/home-atmosphere.png')}
+.shell[data-scene=home]:before,.shell[data-scene=home]:after,.home:before{display:none}
+.shell[data-scene=home] .brand-logo{display:none}
+.shell[data-scene=home] .home-brand-logo{display:block;width:100%;height:auto}
+.shell[data-scene=home] header{height:13%;padding:.2% 3.4%}
+.shell[data-scene=home] .brand{width:26%;margin-top:0}
+.shell[data-scene=home] nav{padding-right:1%;margin-top:1%;gap:1.35em}
+.shell[data-scene=home] nav button{font-size:1.14em;font-weight:300;letter-spacing:.18em;min-width:7.1em;padding:.04em 1.05em;border-color:#c1b6a5;background:linear-gradient(150deg,#343a3d,#0b1117 40%,#12191f 80%,#35383a);box-shadow:inset 0 0 0 2px #070b10,inset 0 0 0 3px #c6bba142}
+.shell[data-scene=home] nav button.active{border-color:#f5ca83;background:linear-gradient(125deg,#54412b,#161613 30%,#221c12 75%,#655035);box-shadow:inset 0 0 0 2px #322414,inset 0 -2px 7px #ffc96e80,0 3px 10px #ed9f2d70}
+.home .showcase{left:20.2%;top:15%;width:62%;height:32%;gap:1%;transform:rotate(-4.8deg);background:linear-gradient(#05111cd9,#071724a8);border-top:2px solid #b1eeff;border-bottom:2px solid #b1eeff;box-shadow:0 -3px 4px #00aaff,0 3px 4px #00aaff,0 0 20px #008eea}
+.home .showcase{border-radius:14px}
+.home .showcase-card{height:95%;clip-path:none;border-radius:12px;overflow:hidden;padding:1px;background:linear-gradient(130deg,#d8d3b9,#5f787f 45%,#cfb782);border:0;transform:none}
+.home .showcase-card .poster-art{border-radius:11px}
+.home .showcase-card.featured{height:126%;flex:1.5;clip-path:none;overflow:visible;padding:0;background:none;box-shadow:none;transform:rotate(3deg);filter:drop-shadow(0 0 5px #24bdff)}
+.home .showcase-card.featured:before{inset:0;background:url('ui/home-frame.png') center/100% 100% no-repeat;clip-path:none}
+.home .showcase-card.featured .movie-poster{position:absolute;inset:4% 4%;width:auto;height:auto;box-shadow:0 0 4px #fff,0 0 10px #00aaff;clip-path:polygon(5% 0,95% 0,100% 4%,100% 96%,95% 100%,5% 100%,0 96%,0 4%)}
+.home .showcase-card.featured>.corner{display:none}
+.home .showcase-card.featured>.tl{top:0;left:0}.home .showcase-card.featured>.tr{top:0;right:0}.home .showcase-card.featured>.bl{bottom:0;left:0}.home .showcase-card.featured>.br{bottom:0;right:0}
+.home-player{top:11%;height:90%;left:-9%;width:45%}
+.home-player.team-1{right:-9%}
+.home-player .fighter-art img{transform:scale(1.16);transform-origin:50% 0;filter:drop-shadow(-2px -1px 1px #aee6ff) drop-shadow(-5px 1px 6px #047ed3)}
+.home-player.team-1 .fighter-art img{filter:drop-shadow(2px -1px 1px #ffc6ae) drop-shadow(5px 1px 6px #d52d20)}
+.home-player .fighter-art{mask-image:linear-gradient(#000 46%,#000e 57%,#0007 76%,transparent 94%),linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask-composite:intersect;-webkit-mask-image:linear-gradient(#000 46%,#000e 57%,#0007 76%,transparent 94%),linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);-webkit-mask-composite:source-in}
+.home-player .nameplate{left:29%;bottom:26%;width:63%;font-size:3.3em;font-weight:400;line-height:1.15;letter-spacing:.075em;padding:.02em .3em .08em;border:2px solid #8bdcff;border-left:7px solid #8dd2ee;background:linear-gradient(120deg,#0c4b71b0,#06121ee8 40%,#08121aee 85%,#17577d);box-shadow:inset 0 0 0 3px #03446f,inset 0 4px 3px #91dcff,0 0 6px #00b7ff,0 0 20px #008dff70}
+.home-player.team-1 .nameplate{left:8%;border-color:#ff9d89;border-left-color:#f28575;background:linear-gradient(120deg,#6d151baf,#190c11eb 40%,#180c0eee 85%,#7a2424);box-shadow:inset 0 0 0 3px #822027,inset 0 4px 3px #ff9c85,0 0 6px #ff4533,0 0 20px #ff392570}
+.home-player .nameplate:before{width:9px;left:-22px;background:linear-gradient(110deg,#c7d6d9,#4f6b7b 35%,#e5eeea 55%,#5f8495);box-shadow:-6px 0 0 #2c657b}
+.home-player.team-1 .nameplate:before{background:linear-gradient(110deg,#e5b4a7,#6d3230 35%,#f0c7b9 55%,#8b4340);box-shadow:-6px 0 0 #842a28}
+.home-player .film-count{bottom:20.1%;left:40%;width:42%;font-size:1.25em;font-weight:300;letter-spacing:.11em;line-height:1.35;border-width:2px;background:linear-gradient(145deg,#65747a,#111c24 25%,#111820 78%,#53636a);box-shadow:inset 0 0 0 2px #13191d,0 0 8px #58b9e94d}
+.home-player.team-1 .film-count{left:17%}
+.home-versus{left:29%;top:49%;width:42%;height:30%;background:url('ui/home-vs.png') center/contain no-repeat}
+.home-versus .vs-mark{visibility:hidden}
+.home .fight{left:30%;width:40%;height:22%;bottom:-1%;font-size:3.9em;font-weight:400;letter-spacing:.13em;background-size:100% 120%;transform:skew(-5deg);text-shadow:0 2px 1px #815019,0 0 8px #d8882560}
+.home .fight:focus-visible{filter:brightness(1.08) drop-shadow(0 0 9px #ffb94c)}
+@media(max-aspect-ratio:1/1){ .shell[data-scene=home] .sound{top:7%}
+ .shell[data-scene=home] header{padding:3% 4%}.shell[data-scene=home] .brand{width:43%}.shell[data-scene=home] nav{gap:.6em;font-size:.65em;padding:0;margin-top:2%}.shell[data-scene=home] nav button{min-width:0;padding:.15em .7em}
+ .home .showcase{left:8%;top:20%;width:84%;height:20%}.home-player{top:42%;width:63%;height:52%;left:-16%}.home-player.team-1{right:-16%}.home-player .nameplate{font-size:2em;bottom:20%;left:32%;width:65%}.home-player.team-1 .nameplate{left:3%}.home-player .film-count{font-size:1em;bottom:13%;left:43%;width:44%}.home-player.team-1 .film-count{left:12%}.home-versus{top:53%;left:32%;width:36%;height:16%}.home .fight{left:22%;width:56%;height:13%;bottom:1%;font-size:2.8em}
+}
+

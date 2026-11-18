@@ -1,0 +1,42 @@
+/* Winner reveal: the winning film owns the foreground, irrespective of player. */
+.shell[data-scene=winner]{background-image:url('ui/intro-atmosphere.png')}
+.shell[data-scene=winner]:before,.shell[data-scene=winner]:after,.winner:before{display:none}
+.shell[data-scene=winner] header{height:21%;padding:0;justify-content:center}
+.shell[data-scene=winner] .brand{width:30%;max-width:60vh;margin:0 auto;transform:rotate(-5deg)}
+.shell[data-scene=winner] .brand-logo{display:none}
+.shell[data-scene=winner] .home-brand-logo{display:block;width:100%}
+.winner .participants .fighter{top:1%;height:31%;width:calc(var(--unit)*24);left:calc(50% - var(--unit)*50);z-index:4}
+.winner .participants .fighter.team-1{left:auto;right:calc(50% - var(--unit)*50)}
+.winner .fighter-art{mask-image:linear-gradient(#000 50%,#000b 75%,transparent);-webkit-mask-image:linear-gradient(#000 50%,#000b 75%,transparent)}
+.winner .fighter-art img{transform:scale(1.4);transform-origin:50% 0}
+.winner .participants .nameplate{font-size:1.85em;bottom:23%;left:57%;width:62%;transform:skew(-22deg) rotate(-5deg);box-shadow:inset 0 2px #b7eeff,0 0 12px var(--team)}
+.winner .participants .team-1 .nameplate{left:-20%}
+.winner .reveal-layout{inset:25% 6% 7% 8%;gap:4%;z-index:6;animation:winner-arrive .65s cubic-bezier(.16,.8,.2,1) both}
+.winner .reveal-layout>.metal-poster{height:100%;width:34%;transform:skew(-10deg) rotate(-5deg);filter:drop-shadow(0 0 5px #fff0b0) drop-shadow(0 0 17px #f5a02b);z-index:5}
+.winner .metal-poster.golden:before{background-image:url('ui/frame-gold.png')}
+.winner .metal-poster.golden:after{display:block;inset:0;border:0;background:radial-gradient(ellipse at 5% 28%,#fff 0, #fff7c6 1%,#ffc25b70 3%,transparent 9%),radial-gradient(ellipse at 94% 12%,#fff 0,#ffe5a6 1%,#ffa62c50 4%,transparent 10%),radial-gradient(ellipse at 45% 96%,#fff 0,#ffe9ae 1%,#ffb34060 4%,transparent 10%);pointer-events:none;z-index:7;animation:winner-glint 1.4s ease-out both}
+.winner .reveal-info{position:absolute;left:36%;top:12%;width:54%;margin:0;transform:rotate(-8deg);z-index:8}
+.winner .reveal-info h1{font-size:clamp(32px,calc(var(--unit)*6.2),160px);font-weight:500;line-height:1.08;letter-spacing:-.025em;color:#ffe3a0;background:linear-gradient(155deg,#fff6d6 8%,#e6ac42 26%,#fff0bd 40%,#c68025 62%,#ffdb86 78%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(1px 3px 0 #8d4b13) drop-shadow(0 0 8px #e79b2450);text-shadow:none}
+.winner .reveal-info .nameplate{font-size:2.1em;width:max-content;min-width:43%;padding:0 .7em;margin:.25em 0 .3em;box-shadow:inset 0 2px #fff9,0 0 12px var(--team)}
+.winner .reveal-info h2{font-size:2em;font-weight:300;line-height:1.2;max-width:75%;padding:.25em .2em;border-top:1px solid #c49a57;border-bottom:1px solid #c49a57;color:#ffe0a3;text-wrap:balance}
+.winner .reveal-info .vs-mark{width:35%;height:8em;margin:0 0 0 25%}
+.winner .defeated{right:0;bottom:2%;width:23%;height:67%;transform:skew(-10deg) rotate(-5deg);filter:grayscale(1);opacity:.42;border:0;padding:4%;z-index:3;background:url('ui/home-frame.png') center/100% 100% no-repeat}
+.winner .defeated .movie-poster{position:absolute;inset:4% 5%;width:auto;height:auto;clip-path:polygon(7% 0,93% 0,100% 6%,100% 94%,93% 100%,7% 100%,0 94%,0 6%)}
+.winner .skip{right:3%;bottom:1.5%;font-size:1em;min-width:0;padding:.15em .8em;opacity:.65;z-index:20}
+.winner .skip:focus-visible,.winner .skip:hover{opacity:1}
+@keyframes winner-arrive{from{opacity:0;transform:scale(.9) translateY(15px)}to{opacity:1;transform:none}}
+@keyframes winner-glint{from{opacity:.2}40%{opacity:1}to{opacity:.75}}
+@media(max-aspect-ratio:1/1){
+ .shell[data-scene=winner] .brand{width:55%;margin-top:1%}
+ .winner .participants .fighter{top:11%;height:25%;width:36%;left:-3%}.winner .participants .fighter.team-1{right:-3%}
+ .winner .participants .nameplate{font-size:1.2em;bottom:16%;left:15%;width:85%}.winner .participants .team-1 .nameplate{left:0}
+ .winner .reveal-layout{inset:35% 6% 7%;display:block}
+ .winner .reveal-layout>.metal-poster{width:56%;height:63%}
+ .winner .defeated{right:-1%;bottom:38%;height:45%;width:33%}
+ .winner .reveal-info{left:5%;top:64%;width:95%;transform:rotate(-5deg)}
+ .winner .reveal-info h1{font-size:3.2em}.winner .reveal-info .nameplate{font-size:1.5em;min-width:45%;margin:.2em 0}
+ .winner .reveal-info h2{font-size:1.45em;max-width:100%}.winner .reveal-info .vs-mark{position:absolute;right:0;top:-100%;width:30%;height:5em;margin:0}
+ .winner .skip{bottom:1%;font-size:1.15em;min-height:36px}
+ .shell[data-scene=winner] .sound{top:1%;right:2%}
+}
+@media(prefers-reduced-motion:reduce){.winner .reveal-layout,.winner .metal-poster.golden:after{animation:none}}

@@ -1,0 +1,261 @@
+{
+  "downloadedAt": "2026-11-18T12:15:23.555Z",
+  "posters": [
+    {
+      "title": "Троя",
+      "tmdbId": 652,
+      "page": "https://www.themoviedb.org/movie/652",
+      "image": "https://image.tmdb.org/t/p/w500/a07wLy4ONfpsjnBqMwhlWTJTcm.jpg",
+      "file": "src/posters/tmdb-652.jpg",
+      "bytes": 88413
+    },
+    {
+      "title": "1+1",
+      "tmdbId": 77338,
+      "page": "https://www.themoviedb.org/movie/77338",
+      "image": "https://image.tmdb.org/t/p/w500/1QU7HKgsQbGpzsJbJK4pAVQV9F5.jpg",
+      "file": "src/posters/tmdb-77338.jpg",
+      "bytes": 69965
+    },
+    {
+      "title": "Побег из Шоушенка",
+      "tmdbId": 278,
+      "page": "https://www.themoviedb.org/movie/278",
+      "image": "https://image.tmdb.org/t/p/w500/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg",
+      "file": "src/posters/tmdb-278.jpg",
+      "bytes": 72829
+    },
+    {
+      "title": "Мементо",
+      "tmdbId": 77,
+      "page": "https://www.themoviedb.org/movie/77",
+      "image": "https://image.tmdb.org/t/p/w500/nzlv62aC0octS5AklAiWpXLX9Z0.jpg",
+      "file": "src/posters/tmdb-77.jpg",
+      "bytes": 79118
+    },
+    {
+      "title": "Ронал-варвар",
+      "tmdbId": 79433,
+      "page": "https://www.themoviedb.org/movie/79433",
+      "image": "https://image.tmdb.org/t/p/w500/vT8m9Ji4mrUExpuIX0LGjMPHEHX.jpg",
+      "file": "src/posters/tmdb-79433.jpg",
+      "bytes": 72508
+    },
+    {
+      "title": "Хищник: Планета смерти",
+      "tmdbId": 1242898,
+      "page": "https://www.themoviedb.org/movie/1242898",
+      "image": "https://image.tmdb.org/t/p/w500/pHpq9yNUIo6aDoCXEBzjSolywgz.jpg",
+      "file": "src/posters/tmdb-1242898.jpg",
+      "bytes": 60693
+    },
+    {
+      "title": "Тёмное наследие",
+      "tmdbId": 602147,
+      "page": "https://www.themoviedb.org/movie/602147",
+      "image": "https://image.tmdb.org/t/p/w500/rEpfvgTQsc768zNND0SjMelbnLH.jpg",
+      "file": "src/posters/tmdb-602147.jpg",
+      "bytes": 92493
+    },
+    {
+      "title": "Зелёная миля",
+      "tmdbId": 497,
+      "page": "https://www.themoviedb.org/movie/497",
+      "image": "https://image.tmdb.org/t/p/w500/8VG8fDNiy50H4FedGwdSVUPoaJe.jpg",
+      "file": "src/posters/tmdb-497.jpg",
+      "bytes": 81677
+    },
+    {
+      "title": "Загадочная история Бенджамина Баттона",
+      "tmdbId": 4922,
+      "page": "https://www.themoviedb.org/movie/4922",
+      "image": "https://image.tmdb.org/t/p/w500/26wEWZYt6yJkwRVkjcbwJEFh9IS.jpg",
+      "file": "src/posters/tmdb-4922.jpg",
+      "bytes": 89801
+    },
+    {
+      "title": "Четыре Рождества",
+      "tmdbId": 12193,
+      "page": "https://www.themoviedb.org/movie/12193",
+      "image": "https://image.tmdb.org/t/p/w500/zixj44TC7rwzpxtJAG5OzFJnEqe.jpg",
+      "file": "src/posters/tmdb-12193.jpg",
+      "bytes": 40124
+    },
+    {
+      "title": "Новогодний корпоратив",
+      "tmdbId": 384682,
+      "page": "https://www.themoviedb.org/movie/384682",
+      "image": "https://image.tmdb.org/t/p/w500/7r3w3cPTbNEIr1imb8zXyeIJCJe.jpg",
+      "file": "src/posters/tmdb-384682.jpg",
+      "bytes": 121065
+    },
+    {
+      "title": "Плохой Санта",
+      "tmdbId": 10147,
+      "page": "https://www.themoviedb.org/movie/10147",
+      "image": "https://image.tmdb.org/t/p/w500/rfClLIyeHqpMofmrPY8DaLe4z9x.jpg",
+      "file": "src/posters/tmdb-10147.jpg",
+      "bytes": 115700
+    },
+    {
+      "title": "101 далматинец",
+      "tmdbId": 11674,
+      "page": "https://www.themoviedb.org/movie/11674",
+      "image": "https://image.tmdb.org/t/p/w500/8o2ADoAyG796UwTjwBFjPyBz0yG.jpg",
+      "file": "src/posters/tmdb-11674.jpg",
+      "bytes": 103813
+    },
+    {
+      "title": "Пережить Рождество",
+      "tmdbId": 15566,
+      "page": "https://www.themoviedb.org/movie/15566",
+      "image": "https://image.tmdb.org/t/p/w500/8jHtvFpCOOqp2U2qwI3L3h10cUv.jpg",
+      "file": "src/posters/tmdb-15566.jpg",
+      "bytes": 112863
+    },
+    {
+      "title": "Зверопой",
+      "tmdbId": 335797,
+      "page": "https://www.themoviedb.org/movie/335797",
+      "image": "https://image.tmdb.org/t/p/w500/rwopfpHqPCYBSgBuZwkaXXqHp14.jpg",
+      "file": "src/posters/tmdb-335797.jpg",
+      "bytes": 131093
+    },
+    {
+      "title": "Ручная кладь",
+      "tmdbId": 1005331,
+      "page": "https://www.themoviedb.org/movie/1005331",
+      "image": "https://image.tmdb.org/t/p/w500/sjMN7DRi4sGiledsmllEw5HJjPy.jpg",
+      "file": "src/posters/tmdb-1005331.jpg",
+      "bytes": 103261
+    },
+    {
+      "title": "Рождественская история",
+      "tmdbId": 17979,
+      "page": "https://www.themoviedb.org/movie/17979",
+      "image": "https://image.tmdb.org/t/p/w500/xNwlAIdx1Ln28GRiQttUP9Gojy2.jpg",
+      "file": "src/posters/tmdb-17979.jpg",
+      "bytes": 133757
+    },
+    {
+      "title": "Обещать — не значит жениться",
+      "tmdbId": 10184,
+      "page": "https://www.themoviedb.org/movie/10184",
+      "image": "https://image.tmdb.org/t/p/w500/jip2ap24Y6JxEgzVRyNqyYssnyR.jpg",
+      "file": "src/posters/tmdb-10184.jpg",
+      "bytes": 87343
+    },
+    {
+      "title": "День сурка",
+      "tmdbId": 137,
+      "page": "https://www.themoviedb.org/movie/137",
+      "image": "https://image.tmdb.org/t/p/w500/gCgt1WARPZaXnq523ySQEUKinCs.jpg",
+      "file": "src/posters/tmdb-137.jpg",
+      "bytes": 126400
+    },
+    {
+      "title": "Сладкий ноябрь",
+      "tmdbId": 1921,
+      "page": "https://www.themoviedb.org/movie/1921",
+      "image": "https://image.tmdb.org/t/p/w500/3biEHZSBSYqSkawU2sQyNbLcjgE.jpg",
+      "file": "src/posters/tmdb-1921.jpg",
+      "bytes": 97064
+    },
+    {
+      "title": "Ты у меня одна",
+      "tmdbId": 83614,
+      "page": "https://www.themoviedb.org/movie/83614",
+      "image": "https://image.tmdb.org/t/p/w500/uqJCiwLNLU56z2Zygf8o2CbXu8L.jpg",
+      "file": "src/posters/tmdb-83614.jpg",
+      "bytes": 97973
+    },
+    {
+      "title": "Крепкий орешек",
+      "tmdbId": 562,
+      "page": "https://www.themoviedb.org/movie/562",
+      "image": "https://image.tmdb.org/t/p/w500/7Bjd8kfmDSOzpmhySpEhkUyK2oH.jpg",
+      "file": "src/posters/tmdb-562.jpg",
+      "bytes": 61784
+    },
+    {
+      "title": "Джуманджи",
+      "tmdbId": 8844,
+      "page": "https://www.themoviedb.org/movie/8844",
+      "image": "https://image.tmdb.org/t/p/w500/bdHG5Mo83VPobeZZdlSz0Y7HQHB.jpg",
+      "file": "src/posters/tmdb-8844.jpg",
+      "bytes": 179237
+    },
+    {
+      "title": "Крепкий орешек 2",
+      "tmdbId": 1573,
+      "page": "https://www.themoviedb.org/movie/1573",
+      "image": "https://image.tmdb.org/t/p/w500/ybki0UWO3OPhaM6MSniuKC7sy1R.jpg",
+      "file": "src/posters/tmdb-1573.jpg",
+      "bytes": 87837
+    },
+    {
+      "title": "Обратная связь",
+      "tmdbId": 598354,
+      "page": "https://www.themoviedb.org/movie/598354",
+      "image": "https://image.tmdb.org/t/p/w500/dg1PNLUWjMk1sgbs7KIDCmf2TI.jpg",
+      "file": "src/posters/tmdb-598354.jpg",
+      "bytes": 105193
+    },
+    {
+      "title": "Пролетая над гнездом кукушки",
+      "tmdbId": 510,
+      "page": "https://www.themoviedb.org/movie/510",
+      "image": "https://image.tmdb.org/t/p/w500/kjWsMh72V6d8KRLV4EOoSJLT1H7.jpg",
+      "file": "src/posters/tmdb-510.jpg",
+      "bytes": 92921
+    },
+    {
+      "title": "Один день",
+      "tmdbId": 51828,
+      "page": "https://www.themoviedb.org/movie/51828",
+      "image": "https://image.tmdb.org/t/p/w500/n9jMwSg4IavdD8wqdYnyW5w3Mvp.jpg",
+      "file": "src/posters/tmdb-51828.jpg",
+      "bytes": 77038
+    },
+    {
+      "title": "Чего хотят женщины",
+      "tmdbId": 3981,
+      "page": "https://www.themoviedb.org/movie/3981",
+      "image": "https://image.tmdb.org/t/p/w500/eqkBEMDk1316Yx5wVoabWY07JAi.jpg",
+      "file": "src/posters/tmdb-3981.jpg",
+      "bytes": 72539
+    },
+    {
+      "title": "Анализируй это",
+      "tmdbId": 9535,
+      "page": "https://www.themoviedb.org/movie/9535",
+      "image": "https://image.tmdb.org/t/p/w500/gN8o7Ke1lUF2K8tzcLRb5bfEKbD.jpg",
+      "file": "src/posters/tmdb-9535.jpg",
+      "bytes": 96046
+    },
+    {
+      "title": "Дневник памяти",
+      "tmdbId": 11036,
+      "page": "https://www.themoviedb.org/movie/11036",
+      "image": "https://image.tmdb.org/t/p/w500/rNzQyW4f8B8cQeg7Dgj3n6eT5k9.jpg",
+      "file": "src/posters/tmdb-11036.jpg",
+      "bytes": 108069
+    },
+    {
+      "title": "Полярный экспресс",
+      "tmdbId": 5255,
+      "page": "https://www.themoviedb.org/movie/5255",
+      "image": "https://image.tmdb.org/t/p/w500/eOoCzH0MqeGr2taUZO4SwG416PF.jpg",
+      "file": "src/posters/tmdb-5255.jpg",
+      "bytes": 82588
+    },
+    {
+      "title": "Реальная любовь",
+      "tmdbId": 508,
+      "page": "https://www.themoviedb.org/movie/508",
+      "image": "https://image.tmdb.org/t/p/w500/7QPeVsr9rcFU9Gl90yg0gTOTpVv.jpg",
+      "file": "src/posters/tmdb-508.jpg",
+      "bytes": 85101
+    }
+  ]
+}

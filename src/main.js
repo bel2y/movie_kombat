@@ -4,6 +4,7 @@
   const soundButton = document.querySelector('.sound');
   const key = 'movie-kombat.history.v1';
   const names = ['Илья', 'Наташа'];
+  let playerFighters = pickFighters();
   function resultLabel(banner) {
     return ({
       'WINNER': 'Победитель',
@@ -25,14 +26,22 @@
     const saved = JSON.parse(localStorage.getItem(excludedKey) || 'null');
     if (Array.isArray(saved)) excluded = new Set(saved);
   } catch (error) { /* Preserve exclusions derived from history. */ }
+  const lossKey = 'movie-kombat.losses.v1';
+  let lossCounts = history.reduce((counts,item)=>recordLoss(counts,item),{});
+  try {
+    const saved = JSON.parse(localStorage.getItem(lossKey) || 'null');
+    if (saved && typeof saved === 'object' && !Array.isArray(saved)) lossCounts = Object.fromEntries(Object.entries(saved).filter(([,n])=>Number.isFinite(n) && n>=0).map(([id,n])=>[id,Math.min(5,n)]));
+  } catch (error) { /* Recover counters from existing history. */ }
   function availableLists() {
-    return movieLists.map(list => list.map((movie, index) => ({ ...movie, rank: index + 1 }))
+    return movieLists.map((list,side) => list.map((movie, index) => ({ ...tmdbRatings.movies[movie.id], ...movie, rank: index + 1, listSize: list.length, losses: lossCounts[(side ? 'right:' : 'left:') + movie.id] || 0 }))
       .filter(movie => !excluded.has(movie.id)));
   }
-  const canBattle = () => availableLists().every(list => list.length > 0);
+  const canBattle = () => availableLists().some(list => list.length > 0);
+  const remainingPlayer = () => { const lists=availableLists(); return lists.every(list=>list.length) ? null : lists.findIndex(list=>list.length); };
+  let previewPlayer = null;
   function battleButton(label, style) {
-    return canBattle() ? button('start', label, style, true)
-      : '<p role="status">В одном из списков закончились фильмы для битвы.</p>';
+    return canBattle() ? button('start', remainingPlayer() !== null ? 'Выбрать фильм' : label, style, true)
+      : '<p role="status">Все фильмы уже выбраны. Добавьте новые фильмы в списки.</p>';
   }
   let scene = 'home';
   let result;
@@ -42,6 +51,16 @@
   let selectedList = 0;
   let muted = false;
   let audio;
+
+  function watchWinner() {
+    if (scene !== 'result' || !result) return;
+    const movie = result[result.winner].movie;
+    const id = tmdbRatings.movies[movie.id]?.tmdbId || movie.tmdbId;
+    if (!Number.isSafeInteger(Number(id)) || Number(id) <= 0) return;
+    if (audio) audio.suspend().catch(() => {});
+    // Keep the same origin as the user's MSX Lampa tile and its saved settings.
+    location.assign('http://lampa.mx/?card=' + Number(id) + '&media=movie&source=tmdb');
+  }
 
   const playing = () => ['intro', 'roulette', 'versus', 'winner'].includes(scene);
   const escape = value => String(value).replace(/[&<>"']/g, char => ({
@@ -57,51 +76,86 @@
       </div></div>`;
   }
 
+  const metalCorners = '<i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>';
+  const vsMark = '<img class="vs-mark" src="src/ui/vs.png" alt="Против">';
+  function fighter(i, extra = '') {
+    return `<aside class="fighter team-${i} ${extra}"><div class="fighter-art"><img src="src/fighters/${playerFighters[i].image}" alt=""></div><div class="nameplate"><span>${names[i]}</span></div></aside>`;
+  }
+  const participants = () => `<div class="participants">${result?.solo && (playing() || scene === 'result') ? fighter(result.winner === 'left' ? 0 : 1) : fighter(0)+fighter(1)}</div>`;
+  function showcase() {
+    const films = [movieLists[0][0], movieLists[1][2], movieLists[0][1], movieLists[1][5], movieLists[0][2]].filter(Boolean);
+    if (scene === 'home') {
+      const extra = movieLists.flat().filter(movie => !films.some(item => item.id === movie.id));
+      films.unshift(...extra.slice(0, 1));
+      films.push(...extra.slice(1, 2));
+    }
+    const featured = Math.floor(films.length / 2);
+    return `<div class="showcase" aria-hidden="true">${films.map((movie, i) => `<div class="showcase-card ${i === featured ? 'featured' : ''}">${poster(movie)}${i === featured ? metalCorners : ''}</div>`).join('')}</div>`;
+  }
+  function scorePanel(side) {
+    const entry=result[side];
+    const score=entry.score || strength(entry.movie,entry.rank);
+    const points=[score.desire*60,score.rating*25,score.losses*15].map(n=>Math.round(n*10)/10);
+    const format=n=>Number(n.toFixed(1)).toLocaleString('ru-RU');
+    let total=0;
+    const labels=['Желание','Рейтинг','Надежда'];
+    const icons=['♨','☆','♡'];
+    return '<section class="combat-stats team-'+(side==='left'?0:1)+'" aria-label="Сила фильма '+escape(entry.movie.title)+'"><div class="stat-parts">'+points.map((n,i)=>'<div class="stat-part" style="--delay:'+(0.6+i*1.1)+'s"><span class="stat-value"><i aria-hidden="true">'+icons[i]+'</i> +'+format(n)+'</span><span class="stat-label">'+labels[i]+'</span></div>').join('')+'</div><div class="power-summary"><div class="power-bar" aria-hidden="true">'+points.map((n,i)=>'<span style="--points:'+n+'%;--delay:'+(0.6+i*1.1)+'s"></span>').join('')+'</div><div class="power-total"><span>Сила</span><b class="power-step initial">0</b>'+points.map((n,i)=>{total+=n;return '<b class="power-step stage-'+i+'" style="--delay:'+(0.6+i*1.1)+'s">'+format(total)+'</b>';}).join('')+'</div></div><span class="stats-help">'+(side==='left'?'':'')+'</span></section>';
+  }
   function duel() {
     const card = side => {
       const entry = result[side];
-      return `<article class="${side} ${result.winner === side ? 'victor' : ''}">${poster(entry.movie)}
-        <div class="contender-caption"><small>${names[side === 'left' ? 0 : 1]}</small><h2>${escape(entry.movie.title)}</h2></div></article>`;
+      return `<article class="${side}"><div class="metal-poster">${poster(entry.movie)}${metalCorners}</div>
+        <div class="contender-caption"><h2>${escape(entry.movie.title)}</h2><p>${entry.movie.year} · ${escape(entry.movie.genre)}</p></div></article>`;
     };
-    const reveal = scene === 'winner';
-    return `<h1 class="scene-title">${reveal ? resultLabel(result.banner) : 'Встречайте соперников'}</h1>
-      <div class="duel ${reveal ? 'reveal' : ''}">${card('left')}<span class="duel-vs">VS</span>${card('right')}</div>`;
+    return `${participants()}<h1 class="scene-title">Схватка</h1>
+      <div class="duel">${card('left')}${vsMark}${card('right')}</div><div class="combat-panels">${scorePanel('left')}${scorePanel('right')}</div>`;
   }
 
+  function singleHome(i) {
+    let movies=availableLists()[i];
+    const params=new URLSearchParams(location.search);
+    const count=Number(params.get('count'));
+    if (params.get('preview')==='home' && [1,2,3].includes(count)) movies=movies.slice(0,count);
+    const films=(movies.length ? movies : movieLists[i]).slice(0,5);
+    const featured=Math.floor((films.length-1)/2);
+    const noun=movies.length===1?'фильм':movies.length>=2&&movies.length<=4?'фильма':'фильмов';
+    return '<div class="single-player">'+fighter(i)+'<p class="single-count">'+movies.length+' '+noun+'</p></div><div class="single-heading"><h1>'+(movies.length===1?'Остался один фильм':'Выбираем фильм')+'</h1><p>Из списка '+(i ? 'Наташи' : 'Ильи')+'</p></div><div class="showcase single-static" data-count="'+films.length+'">'+films.map((movie,index)=>'<div class="showcase-card '+(index===featured?'featured':'')+'">'+poster(movie)+'</div>').join('')+'</div>'+button('start',movies.length===1?'Сегодня смотрим':'Выбрать фильм','fight',true);
+  }
   const views = {
-    home: () => `<div class="hero"><p class="eyebrow">АРЕНА КИНО</p><h1 class="hero-logo"></h1>
-      </div>
-      <div class="matchup">${names.map((name, i) => `
-        <section class="player ${i ? 'red' : ''}"><div class="avatar portrait-frame" aria-hidden="true"><div class="portrait-placeholder"><span class="portrait-head"></span><span class="portrait-shoulders"></span></div></div>
-          <h2>${name}</h2><p>${availableLists()[i].length} фильмов</p></section>
-        ${i ? '' : '<div class="home-vs" aria-hidden="true">VS</div>'}`).join('')}</div>
-      ${battleButton('В БОЙ!', 'fight')}`,
-    intro: () => '<h1 class="intro-title hero-logo"></h1>',
-    roulette: () => `<p class="eyebrow">MOVIE KOMBAT</p><h1>Выбираем соперников</h1><div class="reels">${reels.map((strip, i) =>
-      `<section class="${i ? 'red' : ''}"><h2>${names[i]}</h2><div class="window">
-      <div class="strip" style="--reel-from:${-strip.from};--reel-to:${-strip.to}">${strip.movies.map(poster).join('')}</div><div class="selection-frame" aria-hidden="true"></div></div></section>`).join('')}</div>`,
+    home: () => (previewPlayer ?? remainingPlayer()) !== null && (previewPlayer ?? remainingPlayer()) >= 0 ? singleHome(previewPlayer ?? remainingPlayer()) : `${showcase()}<div class="home-fighters">${names.map((name, i) => `<div class="home-player team-${i}">${fighter(i)}<p class="film-count">${availableLists()[i].length} фильмов</p></div>`).join('')}</div><div class="home-versus">${vsMark}</div>${battleButton('В БОЙ!', 'fight')}`,
+    intro: () => `${participants()}<h1 class="scene-title">Битва начинается</h1><div class="intro-emblem"><img src="src/ui/intro-emblem.png" alt="Movie Kombat — противостояние"></div><div class="intro-flare" aria-hidden="true"></div>`,
+    roulette: () => `${participants()}<h1 class="scene-title">${result.solo ? "Выбираем фильм" : "Выбираем соперников"}</h1><div class="reels">${reels.map((strip, i) => strip ?
+      `<section class="team-${i}"><div class="window"><div class="strip" style="--reel-from:${-strip.from};--reel-to:${-strip.to}">${strip.movies.map(poster).join('')}</div></div><div class="selection-frame" aria-hidden="true"><div class="focus-window"><div class="strip" style="--reel-from:${-strip.from};--reel-to:${-strip.to}">${strip.movies.map(poster).join('')}</div></div>${metalCorners}</div><div class="metal-poster reel-lock">${poster(result[i ? 'right' : 'left'].movie)}${metalCorners}</div></section>` : '').join('')}</div><div class="reel-versus"><img class="vs-mark" src="src/ui/home-vs.png" alt="Против"></div>`,
     versus: duel,
-    winner: duel,
+    winner: () => {
+      const win = result[result.winner].movie;
+      const lose = result[result.winner === 'left' ? 'right' : 'left'].movie;
+      return `${participants()}<div class="reveal-layout"><div class="metal-poster golden">${poster(win)}${metalCorners}</div><div class="reveal-info"><h1>Победитель</h1><div class="nameplate team-${result.winner === 'left' ? 0 : 1}">${names[result.winner === 'left' ? 0 : 1]}</div><h2>${escape(win.title)}</h2>${vsMark}</div><div class="defeated">${poster(lose)}</div></div>`;
+    },
     result: () => {
       const movie = result[result.winner].movie;
-      return `<article class="final-card"><div class="winner-poster">${poster(movie)}<span class="winner-seal">ПОБЕДИТЕЛЬ</span></div><div class="winner-info"><p class="eyebrow">${resultLabel(result.banner)}</p><p class="winner-kicker">Сегодня смотрим</p>
+      return `${participants()}<article class="final-card"><div class="metal-poster golden">${poster(movie)}${metalCorners}</div><div class="winner-info">${result.solo ? '' : '<p class="winner-seal">Победитель</p>'}<p class="winner-kicker">Сегодня смотрим</p>
         <h1>${escape(movie.title)}</h1><p class="subtitle">${movie.year} · ${escape(movie.genre)}</p>
-        <div class="actions">${battleButton('Реванш', 'primary')}${button('home', 'На главную')}</div></div></article>`;
+        <div class="actions">${button('watch', 'Смотреть', 'primary watch', true)}${battleButton(result.solo ? 'Ещё фильм' : 'Реванш', '')}${button('home', 'На главную')}</div></div></article>`;
     },
-    lists: () => `<h1>Списки фильмов</h1><div class="actions">${names.map((name, i) =>
+    lists: () => `${participants()}<h1 class="scene-title">Списки фильмов</h1><div class="actions list-tabs">${names.map((name, i) =>
       `<button data-action="list-${i}" ${i === selectedList ? 'data-initial' : ''} aria-pressed="${i === selectedList}">${name}</button>`).join('')}
-      </div><ol class="collection">${movieLists[selectedList].map(movie =>
-        `<li>${poster(movie)}<strong>${escape(movie.title)}</strong><small>${movie.year} · ${escape(movie.genre)}</small></li>`).join('')}</ol>`,
-    history: () => `<h1>История битв</h1>${button('home', 'На арену', '', true)}<ul class="log">${history.map(item =>
-      `<li><strong>${escape(item[item.winner].movie.title)}</strong><span>${escape(resultLabel(item.banner))}</span>
-        <time datetime="${escape(item.date)}">${escape(item.date.slice(0, 10))}</time></li>`).join('')
-      || '<li>Завершите первую битву, чтобы увидеть результат.</li>'}</ul>`,
+      </div><div class="collection-frame"><ol class="collection">${movieLists[selectedList].map(movie =>
+        `<li tabindex="0">${poster(movie)}<strong>${escape(movie.title)}</strong></li>`).join('')}</ol>${metalCorners}</div>${button('home', 'На арену', 'back-arena')}`,
+    history: () => `${participants()}<h1 class="scene-title">История битв</h1><div class="history-frame"><ul class="log">${history.map((item, i) =>
+      `<li tabindex="0">${poster(item[item.winner].movie)}<div class="history-title"><strong>${escape(item[item.winner].movie.title)}</strong>${i === 0 ? '<small>Последний выбор</small>' : ''}</div><div class="history-player"><span class="nameplate team-${item.winner === 'left' ? 0 : 1}">${names[item.winner === 'left' ? 0 : 1]}</span><time datetime="${escape(item.date)}">${escape(new Date(item.date).toLocaleDateString('ru-RU', {day:'numeric',month:'long',year:'numeric'}))}</time></div><span class="trophy" aria-label="${item.solo ? 'Выбранный фильм' : 'Победа'}">${item.solo ? '▶' : '♛'}</span></li>`).join('')
+      || '<li class="empty-history">Завершите первую битву, чтобы увидеть результат.</li>'}</ul>${metalCorners}</div>${button('home', 'На арену', 'back-arena', true)}`,
   };
 
   function show(next) {
+    if (next === 'home' && scene !== 'home') playerFighters = pickFighters();
     scene = next;
-    main.className = next;
-    nav.hidden = playing();
+    document.querySelector('.shell').dataset.scene = next;
+    const single = next === 'home' ? (previewPlayer ?? remainingPlayer()) : result?.solo && (playing() || next === 'result') ? (result.winner === 'left' ? 0 : 1) : null;
+    main.className = next + (single !== null && single >= 0 ? ' single' : '');
+    document.querySelector('.shell').dataset.single = single !== null && single >= 0 ? String(single) : '';
+    nav.hidden = playing() || next === 'result';
     nav.querySelectorAll('button').forEach(item => item.classList.toggle('active', item.dataset.action === next));
     main.innerHTML = views[next]() + (playing() ? button('skip', 'Пропустить <kbd>OK</kbd>', 'skip', true) : '');
     main.querySelectorAll('.hero-logo').forEach(element => { element.append(document.querySelector('.brand-logo').cloneNode(true)); });
@@ -135,27 +189,41 @@
   function start() {
     if (playing()) return;
     const available = availableLists();
-    const nextResult = battle(available[0], available[1]);
+    const nextResult = chooseRound(available[0], available[1]);
     if (!nextResult) { show('home'); return; }
     result = nextResult;
     if (!result) return;
     previousWinners = new Set(excluded);
     reels = movieLists.map((movies, i) => {
-      const finish = i ? result.right.movie : result.left.movie;
+      const entry=result[i ? 'right' : 'left']; if (!entry) return null; const finish=entry.movie;
       return buildReel(movies, finish.id, i === 1, window.innerWidth);
     });
     excluded.add(result[result.winner].movie.id);
     try { localStorage.setItem(excludedKey, JSON.stringify([...excluded])); } catch (error) { /* Storage is optional. */ }
+    recordLoss(lossCounts, result);
+    try { localStorage.setItem(lossKey, JSON.stringify(lossCounts)); } catch (error) { /* Storage is optional. */ }
     history.unshift(result);
     history.splice(100);
     try { localStorage.setItem(key, JSON.stringify(history)); } catch (error) { /* Storage is optional. */ }
+    if (result.solo) {
+      const remaining = available[result.winner === 'left' ? 0 : 1];
+      if (remaining.length === 1) {
+        show('result');
+        play([262,330,392,523]);
+        return;
+      }
+      show('roulette');
+      play([130,196]);
+      timers=[setTimeout(()=>{show('result');play([262,330,392,523]);},10500)];
+      return;
+    }
     show('intro');
     play([130, 196]);
     timers = [
       setTimeout(() => show('roulette'), 2000),
       setTimeout(() => { show('versus'); play([196, 233, 294]); }, 12000),
-      setTimeout(() => { show('winner'); play([262, 330, 392, 523]); }, 15000),
-      setTimeout(() => show('result'), 18000),
+      setTimeout(() => { show('winner'); play([262, 330, 392, 523]); }, 18500),
+      setTimeout(() => show('result'), 21500),
     ];
   }
 
@@ -174,6 +242,7 @@
     if (!target) return;
     const action = target.dataset.action;
     if (action === 'start') start();
+    else if (action === 'watch') watchWinner();
     else if (action === 'skip' || (playing() && action === 'home')) skip();
     else if (action === 'sound') {
       muted = !muted;
@@ -211,7 +280,7 @@
     const [x, y] = center(document.activeElement);
     let best;
     let score = Infinity;
-    document.querySelectorAll('button:not(:disabled)').forEach(item => {
+    document.querySelectorAll('button:not(:disabled), [tabindex="0"]').forEach(item => {
       if (!item.getClientRects().length) return;
       const [bx, by] = center(item);
       const forward = dx * (bx - x) + dy * (by - y);
@@ -222,5 +291,17 @@
     if (best) { event.preventDefault(); best.focus(); }
   });
 
-  show('home');
+  // Read-only scene preview for visual review; never records a battle.
+  const previewScene = new URLSearchParams(location.search).get('preview');
+  if (previewScene && Object.prototype.hasOwnProperty.call(views, previewScene)) {
+    const previewLists = canBattle() ? availableLists() : movieLists;
+    const singleParam=new URLSearchParams(location.search).get('player');
+    previewPlayer=singleParam==='0'||singleParam==='1' ? Number(singleParam) : null;
+    result=previewPlayer===null ? chooseRound(previewLists[0],previewLists[1],()=>.12) : chooseRound(previewPlayer===0?movieLists[0]:[],previewPlayer===1?movieLists[1]:[],()=>.12);
+    previousWinners = new Set(excluded);
+    reels = movieLists.map((movies, i) => result[i ? 'right' : 'left'] ? buildReel(movies, result[i ? 'right' : 'left'].movie.id, i === 1, window.innerWidth) : null);
+    show(previewScene);
+  } else show('home');
 })();
+
+

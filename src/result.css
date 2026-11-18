@@ -1,0 +1,47 @@
+/* Final selection: cinematic poster, winner crest and accessible actions. */
+.shell[data-scene=result]{background-image:url('ui/intro-atmosphere.png')}
+.shell[data-scene=result]:before,.shell[data-scene=result]:after,.result:before{display:none}
+.shell[data-scene=result] header{height:20%;padding:0;justify-content:center}
+.shell[data-scene=result] .brand{width:29%;max-width:58vh;margin:0 auto;transform:rotate(-5deg)}
+.shell[data-scene=result] .brand-logo{display:none}
+.shell[data-scene=result] .home-brand-logo{display:block;width:100%}
+.result .participants .fighter{top:0;height:29%;width:calc(var(--unit)*23);left:calc(50% - var(--unit)*50);z-index:4}
+.result .participants .fighter.team-1{left:auto;right:calc(50% - var(--unit)*50)}
+.result .fighter-art{mask-image:linear-gradient(#000 50%,#000b 75%,transparent);-webkit-mask-image:linear-gradient(#000 50%,#000b 75%,transparent)}
+.result .fighter-art img{transform:scale(1.45);transform-origin:50% 0}
+.result .participants .nameplate{font-size:1.65em;bottom:29%;left:62%;width:60%;transform:skew(-22deg) rotate(-5deg);box-shadow:inset 0 2px #fff9,0 0 12px var(--team)}
+.result .participants .team-1 .nameplate{left:-22%}
+.result .final-card{inset:23% 5% 7% 8%;grid-template-columns:37% 1fr;gap:6%;align-items:center}
+.result .final-card>.metal-poster{height:100%;width:100%;transform:skew(-9deg) rotate(-5deg);filter:drop-shadow(0 0 4px #fff0aa) drop-shadow(0 0 17px #eaa23e)}
+.result .golden:after{display:block;inset:0;border:0;z-index:7;pointer-events:none;background:radial-gradient(ellipse at 7% 30%,#fff 0,#fff6b9 1%,#ffc64f66 4%,transparent 9%),radial-gradient(ellipse at 92% 10%,#fff 0,#fff3ba 1%,#ffb34455 4%,transparent 9%),radial-gradient(ellipse at 40% 95%,#fff 0,#fff4ba 1%,#ffb34455 4%,transparent 10%)}
+.result .winner-info{align-self:center;padding-bottom:1%;z-index:8}
+.result .winner-seal{position:relative;font-size:3.15em;font-weight:500;line-height:1.2;border:0;border-bottom:2px solid #e7ae4b;padding:.3em .7em .15em;margin:0 auto .5em;background:radial-gradient(ellipse at 50% 100%,#ffad3444,transparent 65%);color:#ffe2a0;text-shadow:1px 2px #945315,0 0 15px #fba22a88}
+.result .winner-seal:before,.result .winner-seal:after{content:'❦';font-size:1.1em;color:#e7bc6a;position:absolute;bottom:.05em;margin:0;left:-.12em}
+.result .winner-seal:after{display:none}
+.result .winner-seal:before{display:none}
+.result .winner-seal{padding:.7em .7em .2em;border:0;background:url('ui/winner-crest.svg') center/100% 100% no-repeat}
+.result .winner-kicker{font-size:1.6em;line-height:1.15;padding:.15em 1.15em;margin:0 auto .6em;color:#f5f4e9;border-color:#a8e9ff;box-shadow:0 0 4px #fff,0 0 14px #00a5ff,inset 0 0 12px #008dff;background:linear-gradient(110deg,#061a2e,#071016);transform:skew(-20deg)}
+.result .winner-info h1{font-size:clamp(25px,calc(var(--unit)*4.4),110px);font-weight:400;line-height:1.12;text-wrap:balance;overflow-wrap:anywhere;background:linear-gradient(155deg,#fff9db 8%,#e7b35a 30%,#fff0ba 47%,#c18733 65%,#ffdf91 85%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(1px 2px #89501e);text-shadow:none;margin:.15em 0}
+.result .subtitle{font-size:1.35em;letter-spacing:.12em;margin:.7em 0 0;color:#e3ded5}
+.result .actions{gap:3%;margin-top:1.6em;align-items:center}
+.result .actions button{flex:1;min-width:0;min-height:52px;font-size:1.9em;font-style:italic;line-height:1.2;padding:.25em .4em;transform:skew(-18deg);border:2px solid #d9d8d2;background:linear-gradient(135deg,#747b7b,#101419 15%,#292d30 65%,#141517);box-shadow:inset 0 0 0 3px #101010,inset 0 0 0 5px #717575,0 4px 0 #090b0d;color:#fff7e4}
+.result .actions .primary{color:#211605;border-color:#ffefb5;background:linear-gradient(125deg,#ffe9a3,#c68a27 25%,#ffe3a0 50%,#d69b37 75%,#fff2bb);box-shadow:inset 0 0 0 3px #a06c23,inset 0 0 0 5px #ffe5a3,0 0 16px #ffb43866;text-shadow:none}
+.result .actions button:focus-visible{outline:3px solid white;outline-offset:6px;filter:brightness(1.2)}
+.result .actions button:hover{filter:brightness(1.15)}
+.result .actions button{font-size:1.45em}
+.result .actions .watch{flex:1.15}
+.result .actions p{font-size:.85em;max-width:50%;color:#ffe3a9}
+@media(max-aspect-ratio:1/1){
+ .shell[data-scene=result] .brand{width:53%;margin-top:1%}
+ .result .participants .fighter{top:10%;height:23%;width:33%;left:-3%}.result .participants .fighter.team-1{right:-3%}
+ .result .participants .nameplate{font-size:1.1em;bottom:17%;left:15%;width:85%}.result .participants .team-1 .nameplate{left:0}
+ .result .final-card{inset:26% 7% 4%;grid-template-columns:1fr;grid-template-rows:49% 1fr;gap:3%}
+ .result .final-card>.metal-poster{width:51%;height:100%;margin:auto;transform:skew(-6deg) rotate(-4deg)}
+ .result .winner-info{align-self:start;padding:0}
+ .result .winner-seal{font-size:1.7em;padding:.7em .7em .2em;margin-bottom:.45em}
+ .result .winner-kicker{font-size:1.1em;margin-bottom:.5em}
+ .result .winner-info h1{font-size:clamp(22px,6.5vw,40px);line-height:1.1}
+ .result .subtitle{font-size:1em;margin-top:.5em;letter-spacing:.04em}
+ .result .actions{margin-top:1em;gap:5%}.result .actions button{font-size:1.4em;min-height:44px}
+ .shell[data-scene=result] .sound{top:1%;right:2%}
+}

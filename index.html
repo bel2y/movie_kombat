@@ -4,7 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MOVIE KOMBAT</title>
-  <link rel="stylesheet" href="src/styles.css">
+  <link rel="preload" as="image" href="src/ui/intro-atmosphere.png">
+  <link rel="preload" as="image" href="src/ui/intro-emblem.png">
+  <link rel="stylesheet" href="src/arena.css">
+  <link rel="stylesheet" href="src/home.css">
+  <link rel="stylesheet" href="src/responsive.css">
+  <link rel="stylesheet" href="src/intro.css">
+  <link rel="stylesheet" href="src/roulette.css">
+  <link rel="stylesheet" href="src/versus.css">
+  <link rel="stylesheet" href="src/winner.css">
+  <link rel="stylesheet" href="src/result.css">
+  <link rel="stylesheet" href="src/single.css">
+  <link rel="stylesheet" href="src/combat.css">
   <script>
 window.addEventListener('error', function(event) {
  var status = document.getElementById('startup-status');
@@ -16,13 +27,15 @@ setTimeout(function() {
 }, 15000);
 </script><script defer src="src/battle.js"></script>
   <script defer src="src/movies.js"></script>
+  <script defer src="src/tmdb-ratings.js"></script>
   <script defer src="src/reel.js"></script>
+  <script defer src="src/fighters.js"></script>
   <script defer src="src/main.js"></script>
 </head>
 <body>
   <div class="shell">
     <header>
-      <button class="brand" data-action="home" aria-label="На главную"><img class="brand-logo" src="src/logo-concept.png" alt="Movie Kombat"></button>
+      <button class="brand" data-action="home" aria-label="На главную"><img class="brand-logo" src="src/ui/wordmark.png" alt="Movie Kombat"><img class="home-brand-logo" src="src/ui/home-wordmark.png" alt="" aria-hidden="true"></button>
       <nav aria-label="Меню">
         <button data-action="home">Арена</button><button data-action="lists">Списки</button><button data-action="history">История</button>
       </nav>

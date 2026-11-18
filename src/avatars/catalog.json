@@ -1,0 +1,52 @@
+[
+  {
+    "id": "m01",
+    "gender": "male",
+    "image": "src/avatars/m01.png"
+  },
+  {
+    "id": "m02",
+    "gender": "male",
+    "image": "src/avatars/m02.png"
+  },
+  {
+    "id": "m03",
+    "gender": "male",
+    "image": "src/avatars/m03.png"
+  },
+  {
+    "id": "m04",
+    "gender": "male",
+    "image": "src/avatars/m04.png"
+  },
+  {
+    "id": "m05",
+    "gender": "male",
+    "image": "src/avatars/m05.png"
+  },
+  {
+    "id": "f01",
+    "gender": "female",
+    "image": "src/avatars/f01.png"
+  },
+  {
+    "id": "f02",
+    "gender": "female",
+    "image": "src/avatars/f02.png"
+  },
+  {
+    "id": "f03",
+    "gender": "female",
+    "image": "src/avatars/f03.png"
+  },
+  {
+    "id": "f04",
+    "gender": "female",
+    "image": "src/avatars/f04.png"
+  },
+  {
+    "id": "f05",
+    "gender": "female",
+    "image": "src/avatars/f05.png"
+  }
+]

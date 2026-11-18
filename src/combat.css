@@ -1,0 +1,36 @@
+.versus .duel{top:15%;height:56%;width:calc(var(--unit)*64);left:calc(50% - var(--unit)*32)}
+.versus .duel .metal-poster{height:87%}
+.versus .duel:before{content:'Исход ещё не решён';top:72%;font-size:.8em;line-height:1.5;padding:.4em 0;text-transform:uppercase}
+.versus .contender-caption h2{font-size:1.2em}
+.versus .contender-caption p{display:none}
+.combat-panels{position:absolute;left:6%;right:6%;top:75%;height:18%;display:grid;grid-template-columns:1fr 1fr;gap:3%;z-index:12}
+.combat-stats{min-width:0;padding:.55em 1em;background:linear-gradient(135deg,#1d2b35f2,#080d14f5 45%,#12171bf5);border:2px solid var(--team);border-radius:7px;box-shadow:inset 0 0 0 3px #aab6c544,inset 0 0 18px #000,0 0 5px #fff9,0 0 15px var(--team);transform:skew(-7deg)}
+.stat-parts{display:grid;grid-template-columns:repeat(3,1fr);gap:.6em;text-align:center}
+.stat-part{border-right:1px solid #b69d6b88;opacity:0;animation:stat-arrive .4s var(--delay) both}
+.stat-part:last-child{border:0}
+.stat-value{display:block;font-size:2em;color:#ffe3a0;white-space:nowrap;font-variant-numeric:tabular-nums;line-height:1.15}
+.stat-value i{font-style:normal;font-size:.75em;margin-right:.1em}
+.stat-label{display:block;font-size:.9em;letter-spacing:.07em;text-transform:uppercase;color:#eee0c9}
+.power-summary{display:flex;align-items:center;gap:5%;margin-top:.5em;padding-top:.3em;border-top:1px solid #93bad844}
+.power-bar{display:flex;align-items:stretch;width:68%;height:.85em;background:#02090e;border:1px solid #a3b4bd;transform:skew(-15deg);box-shadow:inset 0 0 8px #000;overflow:hidden}
+.power-bar span{width:var(--points);flex:none;background:linear-gradient(#dcfaff,var(--team) 45%,var(--team) 75%,#fff9);box-shadow:0 0 8px var(--team);animation:power-fill .8s var(--delay) both;transform-origin:left;border-right:1px solid #fff9}
+.power-bar span:nth-child(2){filter:brightness(.85)}.power-bar span:nth-child(3){filter:brightness(1.2)}
+.power-total{position:relative;display:flex;align-items:center;width:32%;height:1.8em;text-align:left;gap:.4em;color:#ffe3a0;font-size:1.2em;text-transform:uppercase}
+.power-total>span{font-size:.8em}.power-step{position:absolute;right:0;opacity:0;font-size:1.45em;font-weight:500;font-variant-numeric:tabular-nums;animation:power-number 1.1s var(--delay) forwards}
+.power-step.initial{animation:power-number .6s forwards}.power-step.stage-2{animation:stat-arrive .4s var(--delay) both}
+.versus .skip{bottom:.8%;right:3%;min-width:0;font-size:.85em;padding:.1em .7em;z-index:15}
+@keyframes stat-arrive{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes power-fill{from{width:0}to{width:var(--points)}}
+@keyframes power-number{0%,99.9%{opacity:1}100%{opacity:0}}
+@media(max-aspect-ratio:1/1){
+ .versus .duel{top:32%;height:34%;left:6%;width:88%;grid-template-columns:1fr .3fr 1fr}
+ .versus .participants .fighter{top:16%;height:20%}
+ .versus .duel:before{display:none}.versus .contender-caption h2{font-size:1em}
+ .combat-panels{top:69%;height:21%;left:4%;right:4%;gap:4%}
+ .combat-stats{padding:.6em .35em;transform:none}
+ .stat-parts{gap:.1em}.stat-value{font-size:1.4em}.stat-value i{display:none}.stat-label{font-size:.65em;letter-spacing:0}
+ .power-summary{flex-direction:column;gap:.6em;margin-top:.9em}.power-bar{width:92%;height:1em}.power-total{width:90%;font-size:1.1em}
+ .versus .skip{bottom:2%;font-size:1em;min-height:36px}
+}
+@media(prefers-reduced-motion:reduce){.stat-part,.power-bar span{animation:none;opacity:1}.power-step{animation:none;opacity:0}.power-step.stage-2{animation:none;opacity:1}}
+
