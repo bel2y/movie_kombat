@@ -70,7 +70,7 @@
 
   const views = {
     home: () => `<div class="hero"><p class="eyebrow">АРЕНА КИНО</p><h1 class="hero-logo"></h1>
-      <p class="subtitle">Два списка. Один фильм на вечер.</p></div>
+      </div>
       <div class="matchup">${names.map((name, i) => `
         <section class="player ${i ? 'red' : ''}"><div class="avatar portrait-frame" aria-hidden="true"><div class="portrait-placeholder"><span class="portrait-head"></span><span class="portrait-shoulders"></span></div></div>
           <h2>${name}</h2><p>${availableLists()[i].length} фильмов</p></section>
