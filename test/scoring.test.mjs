@@ -4,10 +4,10 @@ import engine from '../src/battle.js';
 import fs from 'node:fs';
 import vm from 'node:vm';
 const {strength,recordLoss,battle}=engine;
-test('60/25/15 weights and vote-count shrinkage',()=>{
+test('desire and TMDB weights are preserved while hope fills remaining power',()=>{
  const s=strength({rank:1,listSize:16,voteAverage:8,voteCount:500,losses:5});
  assert.equal(s.desire,1);assert.equal(s.rating,.725);assert.equal(s.losses,1);
- assert.equal(s.total,.6+.25*.725+.15);
+ assert.deepEqual(s.points,[60,18.1,21.9]);assert.equal(s.total,1);
  assert.ok(strength({voteAverage:10,voteCount:10}).rating < strength({voteAverage:8,voteCount:10000}).rating);
 });
 test('missing ratings use prior, losses cap, original size remains stable',()=>{
@@ -29,7 +29,7 @@ test('equal ranks with unequal ratings are not labelled 50/50',()=>{
  const a=[{id:1,rank:1,listSize:16,voteAverage:9,voteCount:10000}];
  const b=[{id:2,rank:1,listSize:16,voteAverage:4,voteCount:10000}];
  const r=battle(a,b,()=>0);
- assert.equal(r.winner,'left');assert.notEqual(r.banner,'50/50');assert.equal(r.formulaVersion,3);
+ assert.equal(r.winner,'left');assert.notEqual(r.banner,'50/50');assert.equal(r.formulaVersion,4);
 });
 test('greater visible power always wins without a winner random draw',()=>{
  const high={id:1,rank:1,listSize:16,voteAverage:9,voteCount:10000};
@@ -52,4 +52,18 @@ test('rating snapshot covers every catalog entry and corrected identities',()=>{
  const ratings=vm.runInNewContext(fs.readFileSync(new URL('../src/tmdb-ratings.js',import.meta.url),'utf8')+';tmdbRatings');
  for(const movie of films){const r=ratings.movies[movie.id];assert.ok(r, movie.title);assert.ok(r.voteCount>0);assert.ok(r.voteAverage>=0&&r.voteAverage<=10);}
  assert.equal(ratings.movies[79443].tmdbId,79433);assert.equal(ratings.movies[11823].tmdbId,15566);
+});
+test('hope doubles after losses and only displays the points that fit under 100',()=>{
+ const low={rank:16,listSize:16,voteAverage:6.3,voteCount:500};
+ for(const [losses,bonus] of [[0,0],[1,5],[2,10],[3,20],[4,40],[5,80],[9,80]]){
+  const s=strength({...low,losses});assert.equal(s.points[2],bonus);assert.equal(s.power,16+bonus);
+ }
+ const capped=strength({...low,rank:12,losses:5});
+ assert.deepEqual(capped.points,[16,16,68]);assert.equal(capped.power,100);
+});
+test('capped hope remains consistent with displayed totals at all desire ranks',()=>{
+ for(let rank=1;rank<=16;rank++)for(let losses=0;losses<=6;losses++){
+  const s=strength({rank,listSize:16,losses,voteAverage:8.1,voteCount:579});
+  assert.ok(s.power<=100);assert.equal(Math.round(s.points.reduce((a,b)=>a+b,0)*10)/10,s.power);
+ }
 });

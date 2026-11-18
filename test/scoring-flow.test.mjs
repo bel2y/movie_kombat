@@ -37,7 +37,7 @@ test('live app persists loser bonus and uses it after reload',()=>{
  const storage={},lists=[[film(1),film(3)],[film(2)]];
  boot(storage,lists).start();
  let history=JSON.parse(storage['movie-kombat.history.v1']);
- assert.equal(history[0].formulaVersion,3);assert.equal(history[0].left.score.ratingAvailable,true);
+ assert.equal(history[0].formulaVersion,4);assert.equal(history[0].left.score.ratingAvailable,true);
  assert.equal(JSON.parse(storage['movie-kombat.losses.v1'])['right:2'],1);
  boot(storage,lists).start();
  history=JSON.parse(storage['movie-kombat.history.v1']);

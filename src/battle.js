@@ -1,4 +1,4 @@
-const SCORING = Object.freeze({desire: .60, rating: .25, losses: .15, priorRating: 6.5, priorVotes: 500, maxLosses: 5});
+const SCORING = Object.freeze({desire: .60, rating: .25, hope: Object.freeze([0, 5, 10, 20, 40, 80]), priorRating: 6.5, priorVotes: 500, maxLosses: 5});
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 function strength(movie, fallbackRank = 1, fallbackSize = 16) {
   const size = Math.max(1, Number(movie.listSize) || fallbackSize);
@@ -8,9 +8,13 @@ function strength(movie, fallbackRank = 1, fallbackSize = 16) {
   const votes = valid ? movie.voteCount : 0;
   const average = valid ? movie.voteAverage : SCORING.priorRating;
   const rating = (votes * average + SCORING.priorVotes * SCORING.priorRating) / (votes + SCORING.priorVotes) / 10;
-  const losses = clamp(Number(movie.losses) || 0, 0, SCORING.maxLosses) / SCORING.maxLosses;
-  const tenths = [desire*SCORING.desire, rating*SCORING.rating, losses*SCORING.losses].map(value=>Math.round(value*1000));
-  return {desire, rating, losses, ratingAvailable: valid, points:tenths.map(value=>value/10), power:tenths.reduce((sum,value)=>sum+value,0)/10, total: SCORING.desire * desire + SCORING.rating * rating + SCORING.losses * losses};
+  const lossCount = Math.floor(clamp(Number(movie.losses) || 0, 0, SCORING.maxLosses));
+  const losses = lossCount / SCORING.maxLosses;
+  const tenths = [desire*SCORING.desire, rating*SCORING.rating].map(value=>Math.round(value*1000));
+  const hope = Math.min(SCORING.hope[lossCount]*10, Math.max(0,1000-tenths[0]-tenths[1]));
+  tenths.push(hope);
+  const power = tenths.reduce((sum,value)=>sum+value,0)/10;
+  return {desire, rating, losses, ratingAvailable: valid, points:tenths.map(value=>value/10), power, total:power/100};
 }
 function recordLoss(counts, result) {
   if (!result || result.solo || !result.left || !result.right || result.left.movie.id === result.right.movie.id) return counts;
@@ -40,7 +44,7 @@ function battle(a                  , b                  , draw = random)        
   if (same) banner = 'PERFECT MATCH';
   else if (tied) banner = '50/50';
   else if (winningRank === 1) banner = 'FLAWLESS VICTORY';
-  return { formulaVersion: 3, left, right, winner, tied, banner, date: new Date().toISOString() };
+  return { formulaVersion: 4, left, right, winner, tied, banner, date: new Date().toISOString() };
 }
 function chooseRound(a, b, draw = random) {
   if (a.length && b.length) return battle(a, b, draw);
