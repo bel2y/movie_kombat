@@ -11,6 +11,7 @@
   background:var(--ink);
   color:var(--paper);
 }
+@font-face { font-family:'MK Oswald';src:url('fonts/Oswald.ttf') format('truetype');font-weight:200 700;font-display:swap; }
 * { box-sizing:border-box; }
 body { margin:0; }
 button { font:inherit; font-weight:650; color:inherit; background:#ffffff0b; border:1px solid var(--line); border-radius:8px; padding:.72rem 1rem; cursor:pointer; }
@@ -324,7 +325,7 @@ kbd { background:transparent; border-color:#ffffff20; padding:3px 6px; margin-ri
 .winner-info { animation:award-copy .7s .2s both; }
 .winner-info .eyebrow { color:#ffd99a;border-left:2px solid #ffd99a;padding-left:14px;font-size:12px;letter-spacing:.24em;margin-bottom:28px; }
 .winner-kicker { color:#b9b8b9;font-size:15px;margin-bottom:14px; }
-.final-card h1 { font-family:Impact,'Arial Narrow',sans-serif;font-size:clamp(38px,5.6vw,78px);line-height:1.02;text-transform:uppercase;letter-spacing:.005em;text-shadow:0 5px 35px #000; }
+.final-card h1 { font-family:'MK Oswald','Arial Narrow',sans-serif;font-weight:400;font-size:clamp(38px,5.6vw,78px);line-height:1.15;text-transform:uppercase;letter-spacing:.065em;text-shadow:0 5px 35px #000; }
 .final-card .subtitle { margin-top:24px;color:#c1bfbd;font-size:15px; }
 .final-card .actions { margin-top:36px;gap:12px; }
 .final-card .primary { background:linear-gradient(#ffe3ae,#e8aa60);color:#291b0e;border:1px solid #ffdfaa;border-radius:8px;box-shadow:inset 0 1px 0 #fff4db,0 4px 0 #78502e;padding:16px 30px; }
