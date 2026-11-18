@@ -9,8 +9,8 @@ function battle(a                  , b                  , draw = random)        
   if (!a.length || !b.length) return null;
   const i = Math.floor(draw() * a.length);
   const j = Math.floor(draw() * b.length);
-  const left = { movie: a[i], rank: a[i].rank ?? i + 1 };
-  const right = { movie: b[j], rank: b[j].rank ?? j + 1 };
+  const left = { movie: a[i], rank: (a[i].rank == null ? i + 1 : a[i].rank) };
+  const right = { movie: b[j], rank: (b[j].rank == null ? j + 1 : b[j].rank) };
   const same = left.movie.id === right.movie.id;
   const chance = probability(left.rank, right.rank);
   const winner = same || draw() < chance ? 'left' : 'right';

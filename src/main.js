@@ -18,13 +18,13 @@
     const saved = JSON.parse(localStorage.getItem(key) || '[]');
     if (Array.isArray(saved)) history = saved.filter(item => item && ['left', 'right'].includes(item.winner) &&
       item[item.winner] && item[item.winner].movie && typeof item.date === 'string');
-  } catch { /* Storage may be unavailable for local files. */ }
+  } catch (error) { /* Storage may be unavailable for local files. */ }
   const excludedKey = 'movie-kombat.excluded.v1';
   let excluded = new Set(history.map(item => item[item.winner].movie.id));
   try {
     const saved = JSON.parse(localStorage.getItem(excludedKey) || 'null');
     if (Array.isArray(saved)) excluded = new Set(saved);
-  } catch { /* Preserve exclusions derived from history. */ }
+  } catch (error) { /* Preserve exclusions derived from history. */ }
   function availableLists() {
     return movieLists.map(list => list.map((movie, index) => ({ ...movie, rank: index + 1 }))
       .filter(movie => !excluded.has(movie.id)));
@@ -129,7 +129,7 @@
         oscillator.start(time);
         oscillator.stop(time + .38);
       });
-    } catch { /* Sound is optional. */ }
+    } catch (error) { /* Sound is optional. */ }
   }
 
   function start() {
@@ -147,10 +147,10 @@
       return i === 1 ? strip.reverse() : strip;
     });
     excluded.add(result[result.winner].movie.id);
-    try { localStorage.setItem(excludedKey, JSON.stringify([...excluded])); } catch { /* Storage is optional. */ }
+    try { localStorage.setItem(excludedKey, JSON.stringify([...excluded])); } catch (error) { /* Storage is optional. */ }
     history.unshift(result);
     history.splice(100);
-    try { localStorage.setItem(key, JSON.stringify(history)); } catch { /* Storage is optional. */ }
+    try { localStorage.setItem(key, JSON.stringify(history)); } catch (error) { /* Storage is optional. */ }
     show('intro');
     play([130, 196]);
     timers = [
