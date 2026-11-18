@@ -1,6 +1,6 @@
 /* Start screen only: composition matched to the approved 16:9 arena. */
 .home-brand-logo{display:none}
-.shell[data-scene=home]{background-image:url('ui/home-atmosphere.png')}
+.shell[data-scene=home]{background-image:url('optimized/home-atmosphere.46b1eea28fab.webp')}
 .shell[data-scene=home]:before,.shell[data-scene=home]:after,.home:before{display:none}
 .shell[data-scene=home] .brand-logo{display:none}
 .shell[data-scene=home] .home-brand-logo{display:block;width:100%;height:auto}
@@ -14,7 +14,7 @@
 .home .showcase-card{height:95%;clip-path:none;border-radius:12px;overflow:hidden;padding:1px;background:linear-gradient(130deg,#d8d3b9,#5f787f 45%,#cfb782);border:0;transform:none}
 .home .showcase-card .poster-art{border-radius:11px}
 .home .showcase-card.featured{height:126%;flex:1.5;clip-path:none;overflow:visible;padding:0;background:none;box-shadow:none;transform:rotate(3deg);filter:drop-shadow(0 0 5px #24bdff)}
-.home .showcase-card.featured:before{inset:0;background:url('ui/home-frame.png') center/100% 100% no-repeat;clip-path:none}
+.home .showcase-card.featured:before{inset:0;background:url('optimized/home-frame.ee06386d4997.webp') center/100% 100% no-repeat;clip-path:none}
 .home .showcase-card.featured .movie-poster{position:absolute;inset:4% 4%;width:auto;height:auto;box-shadow:0 0 4px #fff,0 0 10px #00aaff;clip-path:polygon(5% 0,95% 0,100% 4%,100% 96%,95% 100%,5% 100%,0 96%,0 4%)}
 .home .showcase-card.featured>.corner{display:none}
 .home .showcase-card.featured>.tl{top:0;left:0}.home .showcase-card.featured>.tr{top:0;right:0}.home .showcase-card.featured>.bl{bottom:0;left:0}.home .showcase-card.featured>.br{bottom:0;right:0}
@@ -29,7 +29,7 @@
 .home-player.team-1 .nameplate:before{background:linear-gradient(110deg,#e5b4a7,#6d3230 35%,#f0c7b9 55%,#8b4340);box-shadow:-6px 0 0 #842a28}
 .home-player .film-count{bottom:20.1%;left:40%;width:42%;font-size:1.25em;font-weight:300;letter-spacing:.11em;line-height:1.35;border-width:2px;background:linear-gradient(145deg,#65747a,#111c24 25%,#111820 78%,#53636a);box-shadow:inset 0 0 0 2px #13191d,0 0 8px #58b9e94d}
 .home-player.team-1 .film-count{left:17%}
-.home-versus{left:29%;top:49%;width:42%;height:30%;background:url('ui/home-vs.png') center/contain no-repeat}
+.home-versus{left:29%;top:49%;width:42%;height:30%;background:url('optimized/home-vs.2b654653a8c6.webp') center/contain no-repeat}
 .home-versus .vs-mark{visibility:hidden}
 .home .fight{left:30%;width:40%;height:22%;bottom:-1%;font-size:3.9em;font-weight:400;letter-spacing:.13em;background-size:100% 120%;transform:skew(-5deg);text-shadow:0 2px 1px #815019,0 0 8px #d8882560}
 .home .fight:focus-visible{filter:brightness(1.08) drop-shadow(0 0 9px #ffb94c)}

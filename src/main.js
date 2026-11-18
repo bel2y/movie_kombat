@@ -77,7 +77,7 @@
   }
 
   const metalCorners = '<i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>';
-  const vsMark = '<img class="vs-mark" src="src/ui/vs.png" alt="Против">';
+  const vsMark = '<img class="vs-mark" src="src/optimized/vs.5d2f7d658415.webp" alt="Против">';
   function fighter(i, extra = '') {
     return `<aside class="fighter team-${i} ${extra}"><div class="fighter-art"><img src="src/fighters/${playerFighters[i].image}" alt=""></div><div class="nameplate"><span>${names[i]}</span></div></aside>`;
   }
@@ -124,9 +124,9 @@
   }
   const views = {
     home: () => (previewPlayer ?? remainingPlayer()) !== null && (previewPlayer ?? remainingPlayer()) >= 0 ? singleHome(previewPlayer ?? remainingPlayer()) : `${showcase()}<div class="home-fighters">${names.map((name, i) => `<div class="home-player team-${i}">${fighter(i)}<p class="film-count">${availableLists()[i].length} фильмов</p></div>`).join('')}</div><div class="home-versus">${vsMark}</div>${battleButton('В БОЙ!', 'fight')}`,
-    intro: () => `${participants()}<h1 class="scene-title">Битва начинается</h1><div class="intro-emblem"><img src="src/ui/intro-emblem.png" alt="Movie Kombat — противостояние"></div><div class="intro-flare" aria-hidden="true"></div>`,
+    intro: () => `${participants()}<h1 class="scene-title">Битва начинается</h1><div class="intro-emblem"><img src="src/optimized/intro-emblem.d5ee62f67913.webp" alt="Movie Kombat — противостояние"></div><div class="intro-flare" aria-hidden="true"></div>`,
     roulette: () => `${participants()}<h1 class="scene-title">${result.solo ? "Выбираем фильм" : "Выбираем соперников"}</h1><div class="reels">${reels.map((strip, i) => strip ?
-      `<section class="team-${i}"><div class="window"><div class="strip" style="--reel-from:${-strip.from};--reel-to:${-strip.to}">${strip.movies.map(poster).join('')}</div></div><div class="selection-frame" aria-hidden="true"><div class="focus-window"><div class="strip" style="--reel-from:${-strip.from};--reel-to:${-strip.to}">${strip.movies.map(poster).join('')}</div></div>${metalCorners}</div><div class="metal-poster reel-lock">${poster(result[i ? 'right' : 'left'].movie)}${metalCorners}</div></section>` : '').join('')}</div><div class="reel-versus"><img class="vs-mark" src="src/ui/home-vs.png" alt="Против"></div>`,
+      `<section class="team-${i}"><div class="window"><div class="strip" style="--reel-from:${-strip.from};--reel-to:${-strip.to}">${strip.movies.map(poster).join('')}</div></div><div class="selection-frame" aria-hidden="true"><div class="focus-window"><div class="strip" style="--reel-from:${-strip.from};--reel-to:${-strip.to}">${strip.movies.map(poster).join('')}</div></div>${metalCorners}</div><div class="metal-poster reel-lock">${poster(result[i ? 'right' : 'left'].movie)}${metalCorners}</div></section>` : '').join('')}</div><div class="reel-versus"><img class="vs-mark" src="src/optimized/home-vs.2b654653a8c6.webp" alt="Против"></div>`,
     versus: duel,
     winner: () => {
       const win = result[result.winner].movie;

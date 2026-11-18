@@ -1,0 +1,392 @@
+[
+  {
+    "source": "src/ui/button-gold.png",
+    "file": "src/optimized/button-gold.41a5f50d38cc.webp",
+    "before": 2088091,
+    "after": 314612
+  },
+  {
+    "source": "src/ui/frame-gold.png",
+    "file": "src/optimized/frame-gold.202ac7528e3b.webp",
+    "before": 1825135,
+    "after": 195206
+  },
+  {
+    "source": "src/ui/frame-silver.png",
+    "file": "src/optimized/frame-silver.32af3df7f5dc.webp",
+    "before": 1326052,
+    "after": 92240
+  },
+  {
+    "source": "src/ui/home-atmosphere.png",
+    "file": "src/optimized/home-atmosphere.46b1eea28fab.webp",
+    "before": 2174113,
+    "after": 178162
+  },
+  {
+    "source": "src/ui/home-frame.png",
+    "file": "src/optimized/home-frame.ee06386d4997.webp",
+    "before": 574264,
+    "after": 145046
+  },
+  {
+    "source": "src/ui/home-vs.png",
+    "file": "src/optimized/home-vs.2b654653a8c6.webp",
+    "before": 970424,
+    "after": 211762
+  },
+  {
+    "source": "src/ui/home-wordmark.png",
+    "file": "src/optimized/home-wordmark.d8e5f47e383c.webp",
+    "before": 2007486,
+    "after": 305052
+  },
+  {
+    "source": "src/ui/intro-atmosphere.png",
+    "file": "src/optimized/intro-atmosphere.4786e2a6de0e.webp",
+    "before": 1943547,
+    "after": 151216
+  },
+  {
+    "source": "src/ui/intro-emblem.png",
+    "file": "src/optimized/intro-emblem.d5ee62f67913.webp",
+    "before": 1699608,
+    "after": 304816
+  },
+  {
+    "source": "src/ui/roulette-atmosphere.png",
+    "file": "src/optimized/roulette-atmosphere.cc64a87030ae.webp",
+    "before": 1951968,
+    "after": 80616
+  },
+  {
+    "source": "src/ui/smoke.png",
+    "file": "src/optimized/smoke.96c91c4b3732.webp",
+    "before": 1694717,
+    "after": 74824
+  },
+  {
+    "source": "src/ui/vs.png",
+    "file": "src/optimized/vs.5d2f7d658415.webp",
+    "before": 1388571,
+    "after": 234520
+  },
+  {
+    "source": "src/ui/wordmark.png",
+    "file": "src/optimized/wordmark.302eb939002a.webp",
+    "before": 2091547,
+    "after": 366186
+  },
+  {
+    "source": "src/fighters/02-cyborg.png",
+    "file": "src/optimized/02-cyborg.5165b0a393f4.webp",
+    "before": 1936782,
+    "after": 260750
+  },
+  {
+    "source": "src/fighters/03-pirate.png",
+    "file": "src/optimized/03-pirate.d816a6162b08.webp",
+    "before": 2204378,
+    "after": 334912
+  },
+  {
+    "source": "src/fighters/04-assassin.png",
+    "file": "src/optimized/04-assassin.0e0cf7c0d683.webp",
+    "before": 1766394,
+    "after": 162450
+  },
+  {
+    "source": "src/fighters/05-explorer.png",
+    "file": "src/optimized/05-explorer.b18e1e952bd0.webp",
+    "before": 2363097,
+    "after": 354804
+  },
+  {
+    "source": "src/fighters/06-time.png",
+    "file": "src/optimized/06-time.778df4b82496.webp",
+    "before": 2304965,
+    "after": 351178
+  },
+  {
+    "source": "src/fighters/07-ghost.png",
+    "file": "src/optimized/07-ghost.ade37b3915eb.webp",
+    "before": 2479963,
+    "after": 388826
+  },
+  {
+    "source": "src/fighters/08-pilot.png",
+    "file": "src/optimized/08-pilot.c9bf1a10b1a2.webp",
+    "before": 2059908,
+    "after": 288824
+  },
+  {
+    "source": "src/fighters/09-gladiator.png",
+    "file": "src/optimized/09-gladiator.cd7bcac3f594.webp",
+    "before": 2565957,
+    "after": 364440
+  },
+  {
+    "source": "src/fighters/10-agent.png",
+    "file": "src/optimized/10-agent.c33a86a38381.webp",
+    "before": 1643884,
+    "after": 152086
+  },
+  {
+    "source": "src/fighters/11-witch.png",
+    "file": "src/optimized/11-witch.2b267fc45354.webp",
+    "before": 2233433,
+    "after": 363384
+  },
+  {
+    "source": "src/fighters/12-hacker.png",
+    "file": "src/optimized/12-hacker.b6c7912e0f3d.webp",
+    "before": 1940803,
+    "after": 236536
+  },
+  {
+    "source": "src/fighters/13-yellow.png",
+    "file": "src/optimized/13-yellow.b10371e4b649.webp",
+    "before": 2566670,
+    "after": 286122
+  },
+  {
+    "source": "src/fighters/14-orange.png",
+    "file": "src/optimized/14-orange.c4f94bd497f8.webp",
+    "before": 1966694,
+    "after": 315050
+  },
+  {
+    "source": "src/fighters/15-adventurer.png",
+    "file": "src/optimized/15-adventurer.193dba4ad4fc.webp",
+    "before": 1736714,
+    "after": 263966
+  },
+  {
+    "source": "src/fighters/16-princess.png",
+    "file": "src/optimized/16-princess.4a099b6c9634.webp",
+    "before": 2257449,
+    "after": 282394
+  },
+  {
+    "source": "src/fighters/17-cat.png",
+    "file": "src/optimized/17-cat.189ce4650ead.webp",
+    "before": 2244657,
+    "after": 203704
+  },
+  {
+    "source": "src/fighters/18-harlequin.png",
+    "file": "src/optimized/18-harlequin.77ebfb308072.webp",
+    "before": 2156450,
+    "after": 329836
+  },
+  {
+    "source": "src/fighters/19-desert.png",
+    "file": "src/optimized/19-desert.612342275160.webp",
+    "before": 2766026,
+    "after": 372382
+  },
+  {
+    "source": "src/fighters/20-vampire.png",
+    "file": "src/optimized/20-vampire.3ba562accaa2.webp",
+    "before": 2348133,
+    "after": 218766
+  },
+  {
+    "source": "src/fighters/21-vampire-hunter.png",
+    "file": "src/optimized/21-vampire-hunter.4d1063cf34b6.webp",
+    "before": 2104298,
+    "after": 246612
+  },
+  {
+    "source": "src/posters/tmdb-1005331.jpg",
+    "file": "src/optimized/tmdb-1005331.4ec362775248.webp",
+    "before": 103261,
+    "after": 85260
+  },
+  {
+    "source": "src/posters/tmdb-10147.jpg",
+    "file": "src/optimized/tmdb-10147.88abc5534bdf.webp",
+    "before": 115700,
+    "after": 90126
+  },
+  {
+    "source": "src/posters/tmdb-10184.jpg",
+    "file": "src/optimized/tmdb-10184.00cfdacd0903.webp",
+    "before": 87343,
+    "after": 68154
+  },
+  {
+    "source": "src/posters/tmdb-11036.jpg",
+    "file": "src/optimized/tmdb-11036.41a3ceb0df25.webp",
+    "before": 108069,
+    "after": 89492
+  },
+  {
+    "source": "src/posters/tmdb-11674.jpg",
+    "file": "src/optimized/tmdb-11674.e8785712444e.webp",
+    "before": 103813,
+    "after": 72494
+  },
+  {
+    "source": "src/posters/tmdb-12193.jpg",
+    "file": "src/optimized/tmdb-12193.2936fa15d740.webp",
+    "before": 40124,
+    "after": 26634
+  },
+  {
+    "source": "src/posters/tmdb-1242898.jpg",
+    "file": "src/optimized/tmdb-1242898.178c3ab694ed.webp",
+    "before": 60693,
+    "after": 44388
+  },
+  {
+    "source": "src/posters/tmdb-137.jpg",
+    "file": "src/optimized/tmdb-137.0b2048742889.webp",
+    "before": 126400,
+    "after": 92192
+  },
+  {
+    "source": "src/posters/tmdb-15566.jpg",
+    "file": "src/optimized/tmdb-15566.ccfcccc375f2.webp",
+    "before": 112863,
+    "after": 88478
+  },
+  {
+    "source": "src/posters/tmdb-1573.jpg",
+    "file": "src/optimized/tmdb-1573.5b359cca6fc5.webp",
+    "before": 87837,
+    "after": 88474
+  },
+  {
+    "source": "src/posters/tmdb-17979.jpg",
+    "file": "src/optimized/tmdb-17979.10caa9daa56a.webp",
+    "before": 133757,
+    "after": 105814
+  },
+  {
+    "source": "src/posters/tmdb-1921.jpg",
+    "file": "src/optimized/tmdb-1921.5c12db43b3ad.webp",
+    "before": 97064,
+    "after": 72122
+  },
+  {
+    "source": "src/posters/tmdb-278.jpg",
+    "file": "src/optimized/tmdb-278.91b625b6efef.webp",
+    "before": 72829,
+    "after": 59650
+  },
+  {
+    "source": "src/posters/tmdb-335797.jpg",
+    "file": "src/optimized/tmdb-335797.3d0ec0424e09.webp",
+    "before": 131093,
+    "after": 94900
+  },
+  {
+    "source": "src/posters/tmdb-384682.jpg",
+    "file": "src/optimized/tmdb-384682.08259b1638cb.webp",
+    "before": 121065,
+    "after": 90042
+  },
+  {
+    "source": "src/posters/tmdb-3981.jpg",
+    "file": "src/optimized/tmdb-3981.42e8bfb2a9b2.webp",
+    "before": 72539,
+    "after": 56596
+  },
+  {
+    "source": "src/posters/tmdb-4922.jpg",
+    "file": "src/optimized/tmdb-4922.32ab5cf23785.webp",
+    "before": 89801,
+    "after": 71732
+  },
+  {
+    "source": "src/posters/tmdb-497.jpg",
+    "file": "src/optimized/tmdb-497.d8112c5b208e.webp",
+    "before": 81677,
+    "after": 53442
+  },
+  {
+    "source": "src/posters/tmdb-508.jpg",
+    "file": "src/optimized/tmdb-508.071bf164105c.webp",
+    "before": 85101,
+    "after": 64336
+  },
+  {
+    "source": "src/posters/tmdb-510.jpg",
+    "file": "src/optimized/tmdb-510.897f6418b9ec.webp",
+    "before": 92921,
+    "after": 70908
+  },
+  {
+    "source": "src/posters/tmdb-51828.jpg",
+    "file": "src/optimized/tmdb-51828.13ab5d7f2e37.webp",
+    "before": 77038,
+    "after": 49754
+  },
+  {
+    "source": "src/posters/tmdb-5255.jpg",
+    "file": "src/optimized/tmdb-5255.7165685970b4.webp",
+    "before": 82588,
+    "after": 66388
+  },
+  {
+    "source": "src/posters/tmdb-562.jpg",
+    "file": "src/optimized/tmdb-562.398327139953.webp",
+    "before": 61784,
+    "after": 52530
+  },
+  {
+    "source": "src/posters/tmdb-598354.jpg",
+    "file": "src/optimized/tmdb-598354.8f7bea232aae.webp",
+    "before": 105193,
+    "after": 83452
+  },
+  {
+    "source": "src/posters/tmdb-602147.jpg",
+    "file": "src/optimized/tmdb-602147.d30ac2bb99bf.webp",
+    "before": 92493,
+    "after": 72900
+  },
+  {
+    "source": "src/posters/tmdb-652.jpg",
+    "file": "src/optimized/tmdb-652.df757bf4d345.webp",
+    "before": 88413,
+    "after": 62302
+  },
+  {
+    "source": "src/posters/tmdb-77.jpg",
+    "file": "src/optimized/tmdb-77.afeee06148b1.webp",
+    "before": 79118,
+    "after": 54882
+  },
+  {
+    "source": "src/posters/tmdb-77338.jpg",
+    "file": "src/optimized/tmdb-77338.f92ca61446c7.webp",
+    "before": 69965,
+    "after": 56564
+  },
+  {
+    "source": "src/posters/tmdb-79433.jpg",
+    "file": "src/optimized/tmdb-79433.d92e17c4ae8b.webp",
+    "before": 72508,
+    "after": 54728
+  },
+  {
+    "source": "src/posters/tmdb-83614.jpg",
+    "file": "src/optimized/tmdb-83614.631c9e93201d.webp",
+    "before": 97973,
+    "after": 76900
+  },
+  {
+    "source": "src/posters/tmdb-8844.jpg",
+    "file": "src/optimized/tmdb-8844.d9d54f972c4d.webp",
+    "before": 179237,
+    "after": 145508
+  },
+  {
+    "source": "src/posters/tmdb-9535.jpg",
+    "file": "src/optimized/tmdb-9535.e1d8d8b65a1a.webp",
+    "before": 96046,
+    "after": 67484
+  }
+]

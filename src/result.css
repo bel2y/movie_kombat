@@ -1,5 +1,5 @@
 /* Final selection: cinematic poster, winner crest and accessible actions. */
-.shell[data-scene=result]{background-image:url('ui/intro-atmosphere.png')}
+.shell[data-scene=result]{background-image:url('optimized/intro-atmosphere.4786e2a6de0e.webp')}
 .shell[data-scene=result]:before,.shell[data-scene=result]:after,.result:before{display:none}
 .shell[data-scene=result] header{height:20%;padding:0;justify-content:center}
 .shell[data-scene=result] .brand{width:29%;max-width:58vh;margin:0 auto;transform:rotate(-5deg)}

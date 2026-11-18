@@ -1,5 +1,5 @@
 /* Battle introduction: layered artwork, live fighters and accessible controls. */
-.shell[data-scene=intro]{background-image:url('ui/intro-atmosphere.png')}
+.shell[data-scene=intro]{background-image:url('optimized/intro-atmosphere.4786e2a6de0e.webp')}
 .shell[data-scene=intro]:before,.shell[data-scene=intro]:after,.intro:before{display:none}
 .intro .scene-title{top:4.5%;left:25%;right:auto;width:54%;max-width:none;font-size:1.9em;letter-spacing:.23em;white-space:nowrap;font-weight:300;z-index:10}
 .intro .scene-title:before,.intro .scene-title:after{width:2.5em;margin:0 .65em}
