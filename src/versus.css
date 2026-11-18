@@ -1,5 +1,5 @@
 /* Face-off composition, with poster and player positions tied to the centre. */
-.shell[data-scene=versus]{background-image:url('optimized/intro-atmosphere.4786e2a6de0e.webp')}
+.shell[data-scene=versus]{background-image:var(--mk-art-intro-atmosphere,url('optimized/intro-atmosphere.4786e2a6de0e.webp'))}
 .shell[data-scene=versus]:before,.shell[data-scene=versus]:after,.versus:before{display:none}
 .shell[data-scene=versus] .brand-logo{display:none}
 .shell[data-scene=versus] .home-brand-logo{display:block;width:100%}
@@ -12,7 +12,7 @@
 .versus .duel article,.versus .duel article.right{transform:rotate(3deg) skewY(-6deg)}
 .versus .duel .metal-poster{height:88%;filter:drop-shadow(0 0 4px #7ee8ff) drop-shadow(0 0 10px #008cff)}
 .versus .duel .right .metal-poster{filter:drop-shadow(0 0 4px #ffb59c) drop-shadow(0 0 10px #ff3020)}
-.versus .metal-poster:before{background-image:url('optimized/home-frame.ee06386d4997.webp');clip-path:none}
+.versus .metal-poster:before{background-image:var(--mk-art-home-frame,url('optimized/home-frame.ee06386d4997.webp'));clip-path:none}
 .versus .metal-poster>.movie-poster{inset:4% 4%;clip-path:polygon(7% 0,93% 0,100% 6%,100% 94%,93% 100%,7% 100%,0 94%,0 6%)}
 .versus .duel>.vs-mark{width:210%;height:50%;margin-left:-55%;object-fit:contain;align-self:center;filter:drop-shadow(0 2px 6px #000a)}
 .versus .duel:before{content:'ПРОТИВОСТОЯНИЕ';position:absolute;left:38%;top:10%;width:24%;font-size:1em;font-weight:300;font-style:italic;letter-spacing:.08em;line-height:2.3;border-top:1px solid #b6975b;border-bottom:1px solid #b6975b;color:#f0dcc0;transform:rotate(-4deg);text-shadow:0 2px 4px #000}

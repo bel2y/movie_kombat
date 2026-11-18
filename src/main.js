@@ -1,4 +1,5 @@
-(() => {
+(async () => {
+  if (window.MovieKombatAssets) await window.MovieKombatAssets.ready;
   const main = document.querySelector('main');
   const nav = document.querySelector('nav');
   const soundButton = document.querySelector('.sound');
@@ -67,13 +68,15 @@
   const escape = value => String(value).replace(/[&<>"']/g, char => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
   })[char]);
+  const artUrl = value => window.MovieKombatAssets?.url(value) || value;
   const button = (action, title, className = '', initial = false) =>
     `<button class="${className}" data-action="${action}" ${initial ? 'data-initial' : ''}>${title}</button>`;
 
   function poster(movie) {
+    const image = movieLists.flat().find(item=>item.id===movie.id)?.poster || movie.poster;
     const unavailable = scene === 'roulette' ? previousWinners.has(movie.id) : scene === 'lists' && excluded.has(movie.id);
     return `<div class="movie-poster${unavailable ? ' already-won' : ''}"${unavailable ? ' title="Уже побеждал — не участвует в выборе"' : ''}><div class="poster-art" style="--hue:${String(movie.id).split('').reduce((sum, char) => sum + char.charCodeAt(0), 0) % 360}">
-      <span>${escape(movie.title)}</span>${movie.poster ? `<img src="${escape(movie.poster)}" alt="">` : ''}
+      <span>${escape(movie.title)}</span>${image ? `<img src="${escape(artUrl(image))}" alt="">` : ''}
       </div></div>`;
   }
 
@@ -146,7 +149,9 @@
         `<li tabindex="0">${poster(movie)}<strong>${escape(movie.title)}</strong></li>`).join('')}</ol>${metalCorners}</div>${button('home', 'На арену', 'back-arena')}`,
     history: () => `${participants()}<h1 class="scene-title">История битв</h1><div class="history-frame"><ul class="log">${history.map((item, i) =>
       `<li tabindex="0">${poster(item[item.winner].movie)}<div class="history-title"><strong>${escape(item[item.winner].movie.title)}</strong>${i === 0 ? '<small>Последний выбор</small>' : ''}</div><div class="history-player"><span class="nameplate team-${item.winner === 'left' ? 0 : 1}">${names[item.winner === 'left' ? 0 : 1]}</span><time datetime="${escape(item.date)}">${escape(new Date(item.date).toLocaleDateString('ru-RU', {day:'numeric',month:'long',year:'numeric'}))}</time></div><span class="trophy" aria-label="${item.solo ? 'Выбранный фильм' : 'Победа'}">${item.solo ? '▶' : '♛'}</span></li>`).join('')
-      || '<li class="empty-history">Завершите первую битву, чтобы увидеть результат.</li>'}</ul>${metalCorners}</div>${button('home', 'На арену', 'back-arena', true)}`,
+      || '<li class="empty-history">Завершите первую битву, чтобы увидеть результат.</li>'}</ul>${metalCorners}</div><div class="history-tools">${button('reset','Сбросить битвы')}${button('assets','Графика')}</div>${button('home', 'На арену', 'back-arena', true)}`,
+    reset: () => `<section class="utility"><h1>Сбросить все битвы?</h1><p>История очистится. Все фильмы снова будут участвовать в выборе, а бонусы за поражения обнулятся. Списки фильмов и сохранённая графика останутся.</p><div class="actions">${button('history','Отмена','',true)}${button('reset-confirm','Сбросить')}</div></section>`,
+    assets: () => `<section class="utility"><h1>Графика на устройстве</h1><p>Один раз скачай постеры, персонажей и оформление. Сохранённые файлы будут загружаться из памяти этого устройства.</p><p class="asset-status" role="status"></p><progress class="asset-progress" max="65" value="0"></progress><div class="actions">${button('download-art','Скачать графику','primary',true)}${button('history','Назад')}</div></section>`,
   };
 
   function show(next) {
@@ -156,12 +161,32 @@
     const single = next === 'home' ? (previewPlayer ?? remainingPlayer()) : result?.solo && (playing() || next === 'result') ? (result.winner === 'left' ? 0 : 1) : null;
     main.className = next + (single !== null && single >= 0 ? ' single' : '');
     document.querySelector('.shell').dataset.single = single !== null && single >= 0 ? String(single) : '';
-    nav.hidden = playing() || next === 'result';
+    nav.hidden = playing() || ['result','reset','assets'].includes(next);
     nav.querySelectorAll('button').forEach(item => item.classList.toggle('active', item.dataset.action === next));
     main.innerHTML = views[next]() + (next==='versus' ? button('continue','Продолжить <kbd>OK</kbd>','skip continue',true) : playing() ? button('skip', 'Пропустить <kbd>OK</kbd>', 'skip', true) : '');
     main.querySelectorAll('.hero-logo').forEach(element => { element.append(document.querySelector('.brand-logo').cloneNode(true)); });
+    if(window.MovieKombatAssets)document.querySelectorAll('img').forEach(img=>{const url=artUrl(img.getAttribute('src'));if(url!==img.getAttribute('src'))img.src=url;});
+    updateAssetStatus();
     const initial = main.querySelector('[data-initial]');
     if (initial) initial.focus();
+  }
+
+  function updateAssetStatus() {
+    const label=main.querySelector('.asset-status');if(!label)return;
+    const state=window.MovieKombatAssets?.status();
+    if(!state){label.textContent='Хранилище изображений недоступно.';return;}
+    label.textContent=(state.busy ? `Загрузка: ${state.done} из ${state.total}. ` : '')+`Сохранено: ${state.saved} из ${state.total}.`+(state.failed ? ` Не загрузилось: ${state.failed}. Нажми «Скачать графику», чтобы повторить.` : '')+(['blocked','full'].includes(state.storage) ? '\nУстройство не разрешило сохранить все файлы. Загруженные изображения доступны только до закрытия игры.' : '');
+    const progress=main.querySelector('.asset-progress');if(progress){progress.max=state.total;progress.value=state.busy?state.done:state.saved;}
+    const download=main.querySelector('[data-action="download-art"]');if(download)download.disabled=state.busy;
+  }
+  if(window.addEventListener)window.addEventListener('mk-assets',updateAssetStatus);
+
+  function resetBattles() {
+    if(scene!=='reset')return;
+    timers.forEach(clearTimeout);timers=[];
+    history=[];excluded=new Set();previousWinners=new Set();lossCounts={};result=null;reels=null;
+    try { [key,excludedKey,lossKey].forEach(name=>localStorage.removeItem(name)); } catch (_) { /* Storage may be disabled. */ }
+    show('home');
   }
 
   function play(notes) {
@@ -242,13 +267,18 @@
   }
 
   main.addEventListener('error', event => {
-    if (event.target.tagName === 'IMG') event.target.hidden = true;
+    if (event.target.tagName === 'IMG') {
+      const img=event.target;img.hidden=true;
+      if(window.MovieKombatAssets&&!img.dataset.retried){img.dataset.retried='1';window.MovieKombatAssets.ensure(img.src).then(url=>{img.src=url;img.hidden=false;}).catch(()=>{});}
+    }
   }, true);
   document.addEventListener('click', event => {
     const target = event.target.closest('button[data-action]');
     if (!target) return;
     const action = target.dataset.action;
     if (action === 'start') start();
+    else if (action === 'reset-confirm') resetBattles();
+    else if (action === 'download-art') { window.MovieKombatAssets?.downloadAll(); }
     else if (action === 'continue') continueBattle();
     else if (action === 'watch') watchWinner();
     else if (action === 'skip' || (playing() && action === 'home')) skip();

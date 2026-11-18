@@ -1,5 +1,5 @@
 /* Two opposing endless film tracks. Selection anchors also position the strip. */
-.shell[data-scene=roulette]{background-image:url('optimized/roulette-atmosphere.cc64a87030ae.webp')}
+.shell[data-scene=roulette]{background-image:var(--mk-art-roulette-atmosphere,url('optimized/roulette-atmosphere.cc64a87030ae.webp'))}
 .shell[data-scene=roulette]:before,.shell[data-scene=roulette]:after,.roulette:before{display:none}
 .shell[data-scene=roulette] .brand-logo{display:none}
 .shell[data-scene=roulette] .home-brand-logo{display:block;width:100%}
@@ -21,7 +21,7 @@
 .roulette .focus-window{position:absolute;left:50%;top:50%;width:var(--reel-card);height:80%;transform:translate(-50%,-50%) scale(1.15);overflow:hidden;background:#071018;clip-path:polygon(7% 0,93% 0,100% 6%,100% 94%,93% 100%,7% 100%,0 94%,0 6%)}
 .roulette .focus-window .strip{margin-left:0}
 .roulette .focus-window .strip .movie-poster{padding:0;opacity:1}
-.roulette .selection-frame:before,.roulette .reel-lock:before{background-image:url('optimized/home-frame.ee06386d4997.webp');clip-path:none}
+.roulette .selection-frame:before,.roulette .reel-lock:before{background-image:var(--mk-art-home-frame,url('optimized/home-frame.ee06386d4997.webp'));clip-path:none}
 .roulette .selection-frame:after{content:'';position:absolute;inset:40% -5%;background:var(--team);clip-path:polygon(0 50%,6% 35%,6% 65%,0 50%,100% 50%,94% 35%,94% 65%,100% 50%);filter:drop-shadow(0 0 5px var(--team))}
 .roulette .reel-lock{left:var(--selection-x);width:calc(var(--reel-card)*1.24);height:136%;top:-18%}
 .roulette .reel-lock>.movie-poster{inset:4% 4%;clip-path:polygon(7% 0,93% 0,100% 6%,100% 94%,93% 100%,7% 100%,0 94%,0 6%)}
