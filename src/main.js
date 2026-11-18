@@ -58,6 +58,7 @@
     const id = tmdbRatings.movies[movie.id]?.tmdbId || movie.tmdbId;
     if (!Number.isSafeInteger(Number(id)) || Number(id) <= 0) return;
     if (audio) audio.suspend().catch(() => {});
+    if (window.MovieKombatHost?.watch(Number(id))) return;
     // Keep the same origin as the user's MSX Lampa tile and its saved settings.
     location.assign('http://lampa.mx/?card=' + Number(id) + '&media=movie&source=tmdb');
   }
@@ -262,8 +263,11 @@
   }
 
   document.addEventListener('keydown', event => {
-    if (['Escape', 'Backspace', 'BrowserBack'].includes(event.key) || event.keyCode === 461) {
-      if (scene === 'home') return;
+    if (['Escape', 'Backspace', 'BrowserBack'].includes(event.key) || event.keyCode === 461 || event.keyCode === 10009) {
+      if (scene === 'home') {
+        if (window.MovieKombatHost?.close()) event.preventDefault();
+        return;
+      }
       event.preventDefault();
       if (playing()) skip();
       else show('home');

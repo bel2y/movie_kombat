@@ -10,7 +10,7 @@ const server = http.createServer((req, res) => {
   if (!name || name.endsWith('/')) name += 'index.html';
   const file = path.resolve(root, name);
   const relative = path.relative(root, file);
-  const allowed = name === 'index.html' || name === 'sw.js' || /^(src|design|msx)\//.test(name);
+  const allowed = name === 'index.html' || name === 'sw.js' || /^(src|design|msx|plugins)\//.test(name);
   if (!allowed || relative.startsWith('..') || path.isAbsolute(relative) || /(^|[\\/])\./.test(relative)) {
     res.writeHead(404).end(); return;
   }
