@@ -1,0 +1,33 @@
+/* Approved layout 17: two independent banks of tilted cinema cards. */
+.shared-roster{position:absolute;left:2.5%;right:2.5%;top:59%;bottom:2%;z-index:6;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:7%;transition:transform .75s ease-in,opacity .65s}
+.roster-team{min-width:0;min-height:0;display:grid;grid-template-rows:repeat(2,minmax(0,1fr));gap:5%;position:relative}
+.roster-team:after{content:'';position:absolute;left:4%;right:0;bottom:-3%;height:2px;background:linear-gradient(90deg,transparent,var(--team),transparent);opacity:.65;pointer-events:none}
+.roster-row{display:grid;grid-template-columns:repeat(var(--columns),minmax(0,1fr));gap:1.2%;min-height:0;align-items:end}
+.roster-row:nth-child(2){transform:translateX(2%);align-items:start}
+.grid-arena .shared-roster .film-tile{position:relative;justify-self:center;width:100%;height:auto;aspect-ratio:2/3;max-height:100%;min-height:0;border:1px solid #8c939b80;border-radius:0;outline:0;background:#080d12;transform:skew(-9deg);box-shadow:3px 6px 4px #0009;padding:0 0 10%;overflow:visible}
+.grid-arena .shared-roster .movie-poster,.grid-arena .shared-roster .poster-art{border-radius:0;overflow:hidden;width:100%;height:100%}
+.grid-arena .shared-roster .poster-art img{object-fit:cover}
+.tile-plinth{position:absolute;left:-1px;right:-1px;bottom:-1px;height:10%;background:linear-gradient(166deg,#19232b 0 40%,#04080d 44%);border-bottom:2px solid #020409;pointer-events:none}
+.tile-plinth:after{content:'';position:absolute;right:6%;bottom:12%;height:3px;width:22%;background:var(--team);transform:rotate(-39deg);box-shadow:0 0 3px var(--team)}
+.target-corners{display:none;position:absolute;inset:-2px;border:2px solid var(--team);pointer-events:none}
+.grid-arena .shared-roster .film-tile.is-running,.grid-arena .shared-roster .film-tile.is-selected{outline:2px solid var(--team);box-shadow:0 0 9px var(--team),3px 6px 4px #0009;z-index:3}
+.is-running .target-corners,.is-selected .target-corners{display:block}
+.shared-roster .film-tile.is-selected:before{display:none}
+.selection-done .shared-roster{transform:translateY(110vh);opacity:0}
+@media(min-aspect-ratio:1/1){
+ .grid-arena .billboard,.grid-arena .billboard.team-1{top:13%;height:43%}
+ .grid-arena .arena-vs{top:19%;height:24%}
+ .grid-arena .arena-action{top:43%;height:11%}
+}
+@media(max-aspect-ratio:1/1){
+ .shared-roster{top:57%;bottom:2%;left:5%;right:5%;gap:8%;overflow:auto}
+ .roster-row{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 12%;align-content:start}
+ .roster-team{display:flex;flex-direction:column;gap:12px}
+ .grid-arena .shared-roster .film-tile{max-height:none}
+}
+@media(prefers-reduced-motion:reduce){.shared-roster{transition:none}}/* One neutral mixed bank; player colours appear only during selection. */
+.shared-roster{grid-template-columns:repeat(var(--columns),minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:12px 10px;align-items:center}
+.shared-roster .tile-plinth:after{background:#7c858c;box-shadow:none}
+.shared-roster .is-running .tile-plinth:after,.shared-roster .is-selected .tile-plinth:after{background:var(--team);box-shadow:0 0 3px var(--team)}
+.grid-arena .shared-roster .film-tile{max-width:12vh}
+@media(max-aspect-ratio:1/1){.shared-roster{grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:max-content;gap:12px 8px;align-content:start}.grid-arena .shared-roster .film-tile{max-width:none}}

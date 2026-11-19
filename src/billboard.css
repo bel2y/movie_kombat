@@ -1,0 +1,107 @@
+/* Static billboard arena: two raster backgrounds; all motion is limited to selectors/panels. */
+.shell[data-scene=home],.shell[data-scene=roulette],.shell[data-scene=versus]{background-image:var(--mk-art-home-atmosphere,url('optimized/home-atmosphere.46b1eea28fab.webp'))}
+.grid-arena:before,.grid-arena:after{display:none}
+.shell[data-scene=roulette] .brand:after{display:none}
+.shell[data-scene=roulette] header,.shell[data-scene=home] header{height:12%;padding:.3% 3.4%}
+.shell[data-scene=roulette] .brand,.shell[data-scene=home] .brand{width:25%;max-width:48vh}
+.billboard-stage{position:absolute;inset:0;isolation:isolate}
+.billboard-stage:before{content:'';position:absolute;left:-2%;top:52%;width:104%;height:2px;transform:rotate(-3deg);background:linear-gradient(90deg,#53ceff,#e7faff 45%,#ff5b4d);box-shadow:0 -3px 6px #009dff,0 4px 7px #ff3624;z-index:1}
+.billboard{position:absolute;left:2.5%;top:12%;width:35%;height:43%;z-index:5;text-align:center}
+.billboard.team-1{left:auto;right:2%;top:47%;height:44%}
+.billboard-art{position:absolute;inset:0 0 19%;overflow:hidden;clip-path:polygon(9% 3%,100% 0,91% 96%,0 100%);background:linear-gradient(125deg,#091a26b0,#07121acc 65%,#18384855)}
+.team-1 .billboard-art{background:linear-gradient(125deg,#250c14aa,#170c13cc 65%,#58212355)}
+.billboard-art:after{content:'';position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 45px #02060a; background:linear-gradient(transparent 60%,#03080ed9);border-top:2px solid var(--team);border-bottom:2px solid var(--team)}
+.billboard-art .poster-art{background:transparent}.billboard-art .poster-art img{object-fit:cover;object-position:50% 30%}
+.billboard-art .poster-art span{font-size:1.2em;max-width:80%}
+.mystery{display:grid;place-items:center;height:100%;font:italic 10em/1 'Oswald',sans-serif;color:#eadbc1;text-shadow:2px 3px 0 #4b4740,0 0 25px #d6bd8d55}
+.metal-shard{position:absolute;z-index:6;pointer-events:none;display:block;width:49%;height:28%;background:repeating-linear-gradient(135deg,#dbe1e3 0px,#7f8992 2px,#c5ccd1 3px,#727b86 4px,#e7edf0 6px);filter:drop-shadow(0 2px 2px #000)}
+.shard-top{top:-2%;left:0;clip-path:polygon(0 100%,20% 15%,100% 0,29% 33%)}
+.shard-bottom{right:0;bottom:17%;clip-path:polygon(0 100%,77% 63%,100% 0,84% 87%)}
+.billboard-name{position:absolute;left:3%;right:3%;bottom:0;min-height:20%;display:flex;align-items:center;justify-content:center;padding:.08em .55em;font-size:clamp(18px,2.7vw,54px);line-height:1.03;letter-spacing:.045em;font-style:italic;text-transform:uppercase;overflow-wrap:anywhere;background:linear-gradient(125deg,#12405cec,#050e17f5 65%,#0b243cee);border:2px solid var(--team);box-shadow:inset 0 2px 1px #e0f7ff,0 0 7px var(--team);transform:skew(-14deg)}
+.team-1 .billboard-name{background:linear-gradient(125deg,#59181ee8,#18090ff5 65%,#300e17ee)}
+.film-rack{position:absolute;left:38.5%;right:2.7%;top:13.5%;height:33%;z-index:2;padding:.8% 1%;background:linear-gradient(135deg,#06141bed,#05090ff0);border-top:3px solid #a9eaff;border-bottom:2px solid #a9eaff;box-shadow:0 -2px 5px var(--team),0 3px 7px var(--team);transition:transform .75s ease-in,opacity .65s}
+.film-rack:before,.film-rack:after{content:'';position:absolute;width:5%;height:18%;background:linear-gradient(145deg,#e0e6e8,#505c68 50%,#c4cdd2);pointer-events:none;z-index:2;clip-path:polygon(0 0,100% 0,28% 28%,0 100%)}
+.film-rack:before{left:-1%;top:-4%}.film-rack:after{right:-1%;bottom:-4%;transform:rotate(180deg)}
+.film-rack.team-1{left:3%;right:38.5%;top:58%;height:31%;border-color:#ffa08a;background:linear-gradient(135deg,#1e0b13ed,#08080df0)}
+.rack-meta{position:absolute;top:-1.7em;right:1%;font-size:.65em;text-transform:uppercase;letter-spacing:.12em;color:#9fbdcc}.rack-meta span{margin-left:1em;color:#f3deba}.team-1 .rack-meta{right:auto;left:1%;color:#d49b94}
+.film-grid{display:grid;grid-template-columns:repeat(var(--columns),minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:7px;height:100%;width:100%}
+.film-tile{min-width:0;min-height:0;position:relative;outline:1px solid #77828a80;border-radius:4px;background:#061018}
+.film-tile .movie-poster,.film-tile .poster-art{border-radius:4px}.film-tile .poster-art span{font-size:.65em;padding:4%}
+.film-tile .poster-art img{object-fit:cover}
+.film-tile.is-watched .poster-art{filter:grayscale(1) brightness(.42)}
+.film-tile.is-watched:after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top right,transparent calc(50% - 1px),#bbc2c7b0 50%,transparent calc(50% + 1px)),linear-gradient(to bottom right,transparent calc(50% - 1px),#bbc2c7b0 50%,transparent calc(50% + 1px))}
+.film-tile.is-running{outline:3px solid #ddfaff;box-shadow:0 0 0 5px var(--team),0 0 15px var(--team);z-index:3}
+.film-tile.is-selected{outline-color:#fff5cc}.film-tile.is-selected:before{content:'✓';position:absolute;right:0;top:0;background:var(--team);color:#fff;z-index:2;font:700 16px sans-serif;padding:1px 4px}
+.arena-vs{position:absolute;top:45%;left:43%;width:14%;height:14%;z-index:8}.arena-vs .vs-mark{filter:none}
+.arena-action{position:absolute;bottom:1.5%;left:37%;width:26%;height:8%;z-index:9;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.arena-action p{font-size:1.1em;letter-spacing:.12em;color:#ffe1a0;text-transform:uppercase}.arena-action button{font-size:1.25em}.arena-action .grid-fight{width:100%;height:100%;background:var(--mk-art-button-gold,url('optimized/button-gold.41a5f50d38cc.webp')) center/100% 100% no-repeat,linear-gradient(130deg,#211b12,#090d11);border:2px solid #e7b35e;clip-path:polygon(7% 0,93% 0,100% 50%,93% 100%,7% 100%,0 50%);transform:none;color:#ffe4a2;font-size:2.3em;line-height:1;padding:0;letter-spacing:.1em;box-shadow:inset 0 0 10px #e1aa4a}
+.grid-arena>.skip{display:none}.selection-done .film-rack{transform:translateY(110vh);opacity:0}.selection-done .arena-action{opacity:0}
+/* The comparison keeps the new billboards and existing score animation. */
+.versus .billboard{top:17%;left:7%;width:32%;height:51%}.versus .billboard.team-1{left:auto;right:7%;top:17%;height:51%}.versus .billboard-art .poster-art img{object-fit:contain}.versus .billboard-name{font-size:1.8em}.versus .arena-vs{top:33%;left:42%;width:16%;height:23%}.versus .arena-action,.versus .billboard-stage:before{display:none}.versus .combat-panels{top:72%;height:20%}
+.fighter-art{display:none}.participants .fighter{pointer-events:none}
+@media(min-aspect-ratio:21/9){.billboard-stage{max-width:210vh;left:50%;transform:translateX(-50%);width:100%}.billboard-name{font-size:4vh}}
+@media(max-aspect-ratio:1/1){
+ .shell[data-scene=home],.shell[data-scene=roulette]{height:100dvh;min-height:760px}.grid-arena{overflow:visible}
+ .shell[data-scene=home] header,.shell[data-scene=roulette] header{height:10%;padding:2% 4%}.shell[data-scene=home] .brand,.shell[data-scene=roulette] .brand{width:44%;max-width:none}
+ .shell[data-scene=home] nav{margin-top:12%;font-size:.8em;position:absolute;right:4%;gap:.5em}.shell[data-scene=home] nav button{min-width:0;padding:.2em .7em}
+ .billboard{left:3%;top:15%;width:33%;height:30%}.billboard.team-1{right:3%;top:54%;width:33%;height:30%}
+ .billboard-name{font-size:clamp(16px,4vw,22px);padding:.2em .3em;min-height:22%;letter-spacing:0}.mystery{font-size:5.5em}
+ .film-rack{left:40%;right:4%;top:15%;height:31%;padding:1.5%}.film-rack.team-1{left:4%;right:40%;top:54%;height:31%;padding:1.5%}
+ .film-grid{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr));gap:4px}
+ .rack-meta{font-size:.7em;top:-2em}.rack-meta span{margin-left:.5em}
+ .arena-vs{top:45%;left:39%;width:22%;height:10%}.arena-action{left:25%;width:50%;bottom:4%;height:7%}
+ .versus .billboard{left:5%;top:20%;width:40%;height:40%}.versus .billboard.team-1{right:5%;top:20%;width:40%;height:40%}.versus .arena-vs{top:30%;left:43%;width:14%;height:12%}.versus .billboard-name{font-size:1.3em}.versus .combat-panels{top:65%;height:24%}
+}
+@media(prefers-reduced-motion:reduce){.film-rack{transition:none}}
+
+.billboard-art.is-empty{background:none;clip-path:none}.billboard-art.is-empty:after{box-shadow:none;border:none;background:linear-gradient(90deg,transparent,var(--team),transparent) top/80% 2px no-repeat,linear-gradient(90deg,transparent,var(--team),transparent) bottom/65% 2px no-repeat}
+.film-grid{max-width:calc(var(--columns)*13vh);margin:auto}
+
+.billboard-name{z-index:7}.billboard-name.long-name{font-size:clamp(18px,2.3vw,44px)}
+@media(max-aspect-ratio:1/1){.grid-arena .billboard:not(.team-1){top:18%;height:27%}.film-rack:not(.team-1){top:18%;height:28%}.billboard-name.long-name{font-size:clamp(12px,3.4vw,18px);line-height:1.08}.rack-meta{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+
+/* Symmetric billboards, with two stationary film strips underneath. */
+.billboard .metal-shard{display:none}
+.billboard:after{content:'';position:absolute;inset:-2% -3% 18%;background:url('ui/billboard-blades.png') center/100% 100% no-repeat;pointer-events:none;z-index:6}
+.billboard.team-1:after{filter:hue-rotate(175deg) saturate(1.25)}
+.billboard-art{clip-path:polygon(14% 4%,100% 0,90% 93%,0 100%);border-radius:0;transform:skew(-3deg)}
+.billboard-art:after{border:0;box-shadow:none;background:linear-gradient(transparent 63%,#03080eaa 92%,#03080e),linear-gradient(105deg,transparent 8%,var(--team) 8.4%,#fff 8.5%,transparent 8.9%,transparent 94%,var(--team) 94.4%,transparent 95%)}
+.billboard-name{border:2px solid #ddf6ff;box-shadow:inset 0 0 0 3px var(--team),inset 0 0 20px var(--shade),0 0 4px #fff,0 0 12px var(--team);font-weight:500}
+.billboard-name:before{content:'';position:absolute;left:-12px;top:-3px;bottom:-3px;width:6px;background:linear-gradient(#e9f4fa,#657c87 48%,#e7f1f5);box-shadow:-5px 0 0 var(--team)}
+.grid-arena .billboard-stage:before{display:none}
+.grid-arena .billboard{left:7%;top:14%;width:28%;height:51%}
+.grid-arena .billboard.team-1{left:auto;right:7%;top:14%;height:51%}
+.grid-arena .arena-vs{left:37%;top:23%;width:26%;height:25%}
+.grid-arena .arena-action{left:36%;width:28%;top:48%;bottom:auto;height:13%}
+.grid-arena .arena-action .grid-fight{font-size:2.9em;background-size:100% 100%;border:0;box-shadow:none;filter:drop-shadow(0 0 5px #e6a02788)}
+.grid-arena .film-rack{left:2%;right:2%;top:68%;height:14%;padding:.45% .6% .45% 8.5%;border-radius:12px}
+.grid-arena .film-rack.team-1{left:2%;right:2%;top:84%;height:14%;padding:.45% 8.5% .45% .6%}
+.grid-arena .film-grid{grid-template-columns:repeat(var(--columns),minmax(0,1fr));grid-template-rows:minmax(0,1fr);gap:6px;max-width:calc(var(--columns)*9.5vh)}
+.grid-arena .rack-meta{top:0;bottom:0;left:.3%;right:auto;width:7.7%;max-width:none;display:flex;flex-direction:column;justify-content:center;text-align:center;white-space:normal;overflow-wrap:anywhere;font-size:clamp(9px,.85vw,18px);line-height:1.1;font-style:italic;letter-spacing:.02em;color:#e8f5fc}
+.grid-arena .rack-meta span{margin:.5em 0 0;font-size:.65em}
+.grid-arena .team-1 .rack-meta{left:auto;right:.3%;color:#ffe5dd}
+.grid-arena .rack-meta{top:24%;bottom:24%;background:linear-gradient(130deg,var(--shade),#061018 75%);border:1px solid #def4ff;box-shadow:inset 0 0 0 2px var(--team),0 0 7px var(--team);transform:skew(-10deg);padding:3px;font-size:clamp(9px,.8vw,18px)}
+.grid-arena .rack-meta span{display:none}
+.grid-arena .film-rack{background:linear-gradient(90deg,#040c1270,#040c12bf);border-color:var(--team);box-shadow:0 -1px 2px #fff,inset 0 2px 2px #def7ff,0 -3px 10px var(--team),0 3px 9px var(--team)}
+.grid-arena .film-tile{border-radius:7px;outline:1px solid #98a6af;box-shadow:0 0 0 2px #0008}
+.grid-arena .film-tile .poster-art,.grid-arena .film-tile .movie-poster{border-radius:7px}
+.grid-arena .film-tile.is-watched .poster-art{filter:grayscale(1) brightness(.65)}
+.grid-arena .film-tile.is-running{outline:2px solid #fff;box-shadow:0 0 0 4px var(--team),0 0 12px var(--team)}
+.grid-arena .film-rack:before,.grid-arena .film-rack:after{display:none}
+@media(max-aspect-ratio:1/1){
+ .grid-arena .billboard,.grid-arena .billboard:not(.team-1){left:3%;top:17%;width:35%;height:27%}
+ .grid-arena .billboard.team-1{left:auto;right:3%;top:17%;height:27%}
+ .grid-arena .arena-vs{left:39%;top:23%;width:22%;height:13%}
+ .grid-arena .arena-action{left:29%;top:45%;width:42%;height:6%}
+ .grid-arena .film-rack,.grid-arena .film-rack:not(.team-1){left:3%;right:3%;top:56%;height:19%;padding:5% 1% 1%}
+ .grid-arena .film-rack.team-1{top:78%;height:19%;padding:5% 1% 1%}
+ .grid-arena .film-grid{grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));max-width:none;gap:4px}
+ .grid-arena .rack-meta,.grid-arena .team-1 .rack-meta{top:.15em;bottom:auto;left:1%;right:1%;width:auto;display:block;text-align:left;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .grid-arena .rack-meta{transform:none;border:0;box-shadow:none;background:none;padding:0}
+ .grid-arena .team-1 .rack-meta{text-align:right}.grid-arena .rack-meta span{margin-left:1em}
+}
+.roulette.grid-arena .arena-action{background:var(--mk-art-button-gold,url("optimized/button-gold.41a5f50d38cc.webp")) center/100% 100% no-repeat;padding:1%}.grid-arena .arena-action p{font-size:1.6em;letter-spacing:.04em;font-style:italic}.grid-arena .arena-action button:not(.grid-fight){font-size:.8em;padding:.1em .8em;background:#080e14b0;border:0;box-shadow:none;transform:none}
+
+.billboard-art:after{z-index:3}.billboard-art .poster-art{mask-image:linear-gradient(transparent,#000 10%,#000 76%,transparent 100%);-webkit-mask-image:linear-gradient(transparent,#000 10%,#000 76%,transparent 100%)}.grid-arena .film-rack{border-radius:5px}.grid-arena .arena-action p{white-space:nowrap}
+.grid-arena .arena-vs{background:var(--mk-art-home-vs,url("optimized/home-vs.2b654653a8c6.webp")) center/contain no-repeat}.grid-arena .arena-vs .vs-mark{visibility:hidden}.roulette.grid-arena .arena-action{background-size:100% 150%}.roulette.grid-arena .arena-action p{line-height:1;margin:0}.roulette.grid-arena .arena-action button{position:absolute;top:100%;font-size:.7em;outline-offset:0}.grid-arena .billboard:after{background-image:var(--mk-art-billboard-blades,url("ui/billboard-blades.png"))}
+@media(max-aspect-ratio:1/1){.shell[data-scene=roulette] nav{margin-top:12%;font-size:.8em;position:absolute;right:4%;gap:.5em}.shell[data-scene=roulette] nav button{min-width:0;padding:.2em .7em}.roulette.grid-arena .arena-action p{font-size:1.2em}}

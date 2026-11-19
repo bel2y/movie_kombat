@@ -4,8 +4,9 @@
   const nav = document.querySelector('nav');
   const soundButton = document.querySelector('.sound');
   const key = 'movie-kombat.history.v1';
-  const names = ['Илья', 'Наташа'];
-  let playerFighters = pickFighters();
+  const names = new URLSearchParams(location.search).get('names')==='long' ? ['Александр Константинович','Анастасия Александровна'] : ['Илья', 'Наташа'];
+  let selectionLists;
+  let fixedRoster;
   function resultLabel(banner) {
     return ({
       'WINNER': 'Победитель',
@@ -50,7 +51,6 @@
   let stopReels = () => {};
   let previousWinners = new Set();
   let timers = [];
-  let selectedList = 0;
   let muted = false;
   let audio;
 
@@ -75,7 +75,7 @@
 
   function poster(movie) {
     const image = movieLists.flat().find(item=>item.id===movie.id)?.poster || movie.poster;
-    const unavailable = scene === 'roulette' ? previousWinners.has(movie.id) : scene === 'lists' && excluded.has(movie.id);
+    const unavailable = scene === 'roulette' ? previousWinners.has(movie.id) : false;
     return `<div class="movie-poster${unavailable ? ' already-won' : ''}"${unavailable ? ' title="Уже побеждал — не участвует в выборе"' : ''}><div class="poster-art" style="--hue:${String(movie.id).split('').reduce((sum, char) => sum + char.charCodeAt(0), 0) % 360}">
       <span>${escape(movie.title)}</span>${image ? `<img src="${escape(artUrl(image))}" alt="">` : ''}
       </div></div>`;
@@ -84,7 +84,7 @@
   const metalCorners = '<i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>';
   const vsMark = '<img class="vs-mark" src="src/optimized/vs.5d2f7d658415.webp" alt="Против">';
   function fighter(i, extra = '') {
-    return `<aside class="fighter team-${i} ${extra}"><div class="fighter-art"><img src="src/fighters/${playerFighters[i].image}" alt=""></div><div class="nameplate"><span>${names[i]}</span></div></aside>`;
+    return `<aside class="fighter team-${i} ${extra}"><div class="nameplate"><span>${escape(names[i])}</span></div></aside>`;
   }
   const participants = () => `<div class="participants">${result?.solo && (playing() || scene === 'result') ? fighter(result.winner === 'left' ? 0 : 1) : fighter(0)+fighter(1)}</div>`;
   function showcase() {
@@ -108,30 +108,34 @@
     return '<section class="combat-stats team-'+(side==='left'?0:1)+'" aria-label="Сила фильма '+escape(entry.movie.title)+'"><div class="stat-parts">'+points.map((n,i)=>'<div class="stat-part" style="--delay:'+(0.6+i*1.1)+'s"><span class="stat-value"><i aria-hidden="true">'+icons[i]+'</i> +'+format(n)+'</span><span class="stat-label">'+labels[i]+'</span></div>').join('')+'</div><div class="power-summary"><div class="power-bar" aria-hidden="true">'+points.map((n,i)=>'<span style="--points:'+n+'%;--delay:'+(0.6+i*1.1)+'s"></span>').join('')+'</div><div class="power-total"><span>Сила</span><b class="power-step initial">0</b>'+points.map((n,i)=>{total+=n;return '<b class="power-step stage-'+i+'" style="--delay:'+(0.6+i*1.1)+'s">'+format(total)+'</b>';}).join('')+'</div></div><span class="stats-help">'+(side==='left'?'':'')+'</span></section>';
   }
   function duel() {
-    const card = side => {
-      const entry = result[side];
-      return `<article class="${side}"><div class="metal-poster">${poster(entry.movie)}${metalCorners}</div>
-        <div class="contender-caption"><h2>${escape(entry.movie.title)}</h2><p>${entry.movie.year} · ${escape(entry.movie.genre)}</p></div></article>`;
-    };
-    return `${participants()}<h1 class="scene-title">Схватка</h1>
-      <div class="duel">${card('left')}${vsMark}${card('right')}</div><div class="combat-panels">${scorePanel('left')}${scorePanel('right')}</div><p class="combat-rule">${result.left.movie.id===result.right.movie.id ? 'Один фильм в обоих списках — полное совпадение.' : result.tied ? 'Сила равна — победителя определяет жребий.' : 'Желание + рейтинг + надежда. Побеждает большая сумма.'}</p>`;
+    return gridArena(true)+'<div class="combat-panels">'+scorePanel('left')+scorePanel('right')+'</div><p class="combat-rule">'+(result.tied?'Сила равна — победителя определяет жребий.':'Желание + рейтинг + надежда. Побеждает большая сумма.')+'</p>';
   }
-
-  function singleHome(i) {
-    let movies=availableLists()[i];
-    const params=new URLSearchParams(location.search);
-    const count=Number(params.get('count'));
-    if (params.get('preview')==='home' && [1,2,3].includes(count)) movies=movies.slice(0,count);
-    const films=(movies.length ? movies : movieLists[i]).slice(0,5);
-    const featured=Math.floor((films.length-1)/2);
-    const noun=movies.length===1?'фильм':movies.length>=2&&movies.length<=4?'фильма':'фильмов';
-    return '<div class="single-player">'+fighter(i)+'<p class="single-count">'+movies.length+' '+noun+'</p></div><div class="single-heading"><h1>'+(movies.length===1?'Остался один фильм':'Выбираем фильм')+'</h1><p>Из списка '+(i ? 'Наташи' : 'Ильи')+'</p></div><div class="showcase single-static" data-count="'+films.length+'">'+films.map((movie,index)=>'<div class="showcase-card '+(index===featured?'featured':'')+'">'+poster(movie)+'</div>').join('')+'</div>'+button('start',movies.length===1?'Сегодня смотрим':'Выбрать фильм','fight',true);
+  function billboardContent(side,movie){
+    return '<div class="cinema-backdrop" aria-hidden="true">'+(movie?poster(movie):'')+'</div><div class="billboard-art'+(movie?'':' is-empty')+'">'+(movie?poster(movie):'<span class="mystery" aria-label="Фильм ещё не выбран">?</span>')+'</div><div class="cinema-copy"><div class="cinema-player">'+escape(names[side])+'</div><h2>'+escape(movie?.title||'Выбираем фильм')+'</h2><p>'+ (movie?escape([movie.year,movie.genre].filter(Boolean).join(' · ')):'Ваш следующий фильм')+'</p></div>';
+  }
+  function billboard(side,movie){
+    return '<article class="billboard cinema-panel team-'+side+'">'+billboardContent(side,movie)+'</article>';
+  }
+  function gridArena(selected=false) {
+    const used=scene==='roulette'?previousWinners:excluded;
+    const layout=fixedRoster||(fixedRoster=savedRosterLayout(movieLists,{getItem:k=>localStorage.getItem(k),setItem:(k,v)=>localStorage.setItem(k,v)}));
+    const racks='<section class="shared-roster" aria-label="Фильмы игроков" style="--columns:'+layout.columns+'">'+layout.tiles.map(({movie:m,side})=>'<div class="film-tile'+(used.has(m.id)?' is-watched':'')+' team-'+side+'" data-side="'+side+'" data-movie="'+escape(m.id)+'" tabindex="0" role="group" aria-label="'+escape(m.title)+(used.has(m.id)?' — уже выбран':'')+'">'+poster(m)+'<i class="tile-plinth" aria-hidden="true"></i><i class="target-corners" aria-hidden="true"></i></div>').join('')+'</section>';
+    const available=availableLists().flat().length;
+    const label=available===1?'Сегодня смотрим':'ЗАПУСК';
+    return '<svg width="0" height="0" aria-hidden="true" style="position:absolute;pointer-events:none"><defs><clipPath id="player-ticket-left" clipPathUnits="objectBoundingBox"><path d="M .04 .003 L .91 .08 L 1 .5 L .91 .92 L .04 .997 Q .04 .91 0 .91 L 0 .59 C .05 .59 .05 .41 0 .41 L 0 .09 Q .04 .09 .04 .003 Z"/></clipPath><clipPath id="player-ticket-right" clipPathUnits="objectBoundingBox"><path d="M .96 .003 Q .96 .09 1 .09 L 1 .41 C .95 .41 .95 .59 1 .59 L 1 .91 Q .96 .91 .96 .997 L .09 .92 L 0 .5 L .09 .08 Z"/></clipPath></defs></svg><div class="billboard-stage">'+billboard(0,selected?result?.left?.movie:null)+billboard(1,selected?result?.right?.movie:null)+(selected?'':racks)+'<div class="arena-ticket-brand"><img src="src/ui/movie-kombat-tickets.png" alt="Movie Kombat"></div><div class="arena-vs plain-duel" role="img" aria-label="Против"><span>VS</span></div><div class="arena-action">'+(scene==='roulette'?'<p role="status">Выбираем фильмы</p>':canBattle()?button('start',label,'grid-fight',true):'<p>Все фильмы выбраны</p>'+button('reset','Сбросить битвы','',true))+'</div></div>';
+  }
+  function revealGridFilm(side,movie){
+    const art=main.querySelector('.billboard.team-'+side);
+    if(art)art.innerHTML=billboardContent(side,movie);
+    if(!result.solo && !main.querySelector('.billboard-art.is-empty')){
+      const status=main.querySelector('.arena-action [role="status"]');
+      if(status)status.textContent='Фильмы выбраны';
+    }
   }
   const views = {
-    home: () => (previewPlayer ?? remainingPlayer()) !== null && (previewPlayer ?? remainingPlayer()) >= 0 ? singleHome(previewPlayer ?? remainingPlayer()) : `${showcase()}<div class="home-fighters">${names.map((name, i) => `<div class="home-player team-${i}">${fighter(i)}<p class="film-count">${availableLists()[i].length} фильмов</p></div>`).join('')}</div><div class="home-versus">${vsMark}</div>${battleButton('В БОЙ!', 'fight')}`,
-    intro: () => `${participants()}<h1 class="scene-title">Битва начинается</h1><div class="intro-emblem"><img src="src/optimized/intro-emblem.d5ee62f67913.webp" alt="Movie Kombat — противостояние"></div><div class="intro-flare" aria-hidden="true"></div>`,
-    roulette: () => `${participants()}<h1 class="scene-title">${result.solo ? "Выбираем фильм" : "Выбираем соперников"}</h1><div class="reels">${reels.map((strip, i) => strip ?
-      `<section class="team-${i}${strip.static ? ' fixed-reel' : ''}"><div class="window"><div class="strip" style="--reel-from:${-strip.from};--reel-to:${-strip.to}"></div></div><div class="selection-frame" aria-hidden="true"><div class="focus-window"><div class="strip" style="--reel-from:${-strip.from};--reel-to:${-strip.to}"></div></div>${metalCorners}</div><div class="metal-poster reel-lock">${poster(result[i ? 'right' : 'left'].movie)}${metalCorners}</div></section>` : '').join('')}</div><div class="reel-versus"><img class="vs-mark" src="src/optimized/home-vs.2b654653a8c6.webp" alt="Против"></div>`,
+    home: () => gridArena(),
+    intro: () => gridArena(),
+    roulette: () => gridArena(),
     versus: duel,
     winner: () => {
       const win = result[result.winner].movie;
@@ -140,14 +144,9 @@
     },
     result: () => {
       const movie = result[result.winner].movie;
-      return `${participants()}<article class="final-card"><div class="metal-poster golden">${poster(movie)}${metalCorners}</div><div class="winner-info">${result.solo ? '' : '<p class="winner-seal">Победитель</p>'}<p class="winner-kicker">Сегодня смотрим</p>
-        <h1>${escape(movie.title)}</h1><p class="subtitle">${movie.year} · ${escape(movie.genre)}</p>
-        <div class="actions">${button('watch', 'Смотреть', 'primary watch', true)}${battleButton(result.solo ? 'Ещё фильм' : 'Реванш', '')}${button('home', 'На главную')}</div></div></article>`;
+      const side=result.winner==='left'?0:1;
+      return '<svg width="0" height="0" aria-hidden="true" style="position:absolute;pointer-events:none"><defs><clipPath id="result-ticket-clip" clipPathUnits="objectBoundingBox"><path transform="scale(0.000666666667 0.0015625)" d="M 48 2 H 417 A 23 23 0 0 0 463 2 H 1452 A 46 46 0 0 0 1498 48 V 274 A 46 46 0 0 0 1498 366 V 592 A 46 46 0 0 0 1452 638 H 463 A 23 23 0 0 0 417 638 H 48 A 46 46 0 0 0 2 592 V 366 A 46 46 0 0 0 2 274 V 48 A 46 46 0 0 0 48 2 Z"/></clipPath></defs></svg><article class="cinema-result result-ticket team-'+side+'"><div class="cinema-backdrop" aria-hidden="true">'+poster(movie)+'</div><div class="result-poster">'+poster(movie)+'</div><div class="result-copy"><p class="result-eyebrow">Сегодня смотрим</p><div class="cinema-player">'+escape(names[side])+(result.solo?' · Выбранный фильм':' · Победитель')+'</div><h1>'+escape(movie.title)+'</h1><p class="result-meta">'+escape([movie.year,movie.genre].filter(Boolean).join(' · '))+'</p><p class="result-description">'+escape(window.MK_OVERVIEWS?.[movie.id]?.overview||'Описание пока недоступно.')+'</p><div class="result-actions">'+button('watch','Смотреть','watch',true)+battleButton(result.solo?'Ещё фильм':'Реванш','')+button('home','На главную')+'</div></div></article>';
     },
-    lists: () => `${participants()}<h1 class="scene-title">Списки фильмов</h1><div class="actions list-tabs">${names.map((name, i) =>
-      `<button data-action="list-${i}" ${i === selectedList ? 'data-initial' : ''} aria-pressed="${i === selectedList}">${name}</button>`).join('')}
-      </div><div class="collection-frame"><ol class="collection">${movieLists[selectedList].map(movie =>
-        `<li tabindex="0">${poster(movie)}<strong>${escape(movie.title)}</strong></li>`).join('')}</ol>${metalCorners}</div>${button('home', 'На арену', 'back-arena')}`,
     history: () => `${participants()}<h1 class="scene-title">История битв</h1><div class="history-frame"><ul class="log">${history.map((item, i) =>
       `<li tabindex="0">${poster(item[item.winner].movie)}<div class="history-title"><strong>${escape(item[item.winner].movie.title)}</strong>${i === 0 ? '<small>Последний выбор</small>' : ''}</div><div class="history-player"><span class="nameplate team-${item.winner === 'left' ? 0 : 1}">${names[item.winner === 'left' ? 0 : 1]}</span><time datetime="${escape(item.date)}">${escape(new Date(item.date).toLocaleDateString('ru-RU', {day:'numeric',month:'long',year:'numeric'}))}</time></div><span class="trophy" aria-label="${item.solo ? 'Выбранный фильм' : 'Победа'}">${item.solo ? '▶' : '♛'}</span></li>`).join('')
       || '<li class="empty-history">Завершите первую битву, чтобы увидеть результат.</li>'}</ul>${metalCorners}</div><div class="history-tools">${button('reset','Сбросить битвы')}${button('assets','Графика')}</div>${button('home', 'На арену', 'back-arena', true)}`,
@@ -155,23 +154,66 @@
     assets: () => `<section class="utility"><h1>Графика на устройстве</h1><p>Один раз скачай постеры, персонажей и оформление. Сохранённые файлы будут загружаться из памяти этого устройства.</p><p class="asset-status" role="status"></p><progress class="asset-progress" max="65" value="0"></progress><div class="actions">${button('download-art','Скачать графику','primary',true)}${button('history','Назад')}</div></section>`,
   };
 
+  let browseCard=null, browseTile=null, browseTimer;
+  function closeBrowse(){clearTimeout(browseTimer);browseTile?.classList.remove('is-browsed');browseTile?.removeAttribute('aria-describedby');browseCard?.remove();browseCard=null;browseTile=null;}
+  function positionBrowse(){
+    if(!browseCard||!browseTile)return;
+    const posterBox=browseCard.querySelector('.browse-poster').getBoundingClientRect();
+    const copy=browseCard.querySelector('.browse-copy');
+    copy.style.height=posterBox.height+'px';
+    const description=browseCard.querySelector('.browse-description');
+    const style=getComputedStyle(description);
+    const available=copy.getBoundingClientRect().bottom-description.getBoundingClientRect().top-parseFloat(style.paddingTop)-1;
+    description.style.webkitLineClamp=String(Math.max(1,Math.floor(available/parseFloat(style.lineHeight))));
+    const tile=browseTile.getBoundingClientRect(), box=browseCard.getBoundingClientRect();
+    const left=Math.max(12,Math.min(innerWidth-box.width-12,tile.left+tile.width/2-box.width*.28));
+    const above=tile.top-box.height-18;
+    const top=above>=12?above:Math.min(innerHeight-box.height-12,tile.bottom+18);
+    browseCard.style.left=left+'px';browseCard.style.top=Math.max(12,top)+'px';
+    browseCard.style.setProperty('--pointer-x',Math.max(24,Math.min(box.width-24,tile.left+tile.width/2-left))+'px');
+    browseCard.classList.toggle('below-tile',above<12);
+  }
+  function openBrowse(tile){
+    if(scene!=='home'||!tile)return;
+    closeBrowse();browseTile=tile;
+    const movie=movieLists[Number(tile.dataset.side)]?.find(m=>String(m.id)===tile.dataset.movie);
+    if(!movie){closeBrowse();return;}
+    const overview=window.MK_OVERVIEWS?.[movie.id]?.overview||'Описание пока недоступно.';
+    browseCard=document.createElement('aside');browseCard.className='movie-browse';browseCard.id='movie-browse';browseCard.setAttribute('role','tooltip');
+    browseCard.innerHTML='<div class="browse-surface"><div class="browse-backdrop" aria-hidden="true">'+poster(movie)+'</div><div class="browse-poster">'+poster(movie)+'</div><div class="browse-copy"><h2>'+escape(movie.title)+'</h2><p class="browse-meta">'+escape([movie.year,movie.genre].filter(Boolean).join(' · '))+'</p><p class="browse-description">'+escape(overview)+'</p></div></div><i class="browse-pointer" aria-hidden="true"></i>';
+    document.body.append(browseCard);tile.classList.add('is-browsed');tile.setAttribute('aria-describedby','movie-browse');positionBrowse();
+  }
+  document.addEventListener('focusin',e=>{const tile=e.target.closest?.('.film-tile');if(tile)openBrowse(tile);else closeBrowse();});
+  document.addEventListener('pointerover',e=>{const tile=e.target.closest?.('.film-tile');if(tile&&tile!==browseTile){clearTimeout(browseTimer);browseTimer=setTimeout(()=>openBrowse(tile),220);}else if(e.target.closest?.('.movie-browse'))clearTimeout(browseTimer);});
+  document.addEventListener('pointerout',e=>{if(e.target.closest?.('.film-tile,.movie-browse')&&!e.relatedTarget?.closest?.('.film-tile,.movie-browse')){clearTimeout(browseTimer);browseTimer=setTimeout(closeBrowse,180);}});
+  document.addEventListener('keydown',e=>{
+    if(scene!=='home'||!browseTile)return;
+    if(e.key==='Enter'||e.keyCode===13){e.preventDefault();e.stopImmediatePropagation();return;}
+    if(['Escape','Backspace','BrowserBack'].includes(e.key)||e.keyCode===461||e.keyCode===10009){e.preventDefault();e.stopImmediatePropagation();closeBrowse();main.querySelector('[data-action="start"]')?.focus();}
+  },true);
+  window.addEventListener?.('resize',positionBrowse);
+
   function show(next) {
+    closeBrowse();
     stopReels();
     window.MovieKombatAssets?.setMotion?.(["intro","roulette","versus","winner"].includes(next));
-    if (next === 'home' && scene !== 'home') playerFighters = pickFighters();
+    const keepGrid=next==='roulette' && scene==='home' && main.querySelector('.billboard-stage');
     scene = next;
     document.querySelector('.shell').dataset.scene = next;
     const single = next === 'home' ? (previewPlayer ?? remainingPlayer()) : result?.solo && (playing() || next === 'result') ? (result.winner === 'left' ? 0 : 1) : null;
-    main.className = next + (single !== null && single >= 0 ? ' single' : '');
+    main.className = next + (['home','roulette','versus'].includes(next)?' grid-arena':'') + (single !== null && single >= 0 ? ' single' : '');
     document.querySelector('.shell').dataset.single = single !== null && single >= 0 ? String(single) : '';
-    nav.hidden = playing() || ['result','reset','assets'].includes(next);
+    nav.hidden = (playing() && next!=='roulette') || ['result','reset','assets'].includes(next);
     nav.querySelectorAll('button').forEach(item => item.classList.toggle('active', item.dataset.action === next));
-    main.innerHTML = views[next]() + (next==='versus' ? button('continue','Продолжить <kbd>OK</kbd>','skip continue',true) : playing() ? button('skip', 'Пропустить <kbd>OK</kbd>', 'skip', true) : '');
+    if(!keepGrid)main.innerHTML = views[next]() + (next==='versus' ? button('continue','Продолжить <kbd>OK</kbd>','skip continue',true) : playing() ? button('skip', 'Пропустить <kbd>OK</kbd>', 'skip', true) : '');
     main.querySelectorAll('.hero-logo').forEach(element => { element.append(document.querySelector('.brand-logo').cloneNode(true)); });
     if(window.MovieKombatAssets)document.querySelectorAll('img').forEach(img=>{const url=artUrl(img.getAttribute('src'));if(url!==img.getAttribute('src'))img.src=url;});
-    if(next==='roulette' && typeof animateReels==='function') stopReels=animateReels(main,reels,poster);
+    if(next==='roulette'){
+      const action=main.querySelector('.arena-action');if(action)action.innerHTML='<p role="status">Выбираем фильмы</p>'+button('skip','Пропустить','grid-fight',true);
+      if(typeof runGridSelection==='function')stopReels=runGridSelection(main,selectionLists||availableLists(),result,revealGridFilm);
+    }
     updateAssetStatus();
-    const initial = main.querySelector('[data-initial]');
+    const initial = main.querySelector(next==='versus'?'[data-action="continue"]':'[data-initial]');
     if (initial) initial.focus();
   }
 
@@ -225,6 +267,7 @@
     result = nextResult;
     if (!result) return;
     previousWinners = new Set(excluded);
+    selectionLists=available;
     reels = available.map((movies, i) => {
       const entry=result[i ? 'right' : 'left']; if (!entry) return null; const finish=entry.movie;
       return buildReel(movies, finish.id, i === 1, window.innerWidth);
@@ -236,40 +279,28 @@
     history.unshift(result);
     history.splice(100);
     try { localStorage.setItem(key, JSON.stringify(history)); } catch (error) { /* Storage is optional. */ }
-    if (result.solo) {
-      const remaining = available[result.winner === 'left' ? 0 : 1];
-      if (remaining.length === 1) {
-        show('result');
-        play([262,330,392,523]);
-        return;
-      }
-      show('roulette');
-      play([130,196]);
-      timers=[setTimeout(()=>{show('result');play([262,330,392,523]);},10500)];
-      return;
-    }
-    show('intro');
-    play([130, 196]);
-    if(reels.every(reel=>!reel||reel.static)){timers=[setTimeout(()=>show('versus'),2000)];return;}
-    timers = [
-      setTimeout(() => show('roulette'), 2000),
-      setTimeout(() => { show('versus'); play([196, 233, 294]); }, 12000),
-    ];
+    if(result.solo && available[result.winner==='left'?0:1].length===1){show('result');play([262,330,392,523]);return;}
+    show('roulette');play([130,196]);
+    const staticSelection=available.every(list=>list.length<=1);
+    const duration=staticSelection?1000:9400;
+    timers=[setTimeout(()=>{
+      const stage=main.querySelector('.billboard-stage');if(stage)stage.classList.add('selection-done');
+    },duration),setTimeout(()=>{show(result.solo?'result':'versus');play([196,233,294]);},duration+900)];
   }
 
   function continueBattle() {
     if (scene!=='versus') return;
     timers.forEach(clearTimeout);
-    show('winner');
+    show('result');
     play([262,330,392,523]);
-    timers=[setTimeout(()=>show('result'),3000)];
+    timers=[];
   }
 
   function skip() {
     timers.forEach(clearTimeout);
     timers = [];
     if (audio) audio.suspend().catch(() => {});
-    show('result');
+    show(scene==='roulette'&&!result.solo?'versus':'result');
   }
 
   main.addEventListener('error', event => {
@@ -293,10 +324,7 @@
       soundButton.textContent = muted ? 'Звук выкл.' : 'Звук вкл.';
       soundButton.setAttribute('aria-pressed', String(muted));
       if (muted && audio) audio.suspend().catch(() => {});
-    } else if (action === 'list-0' || action === 'list-1') {
-      selectedList = Number(action.slice(-1));
-      show('lists');
-    } else show(action);
+    } else if (Object.prototype.hasOwnProperty.call(views, action)) show(action);
   });
 
   const arrows = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
@@ -350,6 +378,7 @@
     result=previewPlayer===null ? chooseRound(previewLists[0],previewLists[1],()=>.12) : chooseRound(previewPlayer===0?previewLists[0]:[],previewPlayer===1?previewLists[1]:[],()=>.12);
     previousWinners = new Set(excluded);
     reels = previewLists.map((movies, i) => result[i ? 'right' : 'left'] ? buildReel(movies, result[i ? 'right' : 'left'].movie.id, i === 1, window.innerWidth) : null);
+    selectionLists=previewLists;
     show(previewScene);
   } else show('home');
 })();

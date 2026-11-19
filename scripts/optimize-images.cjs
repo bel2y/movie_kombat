@@ -40,6 +40,6 @@ for (const file of files) {
   fs.writeFileSync(absolute,text);
 }
 fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify(entries,null,2)+'\n');
-fs.writeFileSync(path.join(root,'src/art-manifest.js'),'window.MK_ART = '+JSON.stringify(entries.map(entry=>entry.file))+';\n');
+fs.writeFileSync(path.join(root,'src/art-manifest.js'),'window.MK_ART = '+JSON.stringify(entries.filter(entry=>!entry.source.includes('/fighters/')).map(entry=>entry.file))+';\n');
 const before=entries.reduce((n,e)=>n+e.before,0),after=entries.reduce((n,e)=>n+e.after,0);
 console.log(JSON.stringify({images:entries.length,before,after,reduction:Math.round((1-after/before)*100)+'%'}));

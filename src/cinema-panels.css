@@ -1,0 +1,217 @@
+/* Full posters with a reused, darkened image behind the film details. */
+.grid-arena .cinema-panel,.grid-arena .cinema-panel.team-1{top:15%;height:38%;width:42%;left:2%;right:auto;overflow:hidden;border:1px solid #7793a66b;border-radius:8px;background:#040b12;box-shadow:0 0 10px #0008;text-align:left}
+.grid-arena .cinema-panel.team-1{left:auto;right:2%;border-color:#b66b706b;text-align:right}
+.grid-arena .cinema-panel:after{display:none}
+.cinema-backdrop{position:absolute;inset:0;opacity:.32;pointer-events:none}
+.cinema-backdrop .poster-art img{object-fit:cover;object-position:center 42%}
+.cinema-backdrop .poster-art span{display:none}
+.cinema-backdrop:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#04111b 25%,#04111be8 48%,#04111b44)}
+.team-1 .cinema-backdrop:after{background:linear-gradient(270deg,#19090d 25%,#19090de8 48%,#19090d44)}
+.grid-arena .cinema-panel .billboard-art{inset:3% auto 3% 1.5%;width:32%;transform:none;clip-path:none;background:#070b10;border:1px solid #718c9b;border-radius:3px}
+.grid-arena .cinema-panel.team-1 .billboard-art{left:auto;right:1.5%;border-color:#9c7678}
+.grid-arena .cinema-panel .billboard-art:after{display:none}
+.grid-arena .cinema-panel .billboard-art .poster-art{mask-image:none;-webkit-mask-image:none}
+.grid-arena .cinema-panel .billboard-art .poster-art img{object-fit:cover;object-position:center}
+.cinema-copy{position:absolute;left:37%;right:4%;top:10%;bottom:8%;display:flex;flex-direction:column;justify-content:center;gap:5%;min-width:0}
+.team-1 .cinema-copy{left:4%;right:37%}
+.cinema-player{font:italic 500 clamp(14px,1.6vw,32px)/1.1 'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.14em;border-bottom:1px solid var(--team);padding-bottom:.35em;color:#e3e6e6;overflow-wrap:anywhere}
+.cinema-copy h2{font:italic 500 clamp(20px,2.5vw,49px)/1.12 'Oswald',sans-serif;color:#f2dfbb;text-transform:uppercase;margin:0;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.cinema-copy p{font:400 clamp(12px,1.3vw,24px)/1.3 'Oswald',sans-serif;color:#d2c3a6;margin:0}
+.grid-arena .cinema-panel .mystery{font-size:clamp(50px,8vw,150px)}
+.grid-arena .arena-vs{left:44%;width:12%;top:25%;height:17%}
+.grid-arena .arena-action{top:48%;height:9%;left:39%;width:22%}
+@media(max-aspect-ratio:1/1){.grid-arena .cinema-panel,.grid-arena .cinema-panel.team-1{top:18%;height:34%;width:44%}.cinema-copy{top:53%;left:6%;right:6%;bottom:5%;gap:5%}.team-1 .cinema-copy{left:6%;right:6%}.grid-arena .cinema-panel .billboard-art,.grid-arena .cinema-panel.team-1 .billboard-art{left:25%;right:auto;top:2%;bottom:50%;width:50%}.cinema-copy h2{font-size:18px}.cinema-player{font-size:14px}.cinema-copy p{font-size:12px}}
+/* Match the approved inward-pointing cinema panels and bundled Cyrillic display face. */
+.grid-arena .cinema-panel,.grid-arena .cinema-panel.team-1{top:14%;height:40%;width:45%;left:1.5%;border:0;border-radius:0;background:linear-gradient(130deg,#75c8df99,#19445170 50%,#19313c);clip-path:polygon(0 0,91% 8%,100% 50%,91% 92%,0 100%);text-align:left}
+.grid-arena .cinema-panel.team-1{left:auto;right:1.5%;background:linear-gradient(230deg,#e48c8899,#65292e70 50%,#382029);clip-path:polygon(9% 8%,100% 0,100% 100%,9% 92%,0 50%);text-align:right}
+.cinema-backdrop{inset:2px;opacity:1;background:#030b10;clip-path:inherit}
+.cinema-backdrop .movie-poster{opacity:.48}
+.cinema-backdrop .poster-art img{object-position:65% 50%}
+.cinema-backdrop:after{background:linear-gradient(90deg,#020d15 23%,#020d15e6 40%,#020d1566 100%)}
+.team-1 .cinema-backdrop:after{background:linear-gradient(270deg,#16080e 23%,#16080ee6 40%,#16080e66 100%)}
+.grid-arena .cinema-panel .billboard-art{top:3%;bottom:3%;left:1%;width:30%;border-radius:0;transform:perspective(900px) rotateY(7deg);border-color:#8cb0bc99}
+.grid-arena .cinema-panel.team-1 .billboard-art{left:auto;right:1%;transform:perspective(900px) rotateY(-7deg);border-color:#c7989899}
+.cinema-copy{top:13%;bottom:14%;left:35%;right:12%;gap:7%;justify-content:center}
+.team-1 .cinema-copy{left:12%;right:35%}
+.cinema-player{font-family:MK,'Arial Narrow',sans-serif;font-size:clamp(16px,1.7vw,34px);font-weight:400;letter-spacing:.16em;line-height:1.1;padding-bottom:.4em;border:0;background:linear-gradient(90deg,#9fdae4aa,transparent) bottom/100% 1px no-repeat}
+.team-1 .cinema-player{background-image:linear-gradient(270deg,#ef9c96aa,transparent)}
+.cinema-copy h2{font-family:MK,'Arial Narrow',sans-serif;font-size:clamp(25px,3.3vw,66px);font-weight:600;font-style:normal;transform:skew(-8deg);line-height:1.08;letter-spacing:-.025em;text-shadow:0 2px 4px #0008}
+.cinema-copy p{font-family:MK,'Arial Narrow',sans-serif;font-size:clamp(14px,1.8vw,32px);letter-spacing:.025em;color:#e3d4b3}
+.grid-arena .arena-vs{left:45%;width:10%;top:26%;height:17%}
+.grid-arena .arena-action{top:50%;height:8%;left:39%;width:22%}
+@media(max-aspect-ratio:1/1){.grid-arena .cinema-panel,.grid-arena .cinema-panel.team-1{top:18%;height:34%;width:46%;clip-path:none}.grid-arena .cinema-panel .billboard-art,.grid-arena .cinema-panel.team-1 .billboard-art{left:25%;right:auto;top:2%;bottom:50%;width:50%;transform:none}.cinema-copy,.team-1 .cinema-copy{top:53%;left:7%;right:7%;bottom:5%;gap:4%}.cinema-copy h2{font-size:20px}.cinema-player{font-size:14px}.cinema-copy p{font-size:12px}}
+.cinema-copy{gap:5%}.cinema-copy h2{flex-shrink:0;font-size:clamp(24px,2.9vw,58px);line-height:1.1}.cinema-player,.cinema-copy p{flex-shrink:0}
+@media(max-aspect-ratio:1/1){.cinema-copy h2{font-size:18px}}
+/* Larger central duel emblem, above the inward edges of both panels. */
+.grid-arena .arena-vs{left:41%;width:18%;top:22%;height:25%;z-index:8}
+@media(max-aspect-ratio:1/1){.grid-arena .arena-vs{left:42%;width:16%;top:29%;height:15%}}
+/* Restrained launch control to match the cinema panels. */
+.grid-arena .arena-action .grid-fight{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:38px;padding:8px 24px;background:linear-gradient(120deg,#ecd49c,#967645);border:0;box-shadow:none;filter:none;clip-path:polygon(6% 0,94% 0,100% 50%,94% 100%,6% 100%,0 50%);font-family:MK,'Arial Narrow',sans-serif;font-size:clamp(18px,2vw,38px);font-weight:500;line-height:1;letter-spacing:.09em;color:#f4dfb1;text-shadow:none;white-space:nowrap}
+.grid-arena .arena-action .grid-fight:before{content:'';position:absolute;inset:2px;z-index:-1;clip-path:inherit;background:linear-gradient(120deg,#182029,#080d13 65%,#24201a)}
+.grid-arena .arena-action .grid-fight:hover:before,.grid-arena .arena-action .grid-fight:focus-visible:before{background:linear-gradient(120deg,#34302a,#121820 65%,#403420)}
+.grid-arena .arena-action .grid-fight:focus-visible{outline:2px solid #ffe6a7;outline-offset:4px;filter:drop-shadow(0 0 5px #e7bb6266)}
+/* The score scene continues the same cinema-panel layout after the grid exits. */
+.versus.grid-arena .cinema-panel,.versus.grid-arena .cinema-panel.team-1{top:14%;height:49%;animation:cinema-expand .65s ease-out both}
+.versus.grid-arena .cinema-panel .billboard-art{width:35%}
+.versus.grid-arena .cinema-copy{left:39%;right:12%}
+.versus.grid-arena .team-1 .cinema-copy{left:12%;right:39%}
+.versus.grid-arena .arena-vs{top:29%;height:22%;left:42%;width:16%}
+.versus.grid-arena .arena-action{display:none}
+.versus.grid-arena .combat-panels{position:absolute;left:1.5%;right:1.5%;top:66%;height:22%;display:grid;grid-template-columns:1fr 1fr;gap:7%;z-index:10}
+.versus.grid-arena .combat-stats{transform:none;border:0;border-top:1px solid var(--team);border-radius:0;background:linear-gradient(110deg,#04101bea,#080c12ed);box-shadow:none;padding:1.1% 3%;clip-path:polygon(0 0,96% 0,100% 15%,100% 100%,4% 100%,0 85%)}
+.versus.grid-arena .combat-stats.team-1{background:linear-gradient(250deg,#1b080eea,#080c12ed)}
+.versus.grid-arena .stat-parts{gap:0;text-align:left}
+.versus.grid-arena .stat-part{border:0;padding:0 8%;border-right:1px solid #ffffff14}
+.versus.grid-arena .stat-part:last-child{border:0}
+.versus.grid-arena .stat-value{font-family:MK,sans-serif;font-size:clamp(22px,2.6vw,48px);color:#f2dfbb;line-height:1.1}
+.versus.grid-arena .stat-value i{display:none}
+.versus.grid-arena .stat-label{font-family:MK,sans-serif;font-size:clamp(10px,1vw,19px);letter-spacing:.08em;color:#aeb8c2}
+.versus.grid-arena .power-summary{margin-top:3%;padding-top:3%;border-top:1px solid #ffffff18;gap:5%}
+.versus.grid-arena .power-bar{height:10px;transform:none;border:0;box-shadow:none;background:#ffffff0d;width:72%;border-radius:2px}
+.versus.grid-arena .power-bar span{background:var(--team);box-shadow:none;border-right:2px solid #071019}
+.versus.grid-arena .power-total{font-family:MK,sans-serif;width:23%;font-size:clamp(14px,1.4vw,26px);color:#eeddbb}
+.versus.grid-arena>.continue{display:block;bottom:2%;right:3%;background:#0b1018;border:1px solid #c6a977;box-shadow:none;transform:none;padding:.35em 1.3em;font-family:MK,sans-serif;font-size:clamp(16px,1.5vw,28px);line-height:1.2}
+.versus.grid-arena .combat-rule{left:3%;bottom:2%;font-family:MK,sans-serif;font-size:clamp(11px,1vw,18px);color:#b7b8b9;max-width:65%}
+@keyframes cinema-expand{from{height:40%}to{height:49%}}
+@media(max-aspect-ratio:1/1){.versus.grid-arena .cinema-panel,.versus.grid-arena .cinema-panel.team-1{top:18%;height:40%;animation:none}.versus.grid-arena .cinema-panel .billboard-art{width:50%}.versus.grid-arena .cinema-copy,.versus.grid-arena .team-1 .cinema-copy{left:7%;right:7%}.versus.grid-arena .combat-panels{top:61%;height:26%;gap:4%}.versus.grid-arena .power-summary{margin-top:12%;gap:8px}.versus.grid-arena .power-bar{width:100%}.versus.grid-arena .power-total{width:100%}.versus.grid-arena .combat-rule{max-width:49%}}
+@media(prefers-reduced-motion:reduce){.versus.grid-arena .cinema-panel{animation:none}}
+/* Selection status and skip use the same restrained treatment as launch. */
+.roulette.grid-arena .arena-action{background:none;border:0;box-shadow:none;filter:none}
+.roulette.grid-arena .arena-action p{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:38px;margin:0;padding:8px 18px;box-sizing:border-box;background:linear-gradient(120deg,#ecd49c,#967645);clip-path:polygon(6% 0,94% 0,100% 50%,94% 100%,6% 100%,0 50%);font-family:MK,sans-serif;font-size:clamp(14px,1.5vw,29px);font-weight:500;letter-spacing:.04em;line-height:1;color:#f4dfb1;text-shadow:none;white-space:nowrap}
+.roulette.grid-arena .arena-action p:before{content:'';position:absolute;inset:2px;z-index:-1;clip-path:inherit;background:linear-gradient(120deg,#182029,#080d13 65%,#24201a)}
+.roulette.grid-arena .arena-action button{top:calc(100% + 5px);margin:0;padding:4px 20px;background:#0b1119;border:1px solid #b89a66;box-shadow:none;transform:none;color:#e9d5aa;font-family:MK,sans-serif;font-size:clamp(11px,1vw,19px);line-height:1.2;outline:none;clip-path:polygon(6% 0,94% 0,100% 50%,94% 100%,6% 100%,0 50%)}
+.roulette.grid-arena .arena-action button:focus-visible{background:#302a20;color:#fff1ce;border-color:#ffe3a1}
+/* Continue shares the launch button's shape, fill and focus treatment. */
+.versus.grid-arena>.continue{isolation:isolate;display:flex;align-items:center;justify-content:center;min-height:44px;padding:10px 32px;background:linear-gradient(120deg,#ecd49c,#967645);border:0;border-radius:0;box-shadow:none;outline:none;filter:none;clip-path:polygon(6% 0,94% 0,100% 50%,94% 100%,6% 100%,0 50%);font-family:MK,'Arial Narrow',sans-serif;font-weight:500;font-style:normal;letter-spacing:.09em;line-height:1;color:#f4dfb1;text-shadow:none;transform:none}
+.versus.grid-arena>.continue:before{content:'';position:absolute;inset:2px;z-index:-1;clip-path:inherit;background:linear-gradient(120deg,#182029,#080d13 65%,#24201a)}
+.versus.grid-arena>.continue:hover:before,.versus.grid-arena>.continue:focus-visible:before{background:linear-gradient(120deg,#34302a,#121820 65%,#403420)}
+.versus.grid-arena>.continue:focus-visible{filter:drop-shadow(0 0 5px #e7bb6266)}
+/* Final choice uses the same cinema panel language as the arena and scores. */
+.shell[data-scene=result]{background-image:var(--mk-art-home-atmosphere,url('optimized/home-atmosphere.46b1eea28fab.webp'))}
+.shell[data-scene=result] header{height:12%;padding:.3% 3.4%}
+.shell[data-scene=result] .brand{position:relative;left:auto;top:auto;transform:none;width:25%;max-width:48vh;margin:0}
+.shell[data-scene=result] .brand:after,.result:before,.result:after{display:none}
+.cinema-result{position:absolute;left:6%;right:6%;top:17%;bottom:9%;isolation:isolate;overflow:hidden;background:#071019;border:1px solid #7793a655;clip-path:polygon(0 0,96% 3%,100% 14%,100% 88%,96% 97%,0 100%)}
+.cinema-result .cinema-backdrop{inset:1px;z-index:-1;clip-path:inherit}
+.cinema-result .cinema-backdrop:after{background:linear-gradient(90deg,#050e17 24%,#050e17eb 42%,#050e1799)}
+.cinema-result .result-poster{position:absolute;left:1.5%;top:3%;bottom:3%;width:33%;border:1px solid #8fa5b455;background:#04090d}
+.cinema-result .result-poster img{object-fit:contain}
+.result-copy{position:absolute;left:40%;right:7%;top:12%;bottom:12%;display:flex;flex-direction:column;justify-content:center;gap:5%;text-align:left}
+.result-eyebrow{font:400 clamp(15px,1.5vw,28px)/1.2 MK,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#e4c993;margin:0}
+.result-copy .cinema-player{font-size:clamp(15px,1.6vw,30px);color:#c7d1d6}
+.result-copy h1{font:600 clamp(30px,4.2vw,78px)/1.08 MK,sans-serif;transform:skew(-8deg);text-transform:uppercase;color:#f0dfbc;margin:0;overflow-wrap:anywhere;text-shadow:none}
+.result-meta{font:400 clamp(16px,1.8vw,32px)/1.2 MK,sans-serif;color:#c5bba8;margin:0}
+.result-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:4%}
+.result-actions button{position:relative;isolation:isolate;min-height:44px;display:flex;align-items:center;justify-content:center;padding:12px 24px;background:linear-gradient(120deg,#ecd49c,#967645);border:0;border-radius:0;box-shadow:none;outline:none;filter:none;clip-path:polygon(6% 0,94% 0,100% 50%,94% 100%,6% 100%,0 50%);font:500 clamp(14px,1.3vw,24px)/1 MK,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#f4dfb1;transform:none;text-shadow:none}
+.result-actions button:before{content:'';position:absolute;inset:2px;z-index:-1;clip-path:inherit;background:linear-gradient(120deg,#182029,#080d13 65%,#24201a)}
+.result-actions button:hover:before,.result-actions button:focus-visible:before{background:linear-gradient(120deg,#51412b,#202329)}
+.result-actions .watch{color:#fff1ce}
+@media(max-aspect-ratio:1/1){.cinema-result{left:4%;right:4%;top:15%;bottom:3%;clip-path:none}.cinema-result .result-poster{top:2%;bottom:48%;left:24%;width:52%}.result-copy{left:7%;right:7%;top:55%;bottom:3%;gap:4%}.result-copy h1{font-size:30px}.result-actions{gap:8px}.result-actions button{padding:10px 16px}.shell[data-scene=result] .brand{width:44%}}
+/* A single full-size skip control replaces the selection status banner. */
+.roulette.grid-arena .arena-action p{display:none}
+.roulette.grid-arena .arena-action button.grid-fight{position:relative;top:auto;width:100%;height:100%;min-height:38px;padding:8px 24px;margin:0;background:linear-gradient(120deg,#ecd49c,#967645);border:0;box-shadow:none;font-size:clamp(18px,2vw,38px);font-weight:500;line-height:1;letter-spacing:.09em;color:#f4dfb1}
+/* One geometry for all three primary controls; no padded roulette wrapper. */
+.grid-arena .arena-action,.roulette.grid-arena .arena-action{padding:0;box-sizing:border-box}
+.grid-arena .arena-action button.grid-fight,.roulette.grid-arena .arena-action button.grid-fight,.result-actions button,.versus.grid-arena>button.continue{box-sizing:border-box;width:22vw;height:8vh;min-height:38px;max-height:none;min-width:0;margin:0;padding:8px 24px;flex-shrink:0;display:flex;align-items:center;justify-content:center;isolation:isolate;background:linear-gradient(120deg,#ecd49c,#967645);border:0;border-radius:0;box-shadow:none;outline:none;filter:none;transform:none;clip-path:polygon(6% 0,94% 0,100% 50%,94% 100%,6% 100%,0 50%);font:500 clamp(18px,2vw,38px)/1 MK,'Arial Narrow',sans-serif;letter-spacing:.09em;color:#f4dfb1;text-shadow:none;white-space:nowrap}
+.grid-arena .arena-action button.grid-fight:before,.roulette.grid-arena .arena-action button.grid-fight:before,.result-actions button:before,.versus.grid-arena>button.continue:before{content:'';position:absolute;inset:2px;z-index:-1;clip-path:inherit;background:linear-gradient(120deg,#182029,#080d13 65%,#24201a)}
+.grid-arena .arena-action button.grid-fight:focus-visible:before,.roulette.grid-arena .arena-action button.grid-fight:focus-visible:before,.result-actions button:focus-visible:before,.versus.grid-arena>button.continue:focus-visible:before{background:linear-gradient(120deg,#34302a,#121820 65%,#403420)}
+@media(max-aspect-ratio:1/1){.grid-arena .arena-action button.grid-fight,.roulette.grid-arena .arena-action button.grid-fight,.result-actions button,.versus.grid-arena>button.continue{width:44vw;height:7vh;font-size:clamp(16px,3.7vw,24px)}}
+/* Ticket identity sits between the two player panels. */
+.shell[data-scene=home] header .brand,.shell[data-scene=roulette] header .brand,.shell[data-scene=versus] header .brand{visibility:hidden;pointer-events:none}
+.grid-arena .arena-vs,.versus.grid-arena .arena-vs{left:42%;width:16%;top:24%;height:20%;display:flex;align-items:center;justify-content:center;z-index:8;pointer-events:none}
+.grid-arena .arena-vs .arena-ticket-logo{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 3px 8px #0009)}
+.versus.grid-arena .arena-vs{top:30%}
+@media(max-aspect-ratio:1/1){.grid-arena .arena-vs{left:40%;width:20%;top:29%;height:13%}.versus.grid-arena .arena-vs{top:32%}}
+.grid-arena .arena-vs,.versus.grid-arena .arena-vs{background:none}.grid-arena .arena-vs:before,.grid-arena .arena-vs:after{display:none}
+/* Brand belongs above the cards; the duel marker stays between them. */
+.grid-arena .arena-ticket-brand{position:absolute;left:40%;top:1%;width:20%;height:12%;z-index:9;pointer-events:none}
+.grid-arena .arena-ticket-brand img{width:100%;height:100%;object-fit:contain;display:block}
+.grid-arena .arena-vs{left:41%;width:18%;top:22%;height:25%}
+.versus.grid-arena .arena-vs{left:42%;width:16%;top:29%;height:22%}
+@media(max-aspect-ratio:1/1){.grid-arena .arena-ticket-brand{left:35%;width:30%;top:1%;height:10%}.grid-arena .arena-vs{left:42%;width:16%;top:29%;height:15%}}
+.grid-arena .arena-vs .vs-mark{display:block;width:100%;height:100%;object-fit:contain;visibility:visible;opacity:1}
+/* VS option 04: paired cinema tickets, matching the new identity. */
+.grid-arena .arena-vs.ticket-duel{background:url('ui/vs-tickets.svg') center/contain no-repeat}
+.grid-arena .ticket-duel span{font:600 clamp(30px,4.5vw,86px)/1 MK,'Arial Narrow',sans-serif;transform:skew(-10deg);color:#f4e3bc;letter-spacing:-.05em;padding-right:.06em;text-shadow:0 2px 3px #0004}
+@media(max-aspect-ratio:1/1){.grid-arena .ticket-duel span{font-size:clamp(22px,5vw,38px)}}
+/* Final movie is a full-bleed detachable cinema ticket. */
+.shell[data-scene=result] header .brand{position:absolute;left:40%;top:1%;width:20%;height:13%;max-width:none;margin:0;transform:none}
+.shell[data-scene=result] header .brand img{width:100%;height:100%;object-fit:contain}
+.shell[data-scene=result] header .brand:after{display:none}
+.cinema-result.result-ticket{left:3%;right:3%;top:18%;bottom:7%;border:0;clip-path:none;background:#061019;mask:none;-webkit-mask:none;clip-path:url(#result-ticket-clip)}
+.result-ticket:after{content:'';position:absolute;inset:0;z-index:5;pointer-events:none;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201500%20640%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20d%3D%22M%2048%202%20H%20417%20A%2023%2023%200%200%200%20463%202%20H%201452%20A%2046%2046%200%200%200%201498%2048%20V%20274%20A%2046%2046%200%200%200%201498%20366%20V%20592%20A%2046%2046%200%200%200%201452%20638%20H%20463%20A%2023%2023%200%200%200%20417%20638%20H%2048%20A%2046%2046%200%200%200%202%20592%20V%20366%20A%2046%2046%200%200%200%202%20274%20V%2048%20A%2046%2046%200%200%200%2048%202%20Z%22%20fill%3D%22none%22%20stroke%3D%22%23eddbab%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20d%3D%22M440%2040V600%22%20stroke%3D%22%23061019%22%20stroke-width%3D%2220%22%2F%3E%3Cpath%20d%3D%22M440%2040V600%22%20stroke%3D%22%23eddbab%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%20stroke-dasharray%3D%2213%2016%22%2F%3E%3C%2Fsvg%3E") 0 0/100% 100% no-repeat}
+.result-ticket .result-poster{left:0;top:0;bottom:0;width:29.333%;border:0;background:#071019;overflow:hidden}
+.result-ticket .result-poster img{width:100%;height:100%;object-fit:cover}
+.result-ticket .cinema-backdrop{left:29.333%;right:0;top:0;bottom:0;clip-path:none}
+.result-ticket .cinema-backdrop img{width:100%;height:100%;object-fit:cover;object-position:center 35%;opacity:.6}
+.result-ticket .cinema-backdrop:after{background:linear-gradient(90deg,#061019f5,#061019ba 48%,#06101955)}
+.result-ticket.team-1 .cinema-backdrop:after{background:linear-gradient(90deg,#061019f5,#160c15aa 55%,#390e1855)}
+.result-ticket .result-copy{left:33%;right:3%;top:9%;bottom:10%;gap:5%;justify-content:center}
+.result-ticket .cinema-player{order:-1;align-self:flex-start;max-width:100%;padding:.35em 1.3em;background:linear-gradient(100deg,color-mix(in srgb,var(--team) 38%,#071019),#09111a99);border:1px solid var(--team);clip-path:polygon(4% 0,100% 0,96% 100%,0 100%);font-size:clamp(16px,1.8vw,34px);overflow-wrap:anywhere}
+.result-ticket .result-copy h1{font-size:clamp(28px,4vw,76px);line-height:1.1}
+.result-ticket .result-actions{flex-wrap:nowrap;gap:10px;margin-top:auto;padding-top:3%;width:100%}
+.result-ticket .result-actions button{width:0;flex:1 1 0;min-width:0;height:8vh;padding:8px 10px;font-size:clamp(16px,1.8vw,34px);letter-spacing:.04em}
+@media(max-aspect-ratio:1/1){
+.shell[data-scene=result] header .brand{left:33%;width:34%;height:10%}
+.cinema-result.result-ticket{top:12%;bottom:3%}
+.result-ticket .result-copy{left:34%;right:6%;top:8%;bottom:8%;gap:4%}
+.result-ticket .result-copy h1{font-size:clamp(21px,4.8vw,36px)}
+.result-ticket .result-eyebrow,.result-ticket .result-meta,.result-ticket .cinema-player{font-size:clamp(12px,3vw,22px);letter-spacing:.04em}
+.result-ticket .result-actions{flex-direction:column;gap:10px}
+.result-ticket .result-actions button{width:100%;flex:none;height:7vh;font-size:clamp(15px,3.5vw,24px)}
+.result-ticket .result-poster img{object-position:center}
+}
+.shell[data-scene=result] header .brand{top:1vh;height:14vh}
+.result-ticket .result-copy h1{white-space:normal;overflow-wrap:anywhere;flex-shrink:0}
+@media(max-aspect-ratio:1/1){.shell[data-scene=result] header .brand{height:10vh}}
+/* Approved player tickets: outer edge cuts only; inward points stay angular. */
+.grid-arena .cinema-panel{clip-path:url(#player-ticket-left);background:linear-gradient(90deg,#36b9db,#194451 72%,#19313c)}
+.grid-arena .cinema-panel.team-1{clip-path:url(#player-ticket-right);background:linear-gradient(270deg,#db555d,#65292e 72%,#382029)}
+.grid-arena .cinema-panel .billboard-art{left:0;top:0;bottom:0;width:31%;transform:none;border:0;border-right:1px solid #718c9b88}
+.grid-arena .cinema-panel.team-1 .billboard-art{left:auto;right:0;transform:none;border:0;border-left:1px solid #9c767888}
+.grid-arena .arena-vs.plain-duel{background:none}
+.grid-arena .plain-duel span{font:600 clamp(40px,5.5vw,104px)/1 MK,'Arial Narrow',sans-serif;transform:skew(-8deg);color:#f4e3bc;letter-spacing:-.05em;text-shadow:none}
+@media(max-aspect-ratio:1/1){.grid-arena .cinema-panel .billboard-art,.grid-arena .cinema-panel.team-1 .billboard-art{left:25%;right:auto;top:2%;bottom:50%;width:50%;border:0}.grid-arena .plain-duel span{font-size:clamp(26px,6vw,44px)}}
+
+.grid-arena .cinema-panel:before{content:"";display:block;position:absolute;inset:0;z-index:10;pointer-events:none;transform:none;opacity:1;background-size:100% 100%;background-repeat:no-repeat}
+.grid-arena .cinema-panel.team-0:before{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201000%201000%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20d%3D%22M%2040%203%20L%20910%2080%20L%201000%20500%20L%20910%20920%20L%2040%20997%20Q%2040%20910%201%20910%20L%201%20590%20C%2050%20590%2050%20410%201%20410%20L%201%2090%20Q%2040%2090%2040%203%20Z%22%20fill%3D%22none%22%20stroke%3D%22%234696ad%22%20stroke-width%3D%221.4%22%20vector-effect%3D%22non-scaling-stroke%22%2F%3E%3C%2Fsvg%3E")}
+.grid-arena .cinema-panel.team-1:before{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201000%201000%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20d%3D%22M%20960%203%20Q%20960%2090%20999%2090%20L%20999%20410%20C%20950%20410%20950%20590%20999%20590%20L%20999%20910%20Q%20960%20910%20960%20997%20L%2090%20920%20L%201%20500%20L%2090%2080%20Z%22%20fill%3D%22none%22%20stroke%3D%22%23974d55%22%20stroke-width%3D%221.4%22%20vector-effect%3D%22non-scaling-stroke%22%2F%3E%3C%2Fsvg%3E")}
+/* Navigation follows the launch control's flat hexagonal design. */
+.shell header nav{display:flex;gap:12px;align-items:center}
+.shell header nav[hidden]{display:none}
+.shell header nav button{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:center;width:11vw;min-width:110px;height:6vh;min-height:36px;margin:0;padding:6px 18px;border:0;border-radius:0;transform:none;box-shadow:none;filter:none;outline:none;background:linear-gradient(120deg,#ecd49c,#967645);clip-path:polygon(6% 0,94% 0,100% 50%,94% 100%,6% 100%,0 50%);font:500 clamp(15px,1.5vw,28px)/1 MK,'Arial Narrow',sans-serif;letter-spacing:.09em;color:#f4dfb1;text-shadow:none}
+.shell header nav button:before{content:'';position:absolute;inset:2px;z-index:-1;clip-path:inherit;background:linear-gradient(120deg,#182029,#080d13 65%,#24201a)}
+.shell header nav button.active:before,.shell header nav button:hover:before,.shell header nav button:focus-visible:before{background:linear-gradient(120deg,#51412b,#202329)}
+@media(max-aspect-ratio:1/1){.shell header nav{gap:6px}.shell header nav button{width:24vw;min-width:0;height:5vh;min-height:32px;font-size:clamp(12px,3vw,18px);padding:5px 10px}}
+.shell[data-scene] header nav button,.shell[data-scene] header nav button.active{background:linear-gradient(120deg,#ecd49c,#967645);font-weight:500;box-shadow:none;filter:none;transform:none}
+/* Read-only film browsing, shared by pointer hover and remote focus. */
+.shared-roster .film-tile.is-browsed,.shared-roster .film-tile:focus-visible{outline:2px solid #f1d79f;outline-offset:3px;filter:drop-shadow(0 0 5px #f1d79f88);z-index:9}
+.movie-browse{position:fixed;width:min(650px,52vw);z-index:100;filter:drop-shadow(0 6px 14px #000b);color:#f2dfb7;text-align:left;pointer-events:auto}
+.browse-surface{position:relative;isolation:isolate;display:grid;grid-template-columns:24% 1fr;gap:18px;padding:14px;background:#08121b;border:2px solid #d9c193;border-radius:12px;overflow:hidden}
+.browse-backdrop{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.browse-backdrop .movie-poster,.browse-backdrop .poster-art{width:100%;height:100%}
+.browse-backdrop img{width:100%;height:100%;object-fit:cover;object-position:center 35%;opacity:.35}
+.browse-backdrop:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#07121bf5 20%,#07121bcc 50%,#07121b55)}
+.browse-backdrop span{display:none}
+.browse-poster{min-width:0;aspect-ratio:2/3;align-self:start;border:1px solid #bba376;overflow:hidden}
+.browse-poster .movie-poster,.browse-poster .poster-art{width:100%;height:100%}
+.browse-poster img{width:100%;height:100%;object-fit:contain}
+.browse-poster span{display:none}
+.browse-copy{min-width:0;display:flex;flex-direction:column;gap:8px}
+.browse-copy h2{font:600 clamp(20px,2vw,32px)/1.1 MK,sans-serif;text-transform:uppercase;margin:0}
+.browse-meta{font:400 clamp(13px,1.1vw,20px)/1.3 Arial,sans-serif;margin:0;color:#e4d3b2}
+.browse-description{font:400 clamp(14px,1.05vw,19px)/1.45 Arial,sans-serif;color:#f1eee7;border-top:1px solid #d9c19377;padding-top:10px;margin:0;max-height:24vh;overflow-y:auto;scrollbar-width:thin}
+.browse-pointer{position:absolute;left:var(--pointer-x);bottom:-13px;transform:translateX(-50%);width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:14px solid #e8d1a4}
+.below-tile .browse-pointer{bottom:auto;top:-13px;border-top:0;border-bottom:14px solid #e8d1a4}
+@media(max-aspect-ratio:1/1){.movie-browse{width:calc(100vw - 24px)}.browse-surface{gap:12px;padding:10px}.browse-description{max-height:22vh;font-size:14px}}
+/* The poster defines the tooltip height; long synopses end with an ellipsis. */
+.browse-surface{align-items:start}
+.browse-copy{overflow:hidden;min-height:0}
+.browse-copy h2,.browse-meta{flex-shrink:0}
+.browse-description{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden;max-height:none;flex-shrink:0}
+@media(max-aspect-ratio:1/1){.browse-description{max-height:none}}
+/* Synopsis shares the ticket's free space without moving the action row. */
+.result-ticket .result-copy{gap:3%}
+.result-ticket .result-description{font:400 clamp(14px,1.15vw,23px)/1.45 Arial,sans-serif;color:#e7e5e0;margin:0;min-height:0;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;flex:1 1 auto;max-height:7.25em}
+.result-ticket .result-actions{flex-shrink:0}
+@media(max-aspect-ratio:1/1){.result-ticket .result-description{font-size:clamp(12px,2.7vw,17px);-webkit-line-clamp:4;max-height:5.8em}}

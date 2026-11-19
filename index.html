@@ -16,6 +16,8 @@
   <link rel="stylesheet" href="src/single.css?v=6">
   <link rel="stylesheet" href="src/combat.css?v=3">
   <link rel="stylesheet" href="src/tools.css?v=6">
+  <link rel="stylesheet" href="src/billboard.css?v=9">
+  <link rel="stylesheet" href="src/roster.css?v=16">
   <script>
 window.addEventListener('error', function(event) {
  var status = document.getElementById('startup-status');
@@ -29,19 +31,20 @@ setTimeout(function() {
   <script defer src="src/movies.js"></script>
   <script defer src="src/tmdb-ratings.js"></script>
   <script defer src="src/reel.js?v=6"></script>
-  <script defer src="src/fighters.js"></script>
+  <script defer src="src/grid-selection.js?v=12"></script>
   <script defer src="src/lampa-bridge.js"></script>
-  <script defer src="src/art-manifest.js?v=6"></script>
+  <script defer src="src/art-manifest.js?v=10"></script>
   <script defer src="src/asset-store.js?v=6"></script>
-  <script defer src="src/main.js?v=6"></script>
+  <script defer src="src/movie-overviews.js?v=1"></script>
+  <script defer src="src/main.js?v=31"></script>
   <script defer src="src/art-cache.js"></script>
-</head>
+<link rel="stylesheet" href="src/cinema-panels.css?v=22"></head>
 <body>
   <div class="shell">
     <header>
-      <button class="brand" data-action="home" aria-label="На главную"><img class="brand-logo" src="src/optimized/wordmark.302eb939002a.webp" alt="Movie Kombat"><img class="home-brand-logo" src="src/optimized/home-wordmark.d8e5f47e383c.webp" alt="" aria-hidden="true"></button>
+      <button class="brand" data-action="home" aria-label="На главную"><img class="brand-logo" src="src/ui/movie-kombat-tickets.png" alt="Movie Kombat"><img class="home-brand-logo" src="src/ui/movie-kombat-tickets.png" alt="" aria-hidden="true"></button>
       <nav aria-label="Меню">
-        <button data-action="home">Арена</button><button data-action="lists">Списки</button><button data-action="history">История</button>
+        <button data-action="home">Арена</button><button data-action="history">История</button>
       </nav>
       <button class="sound" data-action="sound" aria-pressed="false">Звук вкл.</button>
     </header>
