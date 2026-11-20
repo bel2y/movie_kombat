@@ -1,12 +1,12 @@
 // Blob storage works independently of Service Workers (including HTTP-hosted Lampa).
 (() => {
-  const files=window.MK_ART || [];
+  const files=[...new Set([...(window.MK_ART || []),'src/ui/movie-kombat-tickets.png'])];
   const base=new URL('./',location.href);
   const allowed=new Set(files.map(file=>new URL(file,base).href));
-  const blobs=new Map(),saved=new Set(),jobs=new Map();
-  let db=null,busy=false,done=0,failed=0,storage='checking',active=0;
+  const blobs=new Map(),saved=new Set(),jobs=new Map(),nativeImages=new Map();
+  let db=null,storage='checking',active=0;
   const queue=[];
-  let motion=false,completed=false;const pendingArtwork=new Map();
+  let motion=false;const pendingArtwork=new Map();
   const canonical=value=>new URL(value,base).href;
   const notify=()=>window.dispatchEvent(new Event('mk-assets'));
   function apply(url,blob){
@@ -62,49 +62,53 @@
       job().finally(()=>{active--;pump();});
     }
   }
+  function readBytes(blob){
+    if(typeof blob.arrayBuffer==='function')return blob.arrayBuffer();
+    return new Promise((resolve,reject)=>{
+      const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(reader.error||Error('Image read failed'));reader.readAsArrayBuffer(blob);
+    });
+  }
+  // Image loading also works where fetch is blocked (for example file:// TV hosts).
+  function loadNative(url){
+    if(typeof Image!=='function')return Promise.reject(Error('Image loader unavailable'));
+    return new Promise((resolve,reject)=>{
+      const image=new Image();
+      const timer=setTimeout(()=>{image.onload=image.onerror=null;reject(Error('Image request timed out'));},15000);
+      image.onload=()=>{clearTimeout(timer);image.onload=image.onerror=null;nativeImages.set(url,image);resolve(url);};
+      image.onerror=()=>{clearTimeout(timer);image.onload=image.onerror=null;reject(Error('Image unavailable: '+new URL(url).pathname.split('/').pop()));};
+      image.src=url;
+    });
+  }
   function ensure(value){
     const url=canonical(value);
     if(!allowed.has(url))return Promise.reject(Error('Unknown artwork'));
     if(blobs.has(url))return Promise.resolve(blobs.get(url));
+    if(nativeImages.has(url))return Promise.resolve(url);
     if(jobs.has(url))return jobs.get(url);
     const promise=new Promise((resolve,reject)=>{
       queue.push(async()=>{
         let error;
         for(let attempt=0;attempt<2;attempt++){
-          const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),15000);
+          const controller=typeof AbortController==='function'?new AbortController():null;let timer;
           try {
-            const response=await fetch(url,{signal:controller.signal});
+            const response=await Promise.race([fetch(url,controller?{signal:controller.signal}:{}),new Promise((_,reject)=>{timer=setTimeout(()=>{if(controller)controller.abort();reject(Error('Image request timed out'));},15000);})]);
             if(!response.ok)throw Error('HTTP '+response.status);
             const blob=await response.blob();
-            const signature=new Uint8Array(await blob.slice(0,12).arrayBuffer());
-            if(String.fromCharCode(...signature.slice(8,12))!=='WEBP')throw Error('Invalid image');
+            const signature=new Uint8Array(await readBytes(blob.slice(0,12)));
+            const webp=String.fromCharCode(...signature.slice(8,12))==='WEBP';
+            const png=signature[0]===137&&String.fromCharCode(...signature.slice(1,4))==='PNG';
+            if(!webp&&!png)throw Error('Invalid image');
             clearTimeout(timer);const local=apply(url,blob);await persist(url,blob);notify();resolve(local);return;
           }catch(e){error=e;}finally{clearTimeout(timer);}
         }
-        reject(error);
+        try{resolve(await loadNative(url));}catch(nativeError){reject(typeof Image==='function'?nativeError:error);}
       });pump();
     });
     jobs.set(url,promise);promise.then(()=>jobs.delete(url),()=>jobs.delete(url));return promise;
   }
   const ready=open().then(()=>{notify();});
   const api={ready,setMotion(value){motion=value;if(!motion){pendingArtwork.forEach((local,url)=>updateArtwork(url,local));pendingArtwork.clear();pump();}},url:value=>blobs.get(canonical(value)) || value,ensure,
-    status:()=>({total:files.length,saved:saved.size,busy,done,failed,storage,completed}),
-    async downloadAll(){
-      if(busy)return;
-      busy=true;completed=false;done=0;failed=0;notify();await ready;
-      await Promise.all(files.map(async file=>{try{await ensure(file);}catch(_){failed++;}done++;notify();}));
-      busy=false;completed=true;notify();
-    }
+    files:files.slice(),status:()=>({total:files.length,saved:saved.size,storage})
   };
   window.MovieKombatAssets=api;
-  // Remember visible artwork after initial rendering, without delaying startup.
-  window.addEventListener('load',()=>{
-    setTimeout(()=>{
-      const urls=new Set(performance.getEntriesByType('resource').map(entry=>entry.name).filter(url=>allowed.has(url)));
-      urls.forEach(url=>ensure(url).catch(()=>{}));
-    },1000);
-    setTimeout(()=>{
-      if(typeof movieLists!=='undefined')movieLists.flat().forEach(movie=>ensure(movie.poster).catch(()=>{}));
-    },3000);
-  });
 })();

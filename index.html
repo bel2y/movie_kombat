@@ -1,8 +1,12 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" class="is-booting">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+html,body{margin:0;background:#060b11}.is-booting .shell{visibility:hidden}.startup{position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#060b11;color:#f3dfb5;font:16px Arial,sans-serif;text-align:center}.startup img{width:min(38vw,360px);height:auto;margin-bottom:36px}.startup progress{width:min(44vw,380px);height:4px;border:0;background:#24303b;accent-color:#e0c38a}.startup progress::-webkit-progress-bar{background:#24303b}.startup progress::-webkit-progress-value{background:#e0c38a}.startup p{margin:20px 20px 0;line-height:1.5}.startup button{margin-top:20px;padding:12px 24px;border:1px solid #e0c38a;background:#15202b;color:#f3dfb5;font:inherit;transform:none}.startup[hidden],.startup button[hidden]{display:none}
+#startup .startup-retry,#startup button{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:center;width:clamp(250px,28vw,420px);height:clamp(48px,8vh,76px);padding:0 22px;border:0;border-radius:0;box-shadow:none;transform:none;background:#d3b97f;clip-path:polygon(6% 0,94% 0,100% 50%,94% 100%,6% 100%,0 50%);font:500 clamp(20px,2vw,32px)/1 MK,'Arial Narrow',sans-serif;letter-spacing:.07em;color:#f3dfb5;text-transform:uppercase;text-shadow:none;outline:none;filter:none}#startup button:before{content:'';position:absolute;inset:2px;z-index:-1;clip-path:inherit;background:linear-gradient(120deg,#182029,#080d13 65%,#24201a)}#startup button:hover:before,#startup button:focus-visible:before{background:linear-gradient(120deg,#51412b,#202329)}#startup button[hidden]{display:none}#startup p{font:400 clamp(16px,1.4vw,23px)/1.4 MK,'Arial Narrow',sans-serif;color:#d8c8a8}
+  </style>
   <title>MOVIE KOMBAT</title>
   <link rel="preload" as="image" href="src/optimized/home-atmosphere.46b1eea28fab.webp" fetchpriority="high">
   <link rel="stylesheet" href="src/arena.css?v=6">
@@ -18,37 +22,30 @@
   <link rel="stylesheet" href="src/tools.css?v=6">
   <link rel="stylesheet" href="src/billboard.css?v=9">
   <link rel="stylesheet" href="src/roster.css?v=16">
-  <script>
-window.addEventListener('error', function(event) {
- var status = document.getElementById('startup-status');
- if (status) status.textContent = 'Ошибка запуска: ' + (event.message || 'не удалось загрузить файлы приложения');
-}, true);
-setTimeout(function() {
- var status = document.getElementById('startup-status');
- if (status && status.textContent.indexOf('Ошибка') !== 0) status.textContent = 'Загрузка задерживается. Проверьте подключение к интернету и повторите запуск.';
-}, 15000);
-</script><script defer src="src/battle.js?v=7"></script>
+<script defer src="src/battle.js?v=7"></script>
   <script defer src="src/movies.js"></script>
   <script defer src="src/tmdb-ratings.js"></script>
   <script defer src="src/reel.js?v=6"></script>
   <script defer src="src/grid-selection.js?v=12"></script>
   <script defer src="src/lampa-bridge.js"></script>
   <script defer src="src/art-manifest.js?v=10"></script>
-  <script defer src="src/asset-store.js?v=6"></script>
+  <script defer src="src/asset-store.js?v=23"></script>
   <script defer src="src/movie-overviews.js?v=1"></script>
-  <script defer src="src/main.js?v=31"></script>
+  <script defer src="src/startup.js?v=3"></script>
+  <script defer src="src/main.js?v=40"></script>
   <script defer src="src/art-cache.js"></script>
-<link rel="stylesheet" href="src/cinema-panels.css?v=22"></head>
+<link rel="stylesheet" href="src/cinema-panels.css?v=24"><link rel="stylesheet" href="src/history.css?v=4"><link rel="stylesheet" href="src/welcome.css?v=7"></head>
 <body>
+  <div class="startup" id="startup" role="status" aria-live="polite"><img src="src/ui/movie-kombat-tickets.png" alt="Movie Kombat"><progress id="startup-progress" max="100" value="0" aria-label="Загрузка графики"></progress><p id="startup-status">Готовим ваш киновечер…</p><button id="startup-retry" hidden>Повторить загрузку</button></div>
   <div class="shell">
     <header>
       <button class="brand" data-action="home" aria-label="На главную"><img class="brand-logo" src="src/ui/movie-kombat-tickets.png" alt="Movie Kombat"><img class="home-brand-logo" src="src/ui/movie-kombat-tickets.png" alt="" aria-hidden="true"></button>
       <nav aria-label="Меню">
-        <button data-action="home">Арена</button><button data-action="history">История</button>
+        <button data-action="welcome" class="mode-return">Выбор режима</button><button data-action="home" class="arena-return">Арена</button><button data-action="history">История</button>
       </nav>
       <button class="sound" data-action="sound" aria-pressed="false">Звук вкл.</button>
     </header>
-    <main><p id="startup-status" role="status" style="color:white;padding:40px;font:20px sans-serif">Загружаем Movie Kombat…</p></main>
+    <main></main>
     <footer><span><kbd>↑ ↓ ← →</kbd> Навигация</span><span><kbd>OK</kbd> Выбрать</span><span><kbd>Back</kbd> Назад</span></footer>
   </div>
 </body>

@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 const engine=fs.readFileSync(new URL('../src/battle.js',import.meta.url),'utf8');
 const app=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
-function boot(storage,lists){
+function boot(storage,lists,welcome=false){
  const reelInputs=[];const events={};const shell={dataset:{}};let destination;const pending=[];
  const main={innerHTML:'',addEventListener(){},querySelectorAll:()=>[],querySelector:()=>null};
  const nav={querySelectorAll:()=>[]};
@@ -14,6 +14,7 @@ function boot(storage,lists){
   crypto:{getRandomValues:a=>{a[0]=0;return a;}},window:{innerWidth:1920},setTimeout:(fn,delay)=>{pending.push({fn,delay});return pending.length;},clearTimeout(id){if(pending[id-1])pending[id-1].done=true;},
   document:{querySelector:s=>s==='main'?main:s==='nav'?nav:s==='.shell'?shell:{},addEventListener:(type,fn)=>events[type]=fn}};
  vm.runInNewContext(engine+'\n'+fs.readFileSync(new URL('../src/grid-selection.js',import.meta.url),'utf8')+'\n'+app,context);
+ if(!welcome)events.click({target:{closest:()=>({dataset:{action:'mode-two'}})}});
  return {reelInputs,shell,main,enter(action){context.document.activeElement={matches:()=>true,click:()=>events.click({target:{closest:()=>({dataset:{action}})}})};events.keydown({key:'Enter',repeat:false,preventDefault(){}});},click:action=>events.click({target:{closest:()=>({dataset:{action}})}}),runTimers:()=>pending.slice().sort((a,b)=>a.delay-b.delay).forEach(t=>{if(!t.done){t.done=true;t.fn();}}),start:()=>events.click({target:{closest:()=>({dataset:{action:'start'}})}}),watch:()=>events.click({target:{closest:()=>({dataset:{action:'watch'}})}}),destination:()=>destination};
 }
 const film=id=>({id,title:'Film '+id,year:2000,genre:'Drama'});
@@ -81,4 +82,26 @@ test('arena keeps all posters and crosses out past winners instead of removing t
  assert.equal((session.main.innerHTML.match(/class="film-tile/g)||[]).length,3);
  assert.match(session.main.innerHTML,/film-tile is-watched[^>]+data-movie="1"/);
  assert.doesNotMatch(session.main.innerHTML,/fighter-art|class="strip"/);
+});
+
+test('welcome disables one player and opens arena only for two players',()=>{
+ const session=boot({},[[film(1)],[film(2)]],true);
+ assert.equal(session.shell.dataset.scene,'welcome');
+ assert.match(session.main.innerHTML,/data-action="mode-one" disabled aria-disabled="true"/);
+ assert.match(session.main.innerHTML,/Скоро/);
+ session.click('mode-one');assert.equal(session.shell.dataset.scene,'welcome');
+ session.enter('mode-one');assert.equal(session.shell.dataset.scene,'welcome');
+ session.click('mode-two');assert.equal(session.shell.dataset.scene,'home');
+ assert.equal((session.main.innerHTML.match(/class="film-tile/g)||[]).length,2);
+});
+
+test('arena returns to mode selection without losing progress or roster order',()=>{
+ const storage={'movie-kombat.excluded.v1':'[1]'};
+ const session=boot(storage,[[film(1),film(3)],[film(2)]]);
+ const before=JSON.stringify(storage);
+ session.click('welcome');assert.equal(session.shell.dataset.scene,'welcome');
+ assert.equal(JSON.stringify(storage),before);
+ session.enter('mode-two');assert.equal(session.shell.dataset.scene,'home');
+ assert.equal(JSON.stringify(storage),before);
+ assert.match(session.main.innerHTML,/film-tile is-watched[^>]+data-movie="1"/);
 });

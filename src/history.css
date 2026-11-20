@@ -1,0 +1,63 @@
+/* History uses the same dark ticket surfaces and champagne controls as the arena. */
+.shell[data-scene=history]:before,.shell[data-scene=history]:after{display:none}
+.shell[data-scene=history] header{height:16%;display:flex;padding:1% 3%;align-items:flex-start}
+.shell[data-scene=history] .brand{position:absolute;left:41%;top:1%;width:18%;height:100%;margin:0}
+.shell[data-scene=history] .brand-logo{height:100%;width:100%;object-fit:contain}
+.shell[data-scene=history] header nav{position:absolute;right:4%;top:15%;margin:0;padding:0;gap:12px}
+.history-heading{position:absolute;left:5%;top:17%;text-align:left;right:5%;border-bottom:1px solid #d9bf8540;padding-bottom:1.2%}
+.history-heading>p{font:400 clamp(10px,.85vw,17px)/1.2 MK,sans-serif;color:#bda77b;letter-spacing:.22em;margin-bottom:.6%}
+.history-heading h1{font:600 clamp(24px,2.8vw,55px)/1 MK,sans-serif;text-transform:uppercase;color:#f3dfb5;letter-spacing:.03em}
+.history-heading>span{position:absolute;right:0;bottom:22%;font:400 clamp(12px,1.1vw,22px)/1.3 MK,sans-serif;color:#c3bcae}
+.history .history-frame{top:30%;bottom:15%;left:5%;right:5%;padding:0;border:0;background:none;box-shadow:none}
+.history .log{height:100%;padding:2px 12px 2px 2px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#b79c67 #081019;display:flex;flex-direction:column;gap:12px}
+.history .log li.history-ticket{position:relative;isolation:isolate;display:grid;grid-template-columns:9% minmax(0,1fr) 24%;gap:3%;align-items:center;flex:none;height:calc(var(--unit)*10.3);margin:0;padding:0 3% 0 0;clip-path:none;border:1px solid #67758166;border-radius:2px;background:linear-gradient(110deg,#081722f5,#081018f5 65%,#102532ee);box-shadow:none;overflow:hidden;color:#f3dfb5}
+.history .log li.history-ticket.team-1{background:linear-gradient(110deg,#131219f5,#0d1017f5 65%,#2a141bee)}
+.history .log li.history-ticket:first-child{border-color:#d9bd7d;box-shadow:inset 0 0 0 1px #d9bd7d22}
+.history .history-ticket:before,.history .history-ticket:after{content:'';position:absolute;z-index:4;left:calc(10.5% - 9px);width:18px;height:18px;background:#060e16;border:1px solid #8c805f;border-radius:50%;pointer-events:none}
+.history .history-ticket:before{top:-11px}.history .history-ticket:after{bottom:-11px}
+.history .log li.history-ticket:focus-visible{outline:2px solid #ffe4a4;outline-offset:-3px;background:#1b2933;filter:brightness(1.12)}
+.history-poster{height:100%;width:100%;overflow:hidden}
+.history .history-poster .movie-poster{height:100%;width:100%;transform:none;border:0}
+.history .history-poster .poster-art{height:100%;width:100%;border:0;border-radius:0}
+.history .history-poster img{object-fit:cover;object-position:center}
+.history .history-title{position:relative;text-align:left;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:.35em;height:100%}
+.history .history-title:before{content:'';position:absolute;left:-1.7%;top:12%;bottom:12%;border-left:1px dashed #bda77b70}
+.history .history-title strong{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font:600 clamp(18px,2vw,40px)/1.12 MK,sans-serif;letter-spacing:.015em;font-style:normal}
+.history .history-title small{order:-1;align-self:flex-start;transform:none;padding:0;background:none;color:#dfbf7f;font:400 clamp(10px,.8vw,16px)/1 MK,sans-serif;letter-spacing:.14em}
+.history .history-title p{font:400 clamp(12px,1vw,21px)/1.2 MK,sans-serif;color:#b6babd;margin:0}
+.history .history-player{display:flex;flex-direction:column;align-items:flex-start;gap:.25em;padding-left:10%;border-left:1px solid #72818d40;min-width:0}
+.history .history-player small{font:400 clamp(10px,.8vw,16px)/1.1 MK,sans-serif;text-transform:uppercase;letter-spacing:.16em;color:#b3bac0}
+.history .history-player>span{font:500 clamp(16px,1.7vw,34px)/1.1 MK,sans-serif;text-transform:uppercase;color:#70d4ff;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.history .team-1 .history-player>span{color:#ff8c8e}
+.history .history-player time{font:400 clamp(11px,.9vw,18px)/1.3 MK,sans-serif;color:#c9c4ba;margin-top:.2em;text-align:left}
+.history .history-tools{left:5%;bottom:4%;gap:12px;font-size:inherit}
+.history .history-tools button,.history button.back-arena{position:relative;isolation:isolate;width:17vw;height:7vh;margin:0;padding:0 1em;display:flex;align-items:center;justify-content:center;background:#d3b97f;color:#f3dfb5;border:0;box-shadow:none;transform:none;clip-path:polygon(6% 0,94% 0,100% 50%,94% 100%,6% 100%,0 50%);font:500 clamp(14px,1.6vw,32px)/1 MK,sans-serif;letter-spacing:.07em;text-shadow:none}
+.history .history-tools button:before,.history button.back-arena:before{content:'';position:absolute;inset:2px;z-index:-1;clip-path:inherit;background:linear-gradient(120deg,#182029,#080d13 65%,#24201a)}
+.history button.back-arena{position:absolute;right:5%;bottom:4%;width:22vw}
+.history button.back-arena:before{background:linear-gradient(120deg,#3c3325,#171d22)}
+.history .history-tools button:focus-visible,.history button.back-arena:focus-visible{filter:brightness(1.5)}
+.history .log .empty-history{height:100%;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:1em;background:#07121bd9;border:1px dashed #c5aa7270;clip-path:none;text-align:center;color:#ead7b0}
+.history .empty-history strong{font:500 2.5vw MK,sans-serif}.history .empty-history p{font:400 1.3vw MK,sans-serif;color:#b8bdc2}
+@media(max-aspect-ratio:1/1){.shell[data-scene=history] .brand{left:3%;width:27%;height:80%}.shell[data-scene=history] header nav{right:3%;top:22%;gap:6px}.history-heading{top:17%}.history-heading>span{position:static;display:block;margin-top:8px}.history .history-frame{top:30%;bottom:23%}.history .log li.history-ticket{height:24vw;grid-template-columns:16% minmax(0,1fr) 26%;gap:3%}.history .history-ticket:before,.history .history-ticket:after{left:calc(17.5% - 9px)}.history .history-tools{bottom:13%;left:5%;right:5%}.history .history-tools button{width:43vw;height:6vh}.history button.back-arena{width:90%;height:6vh}.history .empty-history strong{font-size:5vw}.history .empty-history p{font-size:3vw}}
+/* Size the tear-off stub from the poster ratio, with true transparent cut-outs. */
+.history .log li.history-ticket{--ticket-height:calc(var(--unit)*10.3);--stub:calc(var(--ticket-height)*2/3);--notch:8px;height:var(--ticket-height);grid-template-columns:var(--stub) minmax(0,1fr) 24%;gap:0;border-radius:8px;mask:radial-gradient(circle at var(--stub) 0,transparent 7px,#000 8px) top/100% 51% no-repeat,radial-gradient(circle at var(--stub) 100%,transparent 7px,#000 8px) bottom/100% 51% no-repeat;-webkit-mask:radial-gradient(circle at var(--stub) 0,transparent 7px,#000 8px) top/100% 51% no-repeat,radial-gradient(circle at var(--stub) 100%,transparent 7px,#000 8px) bottom/100% 51% no-repeat}
+.history .history-ticket:before,.history .history-ticket:after{display:none}
+.history .history-poster img{object-fit:contain}
+.history .history-title{padding:0 5%;border-left:1px dashed #bda77b99}
+.history .history-title:before{display:none}
+@media(max-aspect-ratio:1/1){.history .log li.history-ticket{--ticket-height:24vw;grid-template-columns:var(--stub) minmax(0,1fr) 26%}}
+/* Readable ticket contours on the smoke background, including the tear notches. */
+.history .log{gap:16px}
+.history .log li.history-ticket{--ticket-edge:#7395a8;border:2px solid var(--ticket-edge);background:linear-gradient(110deg,#0b1c29,#09141e 65%,#122a38);box-shadow:inset 0 0 0 1px #ffffff0a}
+.history .log li.history-ticket.team-1{--ticket-edge:#a87580;background:linear-gradient(110deg,#1b141e,#12121b 65%,#2b1720)}
+.history .log li.history-ticket:first-child{--ticket-edge:#edce91;border-color:var(--ticket-edge);box-shadow:inset 0 0 0 1px #edce9120}
+.history .history-ticket:before,.history .history-ticket:after{display:block;left:calc(var(--stub) - 9px);width:18px;height:18px;border:2px solid var(--ticket-edge);border-radius:50%;background:transparent;z-index:5;pointer-events:none}
+.history .history-ticket:before{top:-10px}.history .history-ticket:after{bottom:-10px}
+.history .history-title{border-left:2px dashed #c7b383b3}
+.history .log li.history-ticket:focus-visible{--ticket-edge:#ffe4a4;outline:2px solid #ffe4a4;outline-offset:-4px}
+/* Align notch strokes with the mask in the border-box coordinate system. */
+.history .history-ticket:before,.history .history-ticket:after{left:calc(var(--stub) - 12px);width:20px;height:20px;box-sizing:border-box;border:2px solid var(--ticket-edge)}
+.history .history-ticket:before{top:-12px}
+.history .history-ticket:after{bottom:-12px}
+.history .history-title{border-left:0}
+.history .history-title:before{display:block;content:'';position:absolute;left:-2px;top:10px;bottom:10px;border-left:1px dashed #c7b383b3}

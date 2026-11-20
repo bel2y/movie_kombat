@@ -1,4 +1,5 @@
 (async () => {
+  if (window.MKStartup) await window.MKStartup.ready;
   if (window.MovieKombatAssets) await window.MovieKombatAssets.ready;
   const main = document.querySelector('main');
   const nav = document.querySelector('nav');
@@ -132,7 +133,17 @@
       if(status)status.textContent='Фильмы выбраны';
     }
   }
+  function modeTicket(action,title,subtitle,side,number,initial=false){
+    const ticketIcon='<path d="M12 12h112q0 12 14 12v10q-18 9 0 18v10q-14 0-14 12H12Q12 62 0 62V52q18-9 0-18V24q12 0 12-12Z"/><path stroke-dasharray="1 10" stroke-linecap="round" d="M102 23v40"/>';
+    const icon='<svg viewBox="-8 0 220 110" fill="none" stroke="currentColor" stroke-width="5">'+(side===1?'<g transform="translate(65 -3)">'+ticketIcon+'</g><g transform="translate(0 28)" fill="#52051a">'+ticketIcon+'</g>':'<g transform="translate(32 10)">'+ticketIcon+'</g>')+'</svg>';
+    const shape='<svg class="mode-outline" viewBox="0 0 900 380" preserveAspectRatio="none" aria-hidden="true"><path d="M58 3H665a22 22 0 0 0 44 0H842q55 0 55 55v58a80 80 0 0 0 0 148v58q0 55-55 55H709a22 22 0 0 0-44 0H58q-55 0-55-55v-58a80 80 0 0 0 0-148V58Q3 3 58 3Z"/><path class="mode-perforation" d="M687 29V351"/></svg>';
+    return '<button class="mode-ticket team-'+side+'" data-action="'+action+'"'+(initial?' data-initial="true"':'')+(action==='mode-one'?' disabled aria-disabled="true"':'')+'>'+shape+'<span class="mode-body"><span class="mode-icon" aria-hidden="true">'+icon+'</span><strong>'+escape(title)+'</strong><span class="mode-subtitle">'+escape(subtitle)+'</span></span><span class="mode-stub" aria-hidden="true"><b>'+number+'</b><svg class="mode-film" viewBox="0 0 88 52" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="84" height="48" rx="4"/><path d="M2 12h84M2 40h84M44 12v28"/><path stroke-width="4" stroke-dasharray="4 7" d="M9 7h70M9 45h70"/></svg></span></button>';
+  }
+  function welcomeScreen(){
+    return '<section class="welcome-panel"><img class="welcome-logo" src="src/ui/movie-kombat-tickets.png" alt="Movie Kombat"><div class="welcome-heading"><h1>Что смотрим сегодня?</h1><p class="welcome-intro">Доверьте нам выбор фильма на вечер</p></div><div class="mode-options">'+modeTicket('mode-one','Один игрок','Скоро',0,'01')+modeTicket('mode-two','Два игрока','Битва вкусов. Один фильм на двоих',1,'02',true)+'</div><p class="welcome-footer">ВЫБЕРИТЕ РЕЖИМ</p></section>';
+  }
   const views = {
+    welcome: () => welcomeScreen(),
     home: () => gridArena(),
     intro: () => gridArena(),
     roulette: () => gridArena(),
@@ -147,11 +158,11 @@
       const side=result.winner==='left'?0:1;
       return '<svg width="0" height="0" aria-hidden="true" style="position:absolute;pointer-events:none"><defs><clipPath id="result-ticket-clip" clipPathUnits="objectBoundingBox"><path transform="scale(0.000666666667 0.0015625)" d="M 48 2 H 417 A 23 23 0 0 0 463 2 H 1452 A 46 46 0 0 0 1498 48 V 274 A 46 46 0 0 0 1498 366 V 592 A 46 46 0 0 0 1452 638 H 463 A 23 23 0 0 0 417 638 H 48 A 46 46 0 0 0 2 592 V 366 A 46 46 0 0 0 2 274 V 48 A 46 46 0 0 0 48 2 Z"/></clipPath></defs></svg><article class="cinema-result result-ticket team-'+side+'"><div class="cinema-backdrop" aria-hidden="true">'+poster(movie)+'</div><div class="result-poster">'+poster(movie)+'</div><div class="result-copy"><p class="result-eyebrow">Сегодня смотрим</p><div class="cinema-player">'+escape(names[side])+(result.solo?' · Выбранный фильм':' · Победитель')+'</div><h1>'+escape(movie.title)+'</h1><p class="result-meta">'+escape([movie.year,movie.genre].filter(Boolean).join(' · '))+'</p><p class="result-description">'+escape(window.MK_OVERVIEWS?.[movie.id]?.overview||'Описание пока недоступно.')+'</p><div class="result-actions">'+button('watch','Смотреть','watch',true)+battleButton(result.solo?'Ещё фильм':'Реванш','')+button('home','На главную')+'</div></div></article>';
     },
-    history: () => `${participants()}<h1 class="scene-title">История битв</h1><div class="history-frame"><ul class="log">${history.map((item, i) =>
-      `<li tabindex="0">${poster(item[item.winner].movie)}<div class="history-title"><strong>${escape(item[item.winner].movie.title)}</strong>${i === 0 ? '<small>Последний выбор</small>' : ''}</div><div class="history-player"><span class="nameplate team-${item.winner === 'left' ? 0 : 1}">${names[item.winner === 'left' ? 0 : 1]}</span><time datetime="${escape(item.date)}">${escape(new Date(item.date).toLocaleDateString('ru-RU', {day:'numeric',month:'long',year:'numeric'}))}</time></div><span class="trophy" aria-label="${item.solo ? 'Выбранный фильм' : 'Победа'}">${item.solo ? '▶' : '♛'}</span></li>`).join('')
-      || '<li class="empty-history">Завершите первую битву, чтобы увидеть результат.</li>'}</ul>${metalCorners}</div><div class="history-tools">${button('reset','Сбросить битвы')}${button('assets','Графика')}</div>${button('home', 'На арену', 'back-arena', true)}`,
+    history: () => `<div class="history-heading"><p>ВАШ КИНОВЕЧЕР В БИЛЕТАХ</p><h1>История битв</h1><span>${history.length ? 'Выбрано фильмов: '+history.length : 'Здесь появятся выбранные фильмы'}</span></div><div class="history-frame"><ul class="log">${history.map((item, i) => {
+      const movie=item[item.winner].movie, side=item.winner==='left'?0:1;
+      return `<li tabindex="0" class="history-ticket team-${side}"><div class="history-poster">${poster(movie)}</div><div class="history-title">${i === 0 ? '<small>Последний выбор</small>' : ''}<strong>${escape(movie.title)}</strong><p>${escape([movie.year,movie.genre].filter(Boolean).join(' · '))}</p></div><div class="history-player"><small>${item.solo ? 'Выбранный фильм' : 'Победитель'}</small><span>${escape(names[side])}</span><time datetime="${escape(item.date)}">${escape(new Date(item.date).toLocaleDateString('ru-RU', {day:'numeric',month:'long',year:'numeric'}))}</time></div></li>`;
+    }).join('') || '<li class="empty-history"><strong>Первый билет ещё впереди</strong><p>Запустите выбор на арене — фильм появится здесь.</p></li>'}</ul></div><div class="history-tools">${button('reset','Сбросить битвы')}</div>${button('home', 'На арену', 'back-arena', true)}`,
     reset: () => `<section class="utility"><h1>Сбросить все битвы?</h1><p>История очистится. Все фильмы снова будут участвовать в выборе, а бонусы за поражения обнулятся. Списки фильмов и сохранённая графика останутся.</p><div class="actions">${button('history','Отмена','',true)}${button('reset-confirm','Сбросить')}</div></section>`,
-    assets: () => `<section class="utility"><h1>Графика на устройстве</h1><p>Один раз скачай постеры, персонажей и оформление. Сохранённые файлы будут загружаться из памяти этого устройства.</p><p class="asset-status" role="status"></p><progress class="asset-progress" max="65" value="0"></progress><div class="actions">${button('download-art','Скачать графику','primary',true)}${button('history','Назад')}</div></section>`,
   };
 
   let browseCard=null, browseTile=null, browseTimer;
@@ -180,7 +191,7 @@
     if(!movie){closeBrowse();return;}
     const overview=window.MK_OVERVIEWS?.[movie.id]?.overview||'Описание пока недоступно.';
     browseCard=document.createElement('aside');browseCard.className='movie-browse';browseCard.id='movie-browse';browseCard.setAttribute('role','tooltip');
-    browseCard.innerHTML='<div class="browse-surface"><div class="browse-backdrop" aria-hidden="true">'+poster(movie)+'</div><div class="browse-poster">'+poster(movie)+'</div><div class="browse-copy"><h2>'+escape(movie.title)+'</h2><p class="browse-meta">'+escape([movie.year,movie.genre].filter(Boolean).join(' · '))+'</p><p class="browse-description">'+escape(overview)+'</p></div></div><i class="browse-pointer" aria-hidden="true"></i>';
+    browseCard.innerHTML='<svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs><clipPath id="browse-ticket-clip" clipPathUnits="objectBoundingBox"><path transform="scale(.001 .003846153846)" d="M22 2 H978 Q978 24 998 26 V108 C974 108 974 152 998 152 V234 Q978 236 978 258 H22 Q22 236 2 234 V152 C26 152 26 108 2 108 V26 Q22 24 22 2 Z"/></clipPath></defs></svg><div class="browse-surface"><svg class="browse-ticket-outline" viewBox="0 0 1000 260" preserveAspectRatio="none" aria-hidden="true"><path d="M22 2 H978 Q978 24 998 26 V108 C974 108 974 152 998 152 V234 Q978 236 978 258 H22 Q22 236 2 234 V152 C26 152 26 108 2 108 V26 Q22 24 22 2 Z"/></svg><div class="browse-backdrop" aria-hidden="true">'+poster(movie)+'</div><div class="browse-poster">'+poster(movie)+'</div><div class="browse-copy"><h2>'+escape(movie.title)+'</h2><p class="browse-meta">'+escape([movie.year,movie.genre].filter(Boolean).join(' · '))+'</p><p class="browse-description">'+escape(overview)+'</p></div></div><i class="browse-pointer" aria-hidden="true"></i>';
     document.body.append(browseCard);tile.classList.add('is-browsed');tile.setAttribute('aria-describedby','movie-browse');positionBrowse();
   }
   document.addEventListener('focusin',e=>{const tile=e.target.closest?.('.film-tile');if(tile)openBrowse(tile);else closeBrowse();});
@@ -203,7 +214,7 @@
     const single = next === 'home' ? (previewPlayer ?? remainingPlayer()) : result?.solo && (playing() || next === 'result') ? (result.winner === 'left' ? 0 : 1) : null;
     main.className = next + (['home','roulette','versus'].includes(next)?' grid-arena':'') + (single !== null && single >= 0 ? ' single' : '');
     document.querySelector('.shell').dataset.single = single !== null && single >= 0 ? String(single) : '';
-    nav.hidden = (playing() && next!=='roulette') || ['result','reset','assets'].includes(next);
+    nav.hidden = (playing() && next!=='roulette') || ['result','reset','welcome','players'].includes(next);
     nav.querySelectorAll('button').forEach(item => item.classList.toggle('active', item.dataset.action === next));
     if(!keepGrid)main.innerHTML = views[next]() + (next==='versus' ? button('continue','Продолжить <kbd>OK</kbd>','skip continue',true) : playing() ? button('skip', 'Пропустить <kbd>OK</kbd>', 'skip', true) : '');
     main.querySelectorAll('.hero-logo').forEach(element => { element.append(document.querySelector('.brand-logo').cloneNode(true)); });
@@ -212,21 +223,11 @@
       const action=main.querySelector('.arena-action');if(action)action.innerHTML='<p role="status">Выбираем фильмы</p>'+button('skip','Пропустить','grid-fight',true);
       if(typeof runGridSelection==='function')stopReels=runGridSelection(main,selectionLists||availableLists(),result,revealGridFilm);
     }
-    updateAssetStatus();
+
     const initial = main.querySelector(next==='versus'?'[data-action="continue"]':'[data-initial]');
     if (initial) initial.focus();
   }
 
-  function updateAssetStatus() {
-    const label=main.querySelector('.asset-status');if(!label)return;
-    const state=window.MovieKombatAssets?.status();
-    if(!state){label.textContent='Хранилище изображений недоступно.';return;}
-    label.textContent=(state.busy ? `Загрузка: ${state.done} из ${state.total}. ` : '')+`Сохранено: ${state.saved} из ${state.total}.`+(state.failed ? ` Не загрузилось: ${state.failed}. Нажми «Скачать графику», чтобы повторить.` : '')+(['blocked','full'].includes(state.storage) ? '\nУстройство не разрешило сохранить все файлы. Загруженные изображения доступны только до закрытия игры.' : '');
-    const progress=main.querySelector('.asset-progress');if(progress){progress.max=state.total;progress.value=state.busy?state.done:state.saved;}
-    const download=main.querySelector('[data-action="download-art"]');if(download){download.setAttribute('aria-busy',String(state.busy));download.textContent=state.busy?'Загружаем…':state.completed?'Проверить загрузку':'Скачать графику';}
-    if(state.completed&&!state.busy)label.textContent=(state.saved===state.total?'Готово! Вся графика сохранена на устройстве. ':'Загрузка завершена. ')+label.textContent;
-  }
-  if(window.addEventListener)window.addEventListener('mk-assets',updateAssetStatus);
 
   function resetBattles() {
     if(scene!=='reset')return;
@@ -313,9 +314,10 @@
     const target = event.target.closest('button[data-action]');
     if (!target) return;
     const action = target.dataset.action;
-    if (action === 'start') start();
+    if (action === 'mode-one') return;
+    else if (action === 'mode-two') {previewPlayer=null;show('home');}
+    else if (action === 'start') start();
     else if (action === 'reset-confirm') resetBattles();
-    else if (action === 'download-art') { window.MovieKombatAssets?.downloadAll(); }
     else if (action === 'continue') continueBattle();
     else if (action === 'watch') watchWinner();
     else if (action === 'skip' || (playing() && action === 'home')) skip();
@@ -335,7 +337,8 @@
 
   document.addEventListener('keydown', event => {
     if (['Escape', 'Backspace', 'BrowserBack'].includes(event.key) || event.keyCode === 461 || event.keyCode === 10009) {
-      if (scene === 'home') {
+      if (scene === 'home') { event.preventDefault();show('welcome');return; }
+      if (scene === 'welcome') {
         if (window.MovieKombatHost?.close()) event.preventDefault();
         return;
       }
@@ -380,7 +383,8 @@
     reels = previewLists.map((movies, i) => result[i ? 'right' : 'left'] ? buildReel(movies, result[i ? 'right' : 'left'].movie.id, i === 1, window.innerWidth) : null);
     selectionLists=previewLists;
     show(previewScene);
-  } else show('home');
+  } else show('welcome');
+  if (window.MKStartup) await window.MKStartup.reveal();
 })();
 
 
